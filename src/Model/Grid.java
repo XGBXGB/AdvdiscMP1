@@ -5,6 +5,7 @@
  */
 package Model;
 
+import Model.Shape.Quadrilateral;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -38,8 +39,14 @@ public class Grid extends JFrame {
         //repaint();
     }
     
-    public void rotateLine(int x1, int y1, int x2, int y2, float angle){
+    public void rotateLine(double x1, double y1, double x2, double y2, float angle){
+        System.out.println("Grid rotate: x2:"+x2+" y2:"+y2);
         canvas.rotateLine(x1, y1, x2, y2, angle);
+        //repaint();
+    }
+    
+    public void drawQuad(Quadrilateral quad){
+        canvas.drawQuad(quad);
         //repaint();
     }
     

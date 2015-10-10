@@ -7,6 +7,9 @@ package Driver;
 
 import java.util.ArrayList;
 import Model.Grid;
+import Model.Matrix;
+import Model.Point;
+import Model.Shape.Quadrilateral;
 
 /**
  *
@@ -15,8 +18,17 @@ import Model.Grid;
 public class Driver {
     public static void main(String[] args) {
         Grid xz = new Grid("Title",500,500,20,20);
-        xz.drawLine(0, 0, 10, 0);
-        xz.rotateLine(0, 0, 10, 0, 45);
+//        xz.drawLine(5, 5, 10, 5);
+//        xz.rotateLine(5, 5, 10, 5, 270);
+//        xz.drawLine(10, 5, 5, 5);
+//        xz.rotateLine(10, 5, 5, 5, 90);
+        
+        
+        Quadrilateral q = new Quadrilateral(new Point(2,2),new Point(7,2), new Point(7,4), new Point(2,4));
+        xz.drawQuad(q);
+        Matrix m = new Matrix(3,3);
+        q = (Quadrilateral) m.rotateShape(q, 90, new Point(3,3),false);
+        xz.drawQuad(q);
     }
     
     
