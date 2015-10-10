@@ -6,26 +6,33 @@
 package driver;
 
 import java.util.ArrayList;
-
-import javax.swing.JFrame;
-
 import view.Grid;
-import view.Gui;
-
+import model.Matrix;
+import model.Point;
+import model.shape.Polygon;
 
 /**
  *
  * @author Christian Gabriel
  */
 public class Driver {
-
     public static void main(String[] args) {
-    	new Gui();
-
-//        Grid xz = new Grid("Title",500,500,20,20);
-//        xz.drawLine(1, 1, 2, 1);
-//        //xz.rotateLine(5, 2, 1, 2, 90);
-//        xz.translateLine(1, 1, 2, 1, 1, 2);
+        Grid xz = new Grid("Title",500,500,20,20);
+//        xz.drawLine(5, 5, 10, 5);        
+//        xz.rotateLine(5, 5, 10, 5, 270);
+//        xz.drawLine(10, 5, 5, 5);
+//        xz.rotateLine(10, 5, 5, 5, 90);
+        
+        
+        Polygon q = new Polygon();
+        q.addPoint(new Point(2,2));
+        q.addPoint(new Point(7,2));
+        q.addPoint(new Point(7,4));
+        q.addPoint(new Point(2,4));
+        xz.drawQuad(q);
+        Matrix m = new Matrix(3,3);
+        q = (Polygon) m.rotateShape(q, 90, new Point(3,3),false);
+        xz.drawQuad(q);
     }
     
     
