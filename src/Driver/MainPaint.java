@@ -1,4 +1,4 @@
-package Driver;
+package driver;
 
 import java.awt.*;
 import java.awt.event.*;

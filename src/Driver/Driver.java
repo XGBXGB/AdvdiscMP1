@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Driver;
+package driver;
 
 import java.util.ArrayList;
-import Model.Grid;
-import Model.Matrix;
-import Model.Point;
-import Model.Shape.Quadrilateral;
+import view.Grid;
+import model.matrix.Matrix;
+import model.Point;
+import model.shape.Polygon;
 
 /**
  *
@@ -18,16 +18,21 @@ import Model.Shape.Quadrilateral;
 public class Driver {
     public static void main(String[] args) {
         Grid xz = new Grid("Title",500,500,20,20);
-//        xz.drawLine(5, 5, 10, 5);
+//        xz.drawLine(5, 5, 10, 5);        
 //        xz.rotateLine(5, 5, 10, 5, 270);
 //        xz.drawLine(10, 5, 5, 5);
 //        xz.rotateLine(10, 5, 5, 5, 90);
         
         
-        Quadrilateral q = new Quadrilateral(new Point(2,2),new Point(7,2), new Point(7,4), new Point(2,4));
+        Polygon q = new Polygon();
+        q.addPoint(new Point(2,2));
+        q.addPoint(new Point(7,2));
+        q.addPoint(new Point(7,4));
+        q.addPoint(new Point(2,4));
         xz.drawQuad(q);
-        Matrix m = new Matrix(3,3);
-        q = (Quadrilateral) m.rotateShape(q, 90, new Point(3,3),false);
+//        Matrix m = new Matrix(3,3);
+//        q = (Polygon) m.rotateShape(q, 90, new Point(3,3),false);
+        q.rotateShape(90, new Point(3,3), true);
         xz.drawQuad(q);
     }
     

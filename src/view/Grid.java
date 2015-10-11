@@ -3,11 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package view;
 
-import Model.Shape.Quadrilateral;
+
+
 import java.awt.Graphics;
+
+
+
 import javax.swing.JFrame;
+
+import model.shape.Polygon;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 /**
@@ -45,7 +51,7 @@ public class Grid extends JFrame {
         //repaint();
     }
     
-    public void drawQuad(Quadrilateral quad){
+    public void drawQuad(Polygon quad){
         canvas.drawQuad(quad);
         //repaint();
     }

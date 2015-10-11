@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-package Model.Shape;
+package model.shape;
 
-import Model.Point;
-import Model.Point;
+import model.Point;
+import model.Point;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,4 +20,6 @@ public abstract class Shape {
     public abstract Iterator<Point> getPoints();
     public abstract void setPoints(Iterator<Point> points);
     public abstract void draw(Graphics g);
+    public abstract void rotateShape(float angle, Point center, boolean clockwise);
+    public abstract void translateShape(double x, double y);
 }

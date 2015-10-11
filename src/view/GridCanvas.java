@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package view;
 
-import Model.Shape.Quadrilateral;
+
 import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -13,22 +13,26 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
+
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
+
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import javax.swing.JPanel;
+
+import model.shape.Polygon;
 
 /**
  *
- * @author Christian Gabriel
- */
+ * @author Christian Gabriel*/
 public class GridCanvas extends JPanel {
 
     double width, height, rows, cols;
     double x1, y1, x2, y2;
     int rowHt;
-    Quadrilateral quad = null;
+    Polygon quad = null;
     boolean line = false;
     boolean rotateLine = false;
 
@@ -48,7 +52,7 @@ public class GridCanvas extends JPanel {
         line=false;
     }
     
-    public void drawQuad(Quadrilateral q) {
+    public void drawQuad(Polygon q) {
         quad = q;
         repaint();
     }
