@@ -69,7 +69,8 @@ public class Polygon extends Shape {
     }
 
     @Override
-    public void rotateShape(float angle, Point center, boolean clockwise) {
+    public void rotateShape(float angle, double centerX, double centerY, boolean clockwise) {
+        Point center = new Point(centerX, centerY);
         MatrixFactory matrixFactory = new MatrixFactory();
         Matrix rotator = matrixFactory.getMatrix("ROTATE");
         Matrix translator = matrixFactory.getMatrix("TRANSLATE");

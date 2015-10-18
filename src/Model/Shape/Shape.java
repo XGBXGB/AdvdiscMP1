@@ -20,6 +20,6 @@ public abstract class Shape {
     public abstract Iterator<Point> getPoints();
     public abstract void setPoints(Iterator<Point> points);
     public abstract void draw(Graphics g);
-    public abstract void rotateShape(float angle, Point center, boolean clockwise);
+    public abstract void rotateShape(float angle, double centerX, double centerY, boolean clockwise);
     public abstract void translateShape(double x, double y);
 }
