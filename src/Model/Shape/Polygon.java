@@ -25,27 +25,8 @@ import model.matrix.TranslateMatrix;
  */
 public class Polygon extends Shape {
 
-    private ArrayList<Point> points;
-
     public Polygon() {
         points = new ArrayList();
-    }
-
-    public void addPoint(Point p) {
-        points.add(p);
-    }
-
-    @Override
-    public Iterator<Point> getPoints() {
-        return points.iterator();
-    }
-
-    @Override
-    public void setPoints(Iterator<Point> points) {
-        this.points.clear();
-        while (points.hasNext()) {
-            this.points.add(points.next());
-        }
     }
 
     @Override
@@ -67,48 +48,4 @@ public class Polygon extends Shape {
             System.out.println("Point " + i + 1 + ": (" + p1.getX() + "," + p1.getY() + "  Point 2: (" + p2.getX() + "," + p2.getY() + ")");
         }
     }
-
-    @Override
-    public void rotateShape(float angle, double centerX, double centerY, boolean clockwise) {
-        Point center = new Point(centerX, centerY);
-        MatrixFactory matrixFactory = new MatrixFactory();
-        Matrix rotator = matrixFactory.getMatrix("ROTATE");
-        Matrix translator = matrixFactory.getMatrix("TRANSLATE");
-        Matrix pointHolder = matrixFactory.getMatrix("POINT");
-        ((RotateMatrix) rotator).makeRotator(angle, clockwise);
-
-        for (int i = 0; i < points.size(); i++) {
-            Point p = points.get(i);
-
-            //Convert point to matrix
-            ((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());//insert point values to matrix
-
-            //translate point near origin
-            ((TranslateMatrix) translator).setTranslateValues(-center.getX(), -center.getY());
-            pointHolder.setData(translator.times(pointHolder));
-
-            pointHolder.setData(rotator.times(pointHolder));//multiplies the 3x1 matrix to the rotator matrix
-
-            //because we rotated based on (0,0), we bring it back to its original position by translating
-            ((TranslateMatrix) translator).setTranslateValues(center.getX(), center.getY());
-            pointHolder.setData(translator.times(pointHolder));
-
-            points.set(i, ((R3Matrix) pointHolder).getPoint());
-        }
-    }
-    
-    public void translateShape(double x, double y){
-        MatrixFactory matrixFactory = new MatrixFactory();
-        Matrix translator = matrixFactory.getMatrix("TRANSLATE");
-        Matrix pointHolder = matrixFactory.getMatrix("POINT");
-        ((TranslateMatrix)translator).setTranslateValues(x, y);
-        
-        for(int i=0; i<points.size(); i++){
-            Point p = points.get(i);
-            ((R3Matrix)pointHolder).setPointValues(p.getX(), p.getY());
-            pointHolder.setData(translator.times(pointHolder));
-            points.set(i, ((R3Matrix) pointHolder).getPoint());
-        }
-    }
-
 }

@@ -80,7 +80,6 @@ public class Polygon_GUI extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		          System.out.println("asdasdadasd");
 		if(e.getSource() == btn_addPoints){
 			Points p = new Points("Point",true);
 			panel_points.add(p,"newline");
