@@ -74,7 +74,7 @@ public class Main_GUI extends JFrame {
 		panel_center.setLayout(new BorderLayout(0, 0));
 		
 		splitPane = new JSplitPane();
-		splitPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		splitPane.setBorder(new TitledBorder(null, "ASD", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		splitPane.setBackground(Color.DARK_GRAY);
 		panel_center.add(splitPane, BorderLayout.CENTER);
 		
