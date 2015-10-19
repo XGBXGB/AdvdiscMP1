@@ -3,9 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.shape;
+package Model.Shape;
 
-import model.Point;
+import Model.Point;
+import Model.Matrix.Matrix;
+import Model.Matrix.MatrixFactory;
+import Model.Matrix.R3Matrix;
+import Model.Matrix.RotateMatrix;
+import Model.Matrix.TranslateMatrix;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -13,11 +19,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Iterator;
-import model.matrix.Matrix;
-import model.matrix.MatrixFactory;
-import model.matrix.R3Matrix;
-import model.matrix.RotateMatrix;
-import model.matrix.TranslateMatrix;
 
 /**
  *

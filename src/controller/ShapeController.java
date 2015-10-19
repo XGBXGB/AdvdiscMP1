@@ -7,17 +7,17 @@
 package controller;
 
 import java.util.ArrayList;
-import model.Observer;
-import model.Point;
-import model.Subject;
-import model.shape.Shape;
+import Model.Observer;
+import Model.Point;
+import Model.Subject;
+import Model.Shape.Shape;
 
 /**
  *
  * @author Christian Gabriel
  */
 public class ShapeController implements Subject{
-    private Shape shape;
+    private Shape Shape;
     private static ShapeController instance = null;
     private ArrayList<Observer> observerList;
     
@@ -26,7 +26,7 @@ public class ShapeController implements Subject{
     }
     
     public void addPoints(double x, double y){
-        shape.addPoint(x, y);
+        Shape.addPoint(x, y);
         notifyObservers();
     }
     
@@ -37,21 +37,21 @@ public class ShapeController implements Subject{
     }
     
     public void setShape(Shape s){
-        shape = s;
+        Shape = s;
         notifyObservers();//?
     }
     
     public Shape getShape(Shape s){
-        return shape;
+        return Shape;
     }
     
     public void rotateShape(float angle, double centerX, double centerY, boolean clockwise){
-        shape.rotateShape(angle, centerX, centerY, clockwise);
+        Shape.rotateShape(angle, centerX, centerY, clockwise);
         notifyObservers();
     }
     
     public void translateShape(double x, double y){
-        shape.translateShape(x, y);
+        Shape.translateShape(x, y);
         notifyObservers();
     }
     
@@ -67,7 +67,7 @@ public class ShapeController implements Subject{
     }
 
     @Override
-    public void notifyObservers() {//clears graph and repaints from model
+    public void notifyObservers() {//clears graph and repaints from Model
         for(Observer o: observerList){
             o.update();
         }

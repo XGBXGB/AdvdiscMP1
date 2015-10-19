@@ -4,15 +4,15 @@
  * and open the template in the editor.
  */
 
-package model.matrix;
+package Model.Matrix;
 
-import model.shape.Shape;
+import Model.Shape.Shape;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import java.util.ArrayList;
 import java.util.Iterator;
-import model.Point;
-import model.Point;
+import Model.Point;
+import Model.Point;
 
 /**
  *

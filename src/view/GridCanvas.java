@@ -22,7 +22,7 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
-import model.shape.Polygon;
+import Model.Shape.Polygon;
 
 /**
  *

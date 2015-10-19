@@ -7,23 +7,23 @@
 package controller;
 
 import java.util.ArrayList;
-import model.Model;
-import model.Observer;
-import model.Point;
-import model.Subject;
-import model.shape.Shape;
+import Model.Model;
+import Model.Observer;
+import Model.Point;
+import Model.Subject;
+import Model.Shape.Shape;
 
 /**
  *
  * @author Christian Gabriel
  */
 public class ModelController implements Subject{
-    private Model model;
+    private Model Model;
     private static ModelController instance = null;
     private ArrayList<Observer> observerList;
     
     public ModelController(){
-        model = new Model();
+        Model = new Model();
         observerList = new ArrayList();
     }
     
@@ -34,20 +34,20 @@ public class ModelController implements Subject{
     }
     
     public void setShape(Shape s){
-        model.setShape(s);
+        Model.setShape(s);
     }
     
     public Shape getShape(Shape s){
-        return model.getShape();
+        return Model.getShape();
     }
     
     public void rotateShape(float angle, double centerX, double centerY, boolean clockwise){
-        model.rotateShape(angle, centerX, centerY, clockwise);
+        Model.rotateShape(angle, centerX, centerY, clockwise);
         notifyObservers();
     }
     
     public void translateShape(double x, double y){
-        model.translateShape(x, y);
+        Model.translateShape(x, y);
         notifyObservers();
     }
     
@@ -63,7 +63,7 @@ public class ModelController implements Subject{
     }
 
     @Override
-    public void notifyObservers() {//clears graph and repaints from model
+    public void notifyObservers() {//clears graph and repaints from Model
         for(Observer o: observerList){
             o.update();
         }

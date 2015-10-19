@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package model;
+package Model;
 
-import model.shape.Shape;
+import Model.Shape.Shape;
 
 /**
  *

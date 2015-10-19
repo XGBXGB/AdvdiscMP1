@@ -13,7 +13,7 @@ import java.awt.Graphics;
 
 import javax.swing.JFrame;
 
-import model.shape.Polygon;
+import Model.Shape.Polygon;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 /**

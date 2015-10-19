@@ -149,6 +149,10 @@ public class Main_GUI extends JFrame {
 			
 			c = new Content("Circle", new Circle_GUI());
 			panel_shape_details.add(c, "Circle");
+			
+			c = new Content("Ellipse", new Ellipse_GUI());
+			panel_shape_details.add(c, "Ellipse");
+			
 			cardLayout.show(panel_shape_details, null);
 		}
 		
