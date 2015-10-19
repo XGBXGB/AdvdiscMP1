@@ -2,28 +2,35 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 
-public class Ellipse_GUI extends Content {
+public class Hyperbola_GUI extends Content implements ActionListener{
 	private JTextField txt_horizontal, txt_vertical;
 	private JLabel lbl_horizontal, lbl_vertical;
 	private JPanel panel_content;
 	private Points center;
+	private JRadioButton rbtn_vertical, rbtn_horizontal;
+	private JLabel lbl_orientation;
+	
 	//vertexA and vertexB are the horizontal axis points
 	//covertexA and covertexB are the vertical axis points
 	
-	public Ellipse_GUI() {
-		super("Ellipse");
+	public Hyperbola_GUI() {
+		super("Hyperbola");
 		
 		panel_content = new JPanel();
 		panel_content.setPreferredSize(new Dimension(350, 350));
-		panel_content.setLayout(new MigLayout("", "[][]", "[][]"));
+		panel_content.setLayout(new MigLayout("", "[][]", "[][][][][]"));
 		super.setContent(panel_content);
 		
 		center = new Points("Center", false);
@@ -43,6 +50,34 @@ public class Ellipse_GUI extends Content {
 		txt_vertical = new JTextField();
 		panel_content.add(txt_vertical, "cell 1 2");
 		txt_vertical.setColumns(10);
+		
+		lbl_orientation = new JLabel("Orientation :");
+		panel_content.add(lbl_orientation, "cell 0 3");
+		
+		ButtonGroup bg = new ButtonGroup();
+		
+		rbtn_vertical = new JRadioButton("Vertical");
+		rbtn_vertical.setBounds(45, 70, 120, 25);
+		rbtn_vertical.setOpaque(false);
+		rbtn_vertical.addActionListener(this);
+		rbtn_vertical.setFocusPainted(false);
+		panel_content.add(rbtn_vertical, "cell 1 3");
+		
+		rbtn_horizontal = new JRadioButton("Horizontal");
+		rbtn_horizontal.setBounds(45, 70, 120, 25);
+		rbtn_horizontal.setOpaque(false);
+		rbtn_horizontal.addActionListener(this);
+		rbtn_horizontal.setFocusPainted(false);
+		panel_content.add(rbtn_horizontal, "cell 2 3");
+		
+		bg.add(rbtn_vertical);
+		bg.add(rbtn_horizontal);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override

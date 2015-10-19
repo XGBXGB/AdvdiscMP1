@@ -25,7 +25,6 @@ public class Points extends JPanel
 		
 		setMaximumSize(new Dimension(400, 37));
 		setPreferredSize(new Dimension(210, 37));
-		this.setBackground(Color.WHITE);
 		
 		FlowLayout flowLayout = (FlowLayout) getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);

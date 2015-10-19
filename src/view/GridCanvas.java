@@ -6,6 +6,9 @@
 package view;
 
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+
 import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -14,22 +17,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import javax.swing.JPanel;
 
-import Model.Shape.Polygon;
+import model.shape.Polygon;
 
 /**
  *
  * @author Christian Gabriel*/
-public class GridCanvas extends JPanel {
+public class GridCanvas extends Canvas {
 
-    double width, height, rows, cols;
+	private int width, height;
+	private int rows,cols;
+	
     double x1, y1, x2, y2;
     int rowHt;
     Polygon quad = null;
@@ -37,11 +36,45 @@ public class GridCanvas extends JPanel {
     boolean rotateLine = false;
 
     public GridCanvas(int width, int height, int rows, int cols) {
-        this.rows = rows;
+        this.setSize(width, height);
+        this.width  = width;
+        this.height = height;
+    	this.rows = rows;
         this.cols = cols;
         rowHt = height / (rows);
-        this.setPreferredSize(new Dimension(width, height));
     }
+
+    public void paint(Graphics g) {
+        int i;
+        width = getSize().width;
+        height = getSize().height;
+        for (i = 0; i < rows; i++)
+        {
+        	if(i == rows/2){
+        		 Graphics2D g2 = (Graphics2D) g;
+                 g2.setStroke(new BasicStroke(3));
+                 g2.draw(new Line2D.Float(0, i * rowHt, (int)width, i * rowHt));
+                 g2.setStroke(new BasicStroke(1));
+        	}else{
+        		 g.drawLine(0, i * rowHt, width, i * rowHt);
+        	}
+        }
+       
+        // draw the columns
+        int rowWid = (width / (cols));
+        for (i = 0; i < cols; i++)
+        {
+        	if(i == cols/2){
+        		 Graphics2D g2 = (Graphics2D) g;
+                 g2.setStroke(new BasicStroke(3));
+                 g2.draw(new Line2D.Float(i * rowWid, 0, i * rowWid, height));
+                 g2.setStroke(new BasicStroke(1));
+        	}else{
+        		g.drawLine(i * rowWid, 0, i * rowWid, height);
+        	}
+        }
+    }
+    
 
     public void plotLine(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
@@ -171,21 +204,6 @@ public class GridCanvas extends JPanel {
         }
     */
 
-    //is automatically called when the grid is constructed
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        drawGrid(g);
-        if (line) {
-            plotLine(g);
-        }
-        if (rotateLine){
-            plotLine(g);
-        }
-        if(quad!=null){
-            System.out.println("PASOK QUAD");
-            quad.draw(g);
-        }
-    }
+ 
 
 }

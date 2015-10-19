@@ -7,26 +7,25 @@ package view;
 
 
 
-import java.awt.Graphics;
-
-
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-import Model.Shape.Polygon;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import model.shape.Polygon;
 
 /**
  *
  * @author Christian Gabriel
  */
-public class Grid extends JFrame {
+public class Grid extends JPanel {
 
     int rows, cols, height, width;
     GridCanvas canvas;
 
-    public Grid(String title, int w, int h, int rows, int cols) {
-        setTitle(title);
+    public Grid(int w, int h, int rows, int cols) {
+      
         this.rows = rows;
         this.cols = cols;
         height = h;
@@ -34,9 +33,6 @@ public class Grid extends JFrame {
         
         canvas = new GridCanvas(w,h,rows,cols);
         this.add(canvas);
-        
-        pack();//Adjusts this frame's size automatically to its contents
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
     }
     

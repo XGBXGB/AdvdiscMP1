@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,6 +12,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.DefaultComboBoxModel;
@@ -28,10 +31,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.JButton;
 import javax.swing.border.SoftBevelBorder;
+
 import java.awt.FlowLayout;
 
 
-public class Transformation_GUI extends JPanel{
+public class Transformation_GUI extends JPanel implements ActionListener{
 	private JPanel panel_top, panel_bottom, panel_side, panel_center;
 	private JPanel panel_transformation, panel_rotate, panel_scale, panel_translate, panel_shear;
 	private JPanel panel_scale_x, panel_scale_y;
@@ -51,10 +55,15 @@ public class Transformation_GUI extends JPanel{
 	private JPanel panel_menu;
 	private JButton btn_change_shape;
 	private JButton btn_reset;
-	
-	public Transformation_GUI() {
+	private CardLayout cl;
+	private JPanel panel_main_content;
+	public Transformation_GUI(CardLayout cl, JPanel panel_main_content) {
 		
 		super();
+		
+		this.cl = cl;
+		this.panel_main_content = panel_main_content;
+		
 		this.setBackground(new Color(255, 255, 255));
 		this.setLayout(new BorderLayout(0, 0));
 		
@@ -284,15 +293,17 @@ public class Transformation_GUI extends JPanel{
 		btn_change_shape = new JButton("Change Shape");
 		btn_change_shape.setBackground(new Color(255, 255, 255));
 		btn_change_shape.setPreferredSize(new Dimension(103, 25));
+		btn_change_shape.addActionListener(this);
 		panel_menu.add(btn_change_shape);
 		
 		btn_reset = new JButton("Reset");
 		btn_reset.setBackground(new Color(255, 255, 255));
 		btn_reset.setPreferredSize(new Dimension(61, 25));
+		btn_reset.addActionListener(this);
 		panel_menu.add(btn_reset);
 		
-		panel_center = new JPanel();
-		panel_center.setBackground(new Color(255, 255, 255));
+		panel_center = new Grid(560,510,40,40);;
+		panel_center.setBackground(Color.WHITE);
 		panel_center.setBorder(new TitledBorder(null, "Grid", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		this.add(panel_center, BorderLayout.CENTER);
 		
@@ -307,13 +318,18 @@ public class Transformation_GUI extends JPanel{
 		    // If Nimbus is not available, you can set the GUI to another look and feel.
 		}
 		
-		
-	
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setSize((int)(screenSize.width/1.2), (int)(screenSize.height/1.1));
 		this.setVisible(true);
-//		this.setResizable(false);
-//		this.setTitle("ADVDISC MP1");
+	}
+	@Override
+	public void actionPerformed(ActionEvent a) {
+		// TODO Auto-generated method stub
+		
+		if(a.getSource() == btn_change_shape){
+			cl.show(panel_main_content, "Main");
+		}
+		
 	}
 
 }

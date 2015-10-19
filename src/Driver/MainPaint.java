@@ -1,10 +1,7 @@
-package Driver;
+package driver;
 
-import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-import javax.swing.*;
 
 public class MainPaint {
 

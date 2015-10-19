@@ -3,15 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Driver;
+package driver;
 
-import java.util.ArrayList;
-
-import view.Grid;
 import view.Main_GUI;
-import Model.Point;
-import Model.Matrix.Matrix;
-import Model.Shape.Polygon;
 
 /**
  *

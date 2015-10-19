@@ -20,15 +20,19 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JComboBox;
 
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.HashMap;
 
 import javax.swing.border.BevelBorder;
 import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 
 
-public class Main_GUI extends JFrame {
+
+public class Main_GUI extends JFrame implements ActionListener {
 	
 	private JPanel panel_top, panel_center, panel_bottom;
 	private JPanel panel_shape_info, panel_choose_shape, panel_grid, panel_east, panel_west;
@@ -36,17 +40,19 @@ public class Main_GUI extends JFrame {
 	private JLabel lbl_header, lbl_footer, lbl_shape;
 	private JSplitPane splitPane;
 	private JComboBox cmb_shape;
-	private CardLayout cardLayout;
-	
+	private HashMap<String, Content> contentList;
+	private CardLayout cl_shape;
+	private CardLayout cl_main_content;
 	public Main_GUI() {
 		
 		super();
+		contentList = new HashMap<String, Content>();
 		getContentPane().setBackground(new Color(255, 255, 255));
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		panel_top = new JPanel();
-		panel_top.setBackground(Color.DARK_GRAY);
-		panel_top.setPreferredSize(new Dimension(10, 55));
+		panel_top.setBackground(new Color(32, 178, 170));
+		panel_top.setPreferredSize(new Dimension(10, 40));
 		getContentPane().add(panel_top, BorderLayout.NORTH);
 		panel_top.setLayout(new BorderLayout(0, 0));
 		
@@ -57,8 +63,8 @@ public class Main_GUI extends JFrame {
 		panel_top.add(lbl_header);
 		
 		panel_bottom = new JPanel();
-		panel_bottom.setBackground(Color.DARK_GRAY);
-		panel_bottom.setPreferredSize(new Dimension(10, 45));
+		panel_bottom.setBackground(new Color(32, 178, 170));
+		panel_bottom.setPreferredSize(new Dimension(10, 30));
 		getContentPane().add(panel_bottom, BorderLayout.SOUTH);
 		panel_bottom.setLayout(new BorderLayout(0, 0));
 		
@@ -69,14 +75,20 @@ public class Main_GUI extends JFrame {
 		lbl_footer.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_bottom.add(lbl_footer);
 		
+		cl_main_content = new CardLayout();
+		
 		panel_center = new JPanel();
+		panel_center.setBackground(new Color(47, 79, 79));
 		getContentPane().add(panel_center, BorderLayout.CENTER);
-		panel_center.setLayout(new BorderLayout(0, 0));
+		panel_center.setLayout(cl_main_content);
 		
 		splitPane = new JSplitPane();
 		splitPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		splitPane.setBackground(Color.DARK_GRAY);
-		panel_center.add(splitPane, BorderLayout.CENTER);
+		panel_center.add("Main",splitPane);
+		
+		Transformation_GUI t = new Transformation_GUI(cl_main_content, panel_center);
+		panel_center.add("Transformation",t);
 		
 		panel_shape_info = new JPanel();
 		panel_shape_info.setPreferredSize(new Dimension(400, 10));
@@ -84,6 +96,7 @@ public class Main_GUI extends JFrame {
 		panel_shape_info.setLayout(new BorderLayout(0, 0));
 		
 		panel_choose_shape = new JPanel();
+		panel_choose_shape.setMinimumSize(new Dimension(10, 60));
 		panel_choose_shape.setBackground(SystemColor.inactiveCaptionBorder);
 		panel_choose_shape.setBorder(new TitledBorder(null, "Shape Selection", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_shape_info.add(panel_choose_shape, BorderLayout.NORTH);
@@ -95,29 +108,29 @@ public class Main_GUI extends JFrame {
 		
 		cmb_shape = new JComboBox();
 		cmb_shape.addItemListener(new ItemChangeListener());
-		cmb_shape.setModel(new DefaultComboBoxModel(new String[] {"Line Segments", "Vectors", "Polygon", "Circle", "Ellipse", "Parabola", "Hyperbola"}));
+		cmb_shape.setModel(new DefaultComboBoxModel(new String[] {"Vector", "Line Segment", "Polygon", "Circle", "Ellipse", "Parabola", "Hyperbola"}));
 		cmb_shape.setBackground(SystemColor.window);
 		panel_choose_shape.add(cmb_shape, BorderLayout.CENTER);
 		
-		cardLayout = new CardLayout();
+		cl_shape = new CardLayout();
 		
 		panel_shape_details = new JPanel();
-		panel_shape_details.setLayout(cardLayout);
+		panel_shape_details.setLayout(cl_shape);
 		panel_shape_details.setBackground(SystemColor.inactiveCaptionBorder);
 		panel_shape_details.setBorder(new TitledBorder(null, "Shape Details", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_shape_info.add(panel_shape_details, BorderLayout.CENTER);
 		
-		panel_grid = new JPanel();
+		panel_grid = new Grid(560,510,40,40);
 		panel_grid.setBackground(SystemColor.window);
 		panel_grid.setBorder(new TitledBorder(null, "Shape Preview", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		splitPane.setRightComponent(panel_grid);
 		
 		panel_east = new JPanel();
-		panel_east.setBackground(Color.DARK_GRAY);
+		panel_east.setBackground(new Color(32, 178, 170));
 		getContentPane().add(panel_east, BorderLayout.EAST);
 		
 		panel_west = new JPanel();
-		panel_west.setBackground(Color.DARK_GRAY);
+		panel_west.setBackground(new Color(32, 178, 170));
 		getContentPane().add(panel_west, BorderLayout.WEST);
 		
 		try {
@@ -137,6 +150,7 @@ public class Main_GUI extends JFrame {
 		this.setResizable(false);
 		this.setTitle("ADVDISC MP1");
 		
+		cl_main_content.show(panel_center,"Main");
 		init();
 		this.repaint();
 		this.revalidate();
@@ -144,16 +158,44 @@ public class Main_GUI extends JFrame {
 
 		public void init(){
 			
-			Content c = new Content("Polygon", new Polygon_GUI());
-			panel_shape_details.add(c, "Polygon");
+			TwoPoints_GUI t = new TwoPoints_GUI();
+			t.setCaption("Vector");
+			t.getButtonCreate().addActionListener(this);
+			panel_shape_details.add(t, "Vector");
+			contentList.put("Vector", t);
 			
-			c = new Content("Circle", new Circle_GUI());
+			t = new TwoPoints_GUI();
+			t.setCaption("Line Segment");
+			t.getButtonCreate().addActionListener(this);
+			panel_shape_details.add(t, "Line Segment");
+			contentList.put("Line Segment", t);
+			
+			Polygon_GUI p = new Polygon_GUI();
+			p.getButtonCreate().addActionListener(this);
+			panel_shape_details.add(p, "Polygon");
+			contentList.put("Polygon", p);
+			
+			Circle_GUI c = new Circle_GUI();
+			c.getButtonCreate().addActionListener(this);
 			panel_shape_details.add(c, "Circle");
+			contentList.put("Circle", c);
 			
-			c = new Content("Ellipse", new Ellipse_GUI());
-			panel_shape_details.add(c, "Ellipse");
+			Ellipse_GUI e = new Ellipse_GUI();
+			e.getButtonCreate().addActionListener(this);
+			panel_shape_details.add(e, "Ellipse");
+			contentList.put("Ellipse", e);
 			
-			cardLayout.show(panel_shape_details, null);
+			Parabola_GUI b = new Parabola_GUI();
+			b.getButtonCreate().addActionListener(this);
+			panel_shape_details.add(b, "Parabola");
+			contentList.put("Parabola", b);
+			
+			Hyperbola_GUI h = new Hyperbola_GUI();
+			h.getButtonCreate().addActionListener(this);
+			panel_shape_details.add(h, "Hyperbola");
+			contentList.put("Hyperbola", h);
+			
+			cl_shape.show(panel_shape_details, "Vector");
 		}
 		
 		class ItemChangeListener implements ItemListener {
@@ -162,11 +204,24 @@ public class Main_GUI extends JFrame {
 		    public void itemStateChanged(ItemEvent event) {
 		        if (event.getStateChange() == ItemEvent.SELECTED) {
 		            if (event.getSource() == cmb_shape) {
-		            	cardLayout.show(panel_shape_details, cmb_shape.getSelectedItem().toString());
+		            	cl_shape.show(panel_shape_details, cmb_shape.getSelectedItem().toString());
 		            	System.out.println("Item: "+  cmb_shape.getSelectedItem().toString());
 		            }
 		        }
 		    }
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent a) {
+			// TODO Auto-generated method stub
+			if(((JButton) a.getSource()).getActionCommand().equals("create")){
+				
+				
+				contentList.get(cmb_shape.getSelectedItem().toString()).createShape();
+				cl_main_content.show(panel_center, "Transformation");
+				contentList.get(cmb_shape.getSelectedItem().toString()).clear();
+				
+			}
 		}
 }
 
