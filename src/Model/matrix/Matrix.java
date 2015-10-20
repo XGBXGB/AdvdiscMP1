@@ -54,6 +54,7 @@ public class Matrix {
                     C.data[i][j] += (A.data[i][k] * B.data[k][j]);
                 }
             }
+        
         return C.data;
     }
     
