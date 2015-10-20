@@ -6,6 +6,17 @@
 
 package model.shape;
 
+<<<<<<< HEAD
+=======
+import Model.Point;
+import Model.Matrix.Matrix;
+import Model.Matrix.MatrixFactory;
+import Model.Matrix.R3Matrix;
+import Model.Matrix.RotateMatrix;
+import Model.Matrix.ShearMatrix;
+import Model.Matrix.TranslateMatrix;
+import Model.Point;
+>>>>>>> origin/master
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,64 +33,162 @@ import model.matrix.TranslateMatrix;
  * @author Christian Gabriel
  */
 public abstract class Shape {
-    protected ArrayList<Point> points;
-    
-    public void addPoint(double x, double y) {
-        points.add(new Point(x,y));
-    }
-    
-    public Iterator<Point> getPoints() {
-        return points.iterator();
-    }
+	protected ArrayList<Point> points;
 
-    public void setPoints(Iterator<Point> points) {
-        this.points.clear();
-        while (points.hasNext()) {
-            this.points.add(points.next());
-        }
-    }
-    
-    public abstract void draw(Graphics g);
-    
-    public void rotateShape(float angle, double centerX, double centerY, boolean clockwise) {
-        Point center = new Point(centerX, centerY);
-        MatrixFactory matrixFactory = new MatrixFactory();
-        Matrix rotator = matrixFactory.getMatrix("ROTATE");
-        Matrix translator = matrixFactory.getMatrix("TRANSLATE");
-        Matrix pointHolder = matrixFactory.getMatrix("POINT");
-        ((RotateMatrix) rotator).makeRotator(angle, clockwise);
+	public void addPoint(double x, double y) {
+		points.add(new Point(x, y));
+	}
 
-        for (int i = 0; i < points.size(); i++) {
-            Point p = points.get(i);
+	public Iterator<Point> getPoints() {
+		return points.iterator();
+	}
 
-            //Convert point to matrix
-            ((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());//insert point values to matrix
+	public void setPoints(Iterator<Point> points) {
+		this.points.clear();
+		while (points.hasNext()) {
+			this.points.add(points.next());
+		}
+	}
 
-            //translate point near origin
-            ((TranslateMatrix) translator).setTranslateValues(-center.getX(), -center.getY());
-            pointHolder.setData(translator.times(pointHolder));
+	public abstract void draw(Graphics g);
 
-            pointHolder.setData(rotator.times(pointHolder));//multiplies the 3x1 matrix to the rotator matrix
+	public void rotateShape(float angle, double centerX, double centerY, boolean clockwise) {
+		Point center = new Point(centerX, centerY);
+		MatrixFactory matrixFactory = new MatrixFactory();
+		Matrix rotator = matrixFactory.getMatrix("ROTATE");
+		Matrix translator = matrixFactory.getMatrix("TRANSLATE");
+		Matrix pointHolder = matrixFactory.getMatrix("POINT");
+		((RotateMatrix) rotator).makeRotator(angle, clockwise);
+		for (int i = 0; i < points.size(); i++) {
+			Point p = points.get(i);
 
-            //because we rotated based on (0,0), we bring it back to its original position by translating
-            ((TranslateMatrix) translator).setTranslateValues(center.getX(), center.getY());
-            pointHolder.setData(translator.times(pointHolder));
+			// Convert point to matrix
+			((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());// insert
+																		// point
+																		// values
+																		// to
+																		// matrix
 
-            points.set(i, ((R3Matrix) pointHolder).getPoint());
-        }
-    }
-    
-    public void translateShape(double x, double y){
-        MatrixFactory matrixFactory = new MatrixFactory();
-        Matrix translator = matrixFactory.getMatrix("TRANSLATE");
-        Matrix pointHolder = matrixFactory.getMatrix("POINT");
-        ((TranslateMatrix)translator).setTranslateValues(x, y);
-        
-        for(int i=0; i<points.size(); i++){
-            Point p = points.get(i);
-            ((R3Matrix)pointHolder).setPointValues(p.getX(), p.getY());
-            pointHolder.setData(translator.times(pointHolder));
-            points.set(i, ((R3Matrix) pointHolder).getPoint());
-        }
-    }
+			// translate point near origin
+			((TranslateMatrix) translator).setTranslateValues(-center.getX(), -center.getY());
+			pointHolder.setData(translator.times(pointHolder));
+
+			pointHolder.setData(rotator.times(pointHolder));// multiplies the
+															// 3x1 matrix to the
+															// rotator matrix
+
+			// because we rotated based on (0,0), we bring it back to its
+			// original position by translating
+			((TranslateMatrix) translator).setTranslateValues(center.getX(), center.getY());
+			pointHolder.setData(translator.times(pointHolder));
+
+			points.set(i, ((R3Matrix) pointHolder).getPoint());
+		}
+	}
+
+	public void shear(boolean isXAxis, int x) {
+		MatrixFactory matrixFactory = new MatrixFactory();
+		Matrix pointHolder = matrixFactory.getMatrix("POINT");
+		Matrix translator = matrixFactory.getMatrix("TRANSLATE");
+		Matrix shearer = matrixFactory.getMatrix("SHEAR");
+		((ShearMatrix) shearer).shear(isXAxis, x);
+
+		double nearest = distanceToAxis(isXAxis);
+		System.out.println("NEAREST: " + nearest);
+		for (int i = 0; i < points.size(); i++) {
+			Point p = points.get(i);
+			double X = ((R3Matrix)pointHolder).getPoint().getX();
+			double Y = ((R3Matrix)pointHolder).getPoint().getY();
+			// Convert point to matrix
+			((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());
+
+			// Translate near X or Y axis
+			if (isXAxis) {
+				if(X < 0) {
+					((TranslateMatrix) translator).setTranslateValues(0, nearest);
+				} else {
+					((TranslateMatrix) translator).setTranslateValues(0, -nearest);
+				}
+			} else {
+				if(Y < 0) {
+					((TranslateMatrix) translator).setTranslateValues(nearest, 0);
+				} else {
+					((TranslateMatrix) translator).setTranslateValues(-nearest, 0);
+				}
+			}
+			pointHolder.setData(translator.times(pointHolder));
+			
+			// Shear x units
+			pointHolder.setData(shearer.times(pointHolder));
+			
+			// Translate back to original position
+			if (isXAxis) {
+				if(X < 0) {
+					((TranslateMatrix) translator).setTranslateValues(0, -nearest);
+				} else {
+					((TranslateMatrix) translator).setTranslateValues(0, nearest);
+				}
+			} else {
+				if(Y < 0) {
+					((TranslateMatrix) translator).setTranslateValues(-nearest, 0);
+				} else {
+					((TranslateMatrix) translator).setTranslateValues(nearest, 0);
+				}
+			}
+			pointHolder.setData(translator.times(pointHolder));
+			
+			points.set(i, ((R3Matrix) pointHolder).getPoint());
+		}
+	}
+
+	private double distanceToAxis(boolean isXAxis) {
+		Point p = points.get(0);
+
+		for (int i = 0; i < points.size(); i++) {
+			Point p1 = points.get(i);
+
+			if (isXAxis) {
+				double x = p.getX();
+				double x1 = p1.getX();
+				if (x < 0) {
+					x = -x;
+				}
+				if (x1 < 0) {
+					x1 = -x1;
+				}
+				if (x1 < x) {
+					p = p1;
+				}
+			} else {
+				double y = p.getX();
+				double y1 = p1.getX();
+				if (y < 0) {
+					y = -y;
+				}
+				if (y1 < 0) {
+					y1 = -y1;
+				}
+				if (y1 < y) {
+					p = p1;
+				}
+			}
+		}
+		if (isXAxis)
+			return p.getX();
+		return p.getY();
+	}
+
+	public void translateShape(double x, double y) {
+		MatrixFactory matrixFactory = new MatrixFactory();
+		Matrix translator = matrixFactory.getMatrix("TRANSLATE");
+		Matrix pointHolder = matrixFactory.getMatrix("POINT");
+		((TranslateMatrix) translator).setTranslateValues(x, y);
+
+		for (int i = 0; i < points.size(); i++) {
+			Point p = points.get(i);
+			((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());
+			pointHolder.setData(translator.times(pointHolder));
+			points.set(i, ((R3Matrix) pointHolder).getPoint());
+		}
+	}
 }

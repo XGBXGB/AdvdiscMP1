@@ -40,7 +40,7 @@ public class Polygon extends Shape {
             g2.setColor(Color.red);
             g2.draw(new Line2D.Double((p1.getX() + 10) * rowHt, (10 - p1.getY()) * rowHt, (p2.getX() + 10) * rowHt, (10 - p2.getY()) * rowHt));
             g2.setStroke(new BasicStroke(1));
-            System.out.println("Point " + i + 1 + ": (" + p1.getX() + "," + p1.getY() + "  Point 2: (" + p2.getX() + "," + p2.getY() + ")");
+            System.out.println("Point " + i + 1 + ": (" + p1.getX() + "," + p1.getY() + ")  Point 2: (" + p2.getX() + "," + p2.getY() + ")");
         }
     }
 }

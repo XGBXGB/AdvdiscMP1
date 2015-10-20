@@ -18,7 +18,8 @@ public class MatrixFactory {
             return new TranslateMatrix();
         else if(type.equalsIgnoreCase("POINT"))
             return new R3Matrix();
-        else
-            return null;
+        else if(type.equalsIgnoreCase("SHEAR"))
+        	return new ShearMatrix(); 
+        return null;
     }
 }
