@@ -1,7 +1,7 @@
-package driver;
+package Driver;
 
 
-import model.shape.Polygon;
+import Model.Shape.Polygon;
 import view.Grid;
 
 public class tempDriver {
@@ -13,12 +13,12 @@ public class tempDriver {
 //      xz.rotateLine(10, 5, 5, 5, 90);
       
       
-      Polygon p = new Polygon();
-      p.addPoint(1,1);
-      p.addPoint(2,1);
-      p.addPoint(2,2);
-      p.addPoint(1,2);
-      p.shear(true, 2);
+//      Polygon p = new Polygon();
+//      p.addPoint(1,1);
+//      p.addPoint(2,1);
+//      p.addPoint(2,2);
+//      p.addPoint(1,2);
+//      p.shear(true, 2);
       //xz.drawQuad(p);
   }
 }

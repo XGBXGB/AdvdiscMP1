@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package model.matrix;
+package Model.matrix;
 
 /**
  *
@@ -20,6 +20,8 @@ public class MatrixFactory {
             return new R3Matrix();
         else if(type.equalsIgnoreCase("SHEAR"))
         	return new ShearMatrix(); 
+        else if(type.equalsIgnoreCase("SCALE"))
+        	return new ScaleMatrix();
         return null;
     }
 }

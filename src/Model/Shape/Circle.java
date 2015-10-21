@@ -1,4 +1,4 @@
-package model.shape;
+package Model.Shape;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -8,7 +8,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
-import model.Point;
+import Model.Point;
 
 public class Circle extends Shape{
 

@@ -20,9 +20,9 @@ import java.awt.geom.Line2D;
 import javax.swing.JPanel;
 
 import controller.ShapeController;
-import model.Observer;
-import model.shape.Polygon;
-import model.shape.Shape;
+import Model.Observer;
+import Model.Shape.Polygon;
+import Model.Shape.Shape;
 
 /**
  *
@@ -32,7 +32,7 @@ public class GridCanvas extends Canvas implements Observer {
 	private ShapeController sCon;
 	private int width, height;
 	private int rows,cols;
-	private Shape shape = null;
+	private Shape Shape = null;
     double x1, y1, x2, y2;
     float rowHt, rowWid;
     Polygon quad = null;
@@ -55,8 +55,8 @@ public class GridCanvas extends Canvas implements Observer {
     public void paint(Graphics g) {
         int i;
         Graphics2D g2 = (Graphics2D) g;
-        if(shape!=null)
-        	shape.draw(g2);
+        if(Shape!=null)
+        	Shape.draw(g2);
         drawGrid(g2);
     }
 
@@ -93,7 +93,7 @@ public class GridCanvas extends Canvas implements Observer {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		shape = sCon.getShape();
+		Shape = sCon.getShape();
 		
 		repaint();
 	}

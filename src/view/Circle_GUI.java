@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.ShapeController;
-import model.shape.Circle;
+import Model.Shape.Circle;
 import net.miginfocom.swing.MigLayout;
 
 public class Circle_GUI extends Content{

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package model.shape;
+package Model.Shape;
 
 
 import java.awt.Graphics;
@@ -12,13 +12,14 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import model.Point;
-import model.matrix.Matrix;
-import model.matrix.MatrixFactory;
-import model.matrix.R3Matrix;
-import model.matrix.RotateMatrix;
-import model.matrix.ShearMatrix;
-import model.matrix.TranslateMatrix;
+import Model.Point;
+import Model.matrix.ScaleMatrix;
+import Model.matrix.Matrix;
+import Model.matrix.MatrixFactory;
+import Model.matrix.R3Matrix;
+import Model.matrix.RotateMatrix;
+import Model.matrix.ShearMatrix;
+import Model.matrix.TranslateMatrix;
 
 /**
  *
@@ -183,4 +184,19 @@ public abstract class Shape {
 			points.set(i, ((R3Matrix) pointHolder).getPoint());
 		}
 	}
+	
+	 public void scaleShape(double scalingFactorX, double scalingFactorY)
+	    {
+	    	 MatrixFactory matrixFactory = new MatrixFactory();
+	         Matrix scalor = matrixFactory.getMatrix("SCALE");
+	         Matrix pointHolder = matrixFactory.getMatrix("POINT");
+	         ((ScaleMatrix)scalor).setScalingFactor(scalingFactorX, scalingFactorY);
+	         
+	         for(int i=0; i<points.size(); i++){
+	             Point p = points.get(i);
+	             ((R3Matrix)pointHolder).setPointValues(p.getX(), p.getY());
+	             pointHolder.setData(scalor.times(pointHolder));
+	             points.set(i , ((R3Matrix) pointHolder).getPoint());
+	         }
+	    }
 }

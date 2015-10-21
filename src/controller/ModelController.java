@@ -7,11 +7,11 @@
 package controller;
 
 import java.util.ArrayList;
-import model.Model;
-import model.Observer;
-import model.Point;
-import model.Subject;
-import model.shape.Shape;
+import Model.Model;
+import Model.Observer;
+import Model.Point;
+import Model.Subject;
+import Model.Shape.Shape;
 
 /**
  *

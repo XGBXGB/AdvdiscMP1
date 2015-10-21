@@ -13,7 +13,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import model.shape.Polygon;
+import Model.Shape.Polygon;
 
 /**
  *
