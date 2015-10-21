@@ -8,6 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Model.Shape.Circle;
+import Model.Shape.Ellipse;
+import Model.Shape.Shape;
+import controller.ShapeController;
 import net.miginfocom.swing.MigLayout;
 
 public class Ellipse_GUI extends Content {
@@ -18,8 +22,12 @@ public class Ellipse_GUI extends Content {
 	//vertexA and vertexB are the horizontal axis points
 	//covertexA and covertexB are the vertical axis points
 	
+	private ShapeController sCon;
+	
 	public Ellipse_GUI() {
 		super("Ellipse");
+		
+		sCon = ShapeController.getInstance();
 		
 		panel_content = new JPanel();
 		panel_content.setPreferredSize(new Dimension(350, 350));
@@ -48,6 +56,14 @@ public class Ellipse_GUI extends Content {
 	@Override
 	public void createShape() {
 		// TODO Auto-generated method stub
+		Shape e = new Ellipse();
+		System.out.println("Ellipse CREATE SHAPE");
+		
+		e.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
+		((Ellipse)e).setHorizontalDistance(Double.parseDouble(txt_horizontal.getText()));
+		((Ellipse)e).setVerticalDistance(Double.parseDouble(txt_vertical.getText()));
+		
+		sCon.setShape(e);
 		
 	}
 

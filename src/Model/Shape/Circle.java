@@ -39,7 +39,7 @@ public class Circle extends Shape{
         	   p1 = points.get(0);
             
                Ellipse2D circle = new Ellipse2D.Double();
-               circle.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt,100,100);
+               circle.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt, (20+p1.getX()+radius)*rowWid, (20-p1.getY()-radius)*rowHt);
                g.draw(circle);
                //g.drawLine(0, 0, 20*rowWid, 20*rowHt);
         }

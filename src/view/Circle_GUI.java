@@ -47,7 +47,7 @@ public class Circle_GUI extends Content{
 	public void createShape() {
 		// TODO Auto-generated method stub
 		c = new Circle();
-		System.out.println("CIRCLEE CREATE SHAPE");
+		System.out.println("CIRCLE CREATE SHAPE");
 		c.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
 		c.setRadius(Double.parseDouble(txt_radius.getText()));
 		
