@@ -1,14 +1,12 @@
-package Driver;
+package driver;
 
 
-import Model.Point;
-import Model.Shape.Polygon;
+import model.shape.Polygon;
 import view.Grid;
-import view.Main_GUI;
 
 public class tempDriver {
 	public static void main(String[] args) {
-      Grid xz = new Grid("Title",500,500,20,20);
+      Grid xz = new Grid(500,500,20,20);
 //      xz.drawLine(5, 5, 10, 5);        
 //      xz.rotateLine(5, 5, 10, 5, 270);
 //      xz.drawLine(10, 5, 5, 5);

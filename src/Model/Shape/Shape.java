@@ -6,17 +6,7 @@
 
 package model.shape;
 
-<<<<<<< HEAD
-=======
-import Model.Point;
-import Model.Matrix.Matrix;
-import Model.Matrix.MatrixFactory;
-import Model.Matrix.R3Matrix;
-import Model.Matrix.RotateMatrix;
-import Model.Matrix.ShearMatrix;
-import Model.Matrix.TranslateMatrix;
-import Model.Point;
->>>>>>> origin/master
+
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,6 +16,7 @@ import model.matrix.Matrix;
 import model.matrix.MatrixFactory;
 import model.matrix.R3Matrix;
 import model.matrix.RotateMatrix;
+import model.matrix.ShearMatrix;
 import model.matrix.TranslateMatrix;
 
 /**

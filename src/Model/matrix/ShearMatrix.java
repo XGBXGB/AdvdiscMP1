@@ -1,4 +1,4 @@
-package Model.Matrix;
+package model.matrix;
 
 public class ShearMatrix extends Matrix{
 	public ShearMatrix() {

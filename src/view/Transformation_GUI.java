@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -34,29 +35,47 @@ import javax.swing.border.SoftBevelBorder;
 
 import java.awt.FlowLayout;
 
+import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+
 
 public class Transformation_GUI extends JPanel implements ActionListener{
 	private JPanel panel_top, panel_bottom, panel_side, panel_center;
-	private JPanel panel_transformation, panel_rotate, panel_scale, panel_translate, panel_shear;
-	private JPanel panel_scale_x, panel_scale_y;
-	private JPanel panel_shear_x, panel_shear_y;
-	private JPanel panel_translate_x, panel_translate_y;
+	private JPanel panel_transformation;
 	private JPanel panel_matrix, panel_before_matrix, panel_after_matrix;
-
-	private JLabel lbl_rotate, lbl_rotate_val;
-	private JLabel lbl_scale_x, lbl_scale_x_val, lbl_scale_y, lbl_scale_y_val;
-	private JLabel lbl_shear_x, lbl_shear_x_val, lbl_shear_y, lbl_shear_y_val;
-	private JLabel lbl_translate_x, lbl_translate_x_val, lbl_translate_y, lbl_translate_y_val;
 	
 	private JSplitPane splitPane;
-	
-	private JSlider slider_rotate,  slider_scale_x, slider_scale_y,
-					slider_shear_x, slider_shear_y, slider_translate_x, slider_translate_y;
 	private JPanel panel_menu;
 	private JButton btn_change_shape;
 	private JButton btn_reset;
 	private CardLayout cl;
 	private JPanel panel_main_content;
+	private JPanel panel_scale;
+	private JLabel lbl_scale;
+	private JLabel lbl_scale_x;
+	private JTextField txt_scale_x;
+	private JLabel lbl_scale_y;
+	private JTextField txt_scale_y;
+	private JPanel panel_translate;
+	private JLabel lbl_translate;
+	private JLabel lbl_translate_x;
+	private JTextField txt_translate_x;
+	private JLabel lbl_translate_y;
+	private JTextField txt_translate_y;
+	private JPanel panel_shear;
+	private JLabel lbl_shear;
+	private JLabel lbl_shear_x;
+	private JTextField txt_shear_x;
+	private JLabel lbl_shear_y;
+	private JTextField txt_shear_y;
+	private JPanel panel_rotate;
+	private JLabel lbl_rotate;
+	private JTextField txt_rotate;
+	private JPanel panel_reflect;
+	private JLabel lbl_reflect;
+	private JRadioButton rBtn_x;
+	private JRadioButton rBtn_y;
+	private JLabel lblNewLabel;
 	public Transformation_GUI(CardLayout cl, JPanel panel_main_content) {
 		
 		super();
@@ -82,192 +101,244 @@ public class Transformation_GUI extends JPanel implements ActionListener{
 		panel_side.setLayout(new BorderLayout(0, 0));
 		
 		panel_transformation = new JPanel();
-		panel_transformation.setBorder(new TitledBorder(null, "Transformation", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_transformation.setBorder(new TitledBorder(null, "Transformations", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_transformation.setBackground(new Color(102, 205, 170));
 		panel_side.add(panel_transformation, BorderLayout.CENTER);
 		panel_transformation.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		panel_rotate = new JPanel();
-		panel_rotate.setBackground(new Color(102, 205, 170));
-		panel_transformation.add(panel_rotate);
-		panel_rotate.setLayout(new BorderLayout(0, 0));
-		
-		lbl_rotate = new JLabel("Rotate");
-		lbl_rotate.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_rotate.setPreferredSize(new Dimension(75, 14));
-		lbl_rotate.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panel_rotate.add(lbl_rotate, BorderLayout.WEST);
-		
-		lbl_rotate_val = new JLabel("0");
-		lbl_rotate_val.setPreferredSize(new Dimension(10, 14));
-		lbl_rotate_val.setHorizontalTextPosition(SwingConstants.LEFT);
-		lbl_rotate_val.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_rotate.add(lbl_rotate_val, BorderLayout.CENTER);
-		
-		slider_rotate = new JSlider();
-		slider_rotate.setBackground(new Color(102, 205, 170));
-		slider_rotate.setPreferredSize(new Dimension(360, 26));
-		slider_rotate.setPaintLabels(true);
-		panel_rotate.add(slider_rotate, BorderLayout.EAST);
-		
 		panel_scale = new JPanel();
+		panel_scale.setOpaque(false);
 		panel_transformation.add(panel_scale);
-		panel_scale.setLayout(new BorderLayout(0, 0));
+		GridBagLayout gbl_panel_scale = new GridBagLayout();
+		gbl_panel_scale.columnWidths = new int[]{100, 0, 150, 0, 150, 0};
+		gbl_panel_scale.rowHeights = new int[]{14, 0};
+		gbl_panel_scale.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_scale.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panel_scale.setLayout(gbl_panel_scale);
 		
-		panel_scale_x = new JPanel();
-		panel_scale_x.setBackground(new Color(102, 205, 170));
-		panel_scale.add(panel_scale_x, BorderLayout.NORTH);
-		panel_scale_x.setLayout(new BorderLayout(0, 0));
+		lbl_scale = new JLabel("Scale");
+		GridBagConstraints gbc_lbl_scale = new GridBagConstraints();
+		gbc_lbl_scale.anchor = GridBagConstraints.WEST;
+		gbc_lbl_scale.insets = new Insets(0, 0, 0, 5);
+		gbc_lbl_scale.gridx = 0;
+		gbc_lbl_scale.gridy = 0;
+		panel_scale.add(lbl_scale, gbc_lbl_scale);
 		
-		lbl_scale_x = new JLabel("Scale X ");
-		lbl_scale_x.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_scale_x.setMaximumSize(new Dimension(40, 14));
-		lbl_scale_x.setPreferredSize(new Dimension(75, 15));
-		lbl_scale_x.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panel_scale_x.add(lbl_scale_x, BorderLayout.WEST);
+		lbl_scale_x = new JLabel("X :");
+		GridBagConstraints gbc_lbl_scale_x = new GridBagConstraints();
+		gbc_lbl_scale_x.anchor = GridBagConstraints.EAST;
+		gbc_lbl_scale_x.insets = new Insets(0, 0, 0, 5);
+		gbc_lbl_scale_x.gridx = 1;
+		gbc_lbl_scale_x.gridy = 0;
+		panel_scale.add(lbl_scale_x, gbc_lbl_scale_x);
 		
-		lbl_scale_x_val = new JLabel("0");
-		lbl_scale_x_val.setPreferredSize(new Dimension(10, 14));
-		lbl_scale_x_val.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_scale_x_val.setHorizontalTextPosition(SwingConstants.LEFT);
-		panel_scale_x.add(lbl_scale_x_val, BorderLayout.CENTER);
+		txt_scale_x = new JTextField();
+		GridBagConstraints gbc_txt_scale_x = new GridBagConstraints();
+		gbc_txt_scale_x.insets = new Insets(0, 0, 0, 5);
+		gbc_txt_scale_x.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txt_scale_x.gridx = 2;
+		gbc_txt_scale_x.gridy = 0;
+		panel_scale.add(txt_scale_x, gbc_txt_scale_x);
+		txt_scale_x.setColumns(10);
 		
-		slider_scale_x = new JSlider();
-		slider_scale_x.setBackground(new Color(102, 205, 170));
-		slider_scale_x.setPaintLabels(true);
-		slider_scale_x.setPreferredSize(new Dimension(360, 26));
-		panel_scale_x.add(slider_scale_x, BorderLayout.EAST);
+		lbl_scale_y = new JLabel("Y :");
+		GridBagConstraints gbc_lbl_scale_y = new GridBagConstraints();
+		gbc_lbl_scale_y.anchor = GridBagConstraints.EAST;
+		gbc_lbl_scale_y.insets = new Insets(0, 0, 0, 5);
+		gbc_lbl_scale_y.gridx = 3;
+		gbc_lbl_scale_y.gridy = 0;
+		panel_scale.add(lbl_scale_y, gbc_lbl_scale_y);
 		
-		panel_scale_y = new JPanel();
-		panel_scale_y.setBackground(new Color(102, 205, 170));
-		panel_scale.add(panel_scale_y, BorderLayout.CENTER);
-		panel_scale_y.setLayout(new BorderLayout(0, 0));
-		
-		lbl_scale_y = new JLabel("Scale Y");
-		lbl_scale_y.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_scale_y.setPreferredSize(new Dimension(75, 15));
-		lbl_scale_y.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panel_scale_y.add(lbl_scale_y, BorderLayout.WEST);
-		
-		lbl_scale_y_val = new JLabel("0");
-		lbl_scale_y_val.setPreferredSize(new Dimension(10, 14));
-		lbl_scale_y_val.setHorizontalTextPosition(SwingConstants.LEFT);
-		lbl_scale_y_val.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_scale_y.add(lbl_scale_y_val, BorderLayout.CENTER);
-		
-		slider_scale_y = new JSlider();
-		slider_scale_y.setBackground(new Color(102, 205, 170));
-		slider_scale_y.setPreferredSize(new Dimension(360, 26));
-		panel_scale_y.add(slider_scale_y, BorderLayout.EAST);
-		
-		panel_shear = new JPanel();
-		panel_transformation.add(panel_shear);
-		panel_shear.setLayout(new BorderLayout(0, 0));
-		
-		panel_shear_x = new JPanel();
-		panel_shear_x.setBackground(new Color(102, 205, 170));
-		panel_shear.add(panel_shear_x, BorderLayout.NORTH);
-		panel_shear_x.setLayout(new BorderLayout(0, 0));
-		
-		lbl_shear_x = new JLabel("Shear X ");
-		lbl_shear_x.setHorizontalAlignment(SwingConstants.LEFT);
-		panel_shear_x.add(lbl_shear_x, BorderLayout.WEST);
-		lbl_shear_x.setPreferredSize(new Dimension(75, 15));
-		lbl_shear_x.setMaximumSize(new Dimension(40, 14));
-		lbl_shear_x.setFont(new Font("Tahoma", Font.BOLD, 11));
-		
-		lbl_shear_x_val = new JLabel("0");
-		lbl_shear_x_val.setPreferredSize(new Dimension(10, 14));
-		panel_shear_x.add(lbl_shear_x_val, BorderLayout.CENTER);
-		lbl_shear_x_val.setHorizontalTextPosition(SwingConstants.LEFT);
-		lbl_shear_x_val.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		slider_shear_x = new JSlider();
-		slider_shear_x.setBackground(new Color(102, 205, 170));
-		panel_shear_x.add(slider_shear_x, BorderLayout.EAST);
-		slider_shear_x.setPreferredSize(new Dimension(360, 26));
-		
-		panel_shear_y = new JPanel();
-		panel_shear_y.setBackground(new Color(102, 205, 170));
-		panel_shear.add(panel_shear_y, BorderLayout.CENTER);
-		panel_shear_y.setLayout(new BorderLayout(0, 0));
-		
-		lbl_shear_y = new JLabel("Shear Y");
-		lbl_shear_y.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_shear_y.setPreferredSize(new Dimension(75, 15));
-		lbl_shear_y.setMaximumSize(new Dimension(40, 14));
-		lbl_shear_y.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panel_shear_y.add(lbl_shear_y, BorderLayout.WEST);
-		
-		lbl_shear_y_val = new JLabel("0");
-		lbl_shear_y_val.setPreferredSize(new Dimension(10, 14));
-		lbl_shear_y_val.setHorizontalTextPosition(SwingConstants.LEFT);
-		lbl_shear_y_val.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_shear_y.add(lbl_shear_y_val, BorderLayout.CENTER);
-		
-		slider_shear_y = new JSlider();
-		slider_shear_y.setBackground(new Color(102, 205, 170));
-		slider_shear_y.setPreferredSize(new Dimension(360, 26));
-		panel_shear_y.add(slider_shear_y, BorderLayout.EAST);
+		txt_scale_y = new JTextField();
+		GridBagConstraints gbc_txt_scale_y = new GridBagConstraints();
+		gbc_txt_scale_y.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txt_scale_y.gridx = 4;
+		gbc_txt_scale_y.gridy = 0;
+		panel_scale.add(txt_scale_y, gbc_txt_scale_y);
+		txt_scale_y.setColumns(10);
 		
 		panel_translate = new JPanel();
+		panel_translate.setOpaque(false);
 		panel_transformation.add(panel_translate);
-		panel_translate.setLayout(new BorderLayout(0, 0));
+		GridBagLayout gbl_panel_translate = new GridBagLayout();
+		gbl_panel_translate.columnWidths = new int[]{100, 0, 150, 0, 150, 0};
+		gbl_panel_translate.rowHeights = new int[]{14, 0};
+		gbl_panel_translate.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_translate.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panel_translate.setLayout(gbl_panel_translate);
 		
-		panel_translate_x = new JPanel();
-		panel_translate_x.setBackground(new Color(102, 205, 170));
-		panel_translate.add(panel_translate_x, BorderLayout.NORTH);
-		panel_translate_x.setLayout(new BorderLayout(0, 0));
+		lbl_translate = new JLabel("Translate ");
+		GridBagConstraints gbc_lbl_translate = new GridBagConstraints();
+		gbc_lbl_translate.anchor = GridBagConstraints.WEST;
+		gbc_lbl_translate.insets = new Insets(0, 0, 0, 5);
+		gbc_lbl_translate.gridx = 0;
+		gbc_lbl_translate.gridy = 0;
+		panel_translate.add(lbl_translate, gbc_lbl_translate);
 		
-		lbl_translate_x = new JLabel("Translate X");
-		lbl_translate_x.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_translate_x.setPreferredSize(new Dimension(75, 15));
-		lbl_translate_x.setMaximumSize(new Dimension(40, 14));
-		lbl_translate_x.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panel_translate_x.add(lbl_translate_x, BorderLayout.WEST);
+		lbl_translate_x = new JLabel("X :");
+		GridBagConstraints gbc_lbl_translate_x = new GridBagConstraints();
+		gbc_lbl_translate_x.anchor = GridBagConstraints.EAST;
+		gbc_lbl_translate_x.insets = new Insets(0, 0, 0, 5);
+		gbc_lbl_translate_x.gridx = 1;
+		gbc_lbl_translate_x.gridy = 0;
+		panel_translate.add(lbl_translate_x, gbc_lbl_translate_x);
 		
-		lbl_translate_x_val = new JLabel("0");
-		lbl_translate_x_val.setPreferredSize(new Dimension(10, 14));
-		lbl_translate_x_val.setHorizontalTextPosition(SwingConstants.LEFT);
-		lbl_translate_x_val.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_translate_x.add(lbl_translate_x_val, BorderLayout.CENTER);
+		txt_translate_x = new JTextField();
+		txt_translate_x.setColumns(10);
+		GridBagConstraints gbc_txt_translate_x = new GridBagConstraints();
+		gbc_txt_translate_x.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txt_translate_x.insets = new Insets(0, 0, 0, 5);
+		gbc_txt_translate_x.gridx = 2;
+		gbc_txt_translate_x.gridy = 0;
+		panel_translate.add(txt_translate_x, gbc_txt_translate_x);
 		
-		slider_translate_x = new JSlider();
-		slider_translate_x.setBackground(new Color(102, 205, 170));
-		slider_translate_x.setPreferredSize(new Dimension(360, 26));
-		panel_translate_x.add(slider_translate_x, BorderLayout.EAST);
+		lbl_translate_y = new JLabel("Y :");
+		GridBagConstraints gbc_lbl_translate_y = new GridBagConstraints();
+		gbc_lbl_translate_y.anchor = GridBagConstraints.EAST;
+		gbc_lbl_translate_y.insets = new Insets(0, 0, 0, 5);
+		gbc_lbl_translate_y.gridx = 3;
+		gbc_lbl_translate_y.gridy = 0;
+		panel_translate.add(lbl_translate_y, gbc_lbl_translate_y);
 		
-		panel_translate_y = new JPanel();
-		panel_translate_y.setBackground(new Color(102, 205, 170));
-		panel_translate.add(panel_translate_y, BorderLayout.CENTER);
-		panel_translate_y.setLayout(new BorderLayout(0, 0));
+		txt_translate_y = new JTextField();
+		txt_translate_y.setColumns(10);
+		GridBagConstraints gbc_txt_translate_y = new GridBagConstraints();
+		gbc_txt_translate_y.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txt_translate_y.gridx = 4;
+		gbc_txt_translate_y.gridy = 0;
+		panel_translate.add(txt_translate_y, gbc_txt_translate_y);
 		
-		lbl_translate_y = new JLabel("Translate Y");
-		lbl_translate_y.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_translate_y.setPreferredSize(new Dimension(75, 15));
-		lbl_translate_y.setMaximumSize(new Dimension(40, 14));
-		lbl_translate_y.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panel_translate_y.add(lbl_translate_y, BorderLayout.WEST);
+		panel_shear = new JPanel();
+		panel_shear.setOpaque(false);
+		panel_transformation.add(panel_shear);
+		GridBagLayout gbl_panel_shear = new GridBagLayout();
+		gbl_panel_shear.columnWidths = new int[]{100, 0, 150, 0, 150, 0};
+		gbl_panel_shear.rowHeights = new int[]{14, 0};
+		gbl_panel_shear.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_shear.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panel_shear.setLayout(gbl_panel_shear);
 		
-		lbl_translate_y_val = new JLabel("0");
-		lbl_translate_y_val.setPreferredSize(new Dimension(10, 14));
-		lbl_translate_y_val.setHorizontalTextPosition(SwingConstants.LEFT);
-		lbl_translate_y_val.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_translate_y.add(lbl_translate_y_val, BorderLayout.CENTER);
+		lbl_shear = new JLabel("Shear ");
+		GridBagConstraints gbc_lbl_shear = new GridBagConstraints();
+		gbc_lbl_shear.anchor = GridBagConstraints.WEST;
+		gbc_lbl_shear.insets = new Insets(0, 0, 0, 5);
+		gbc_lbl_shear.gridx = 0;
+		gbc_lbl_shear.gridy = 0;
+		panel_shear.add(lbl_shear, gbc_lbl_shear);
 		
-		slider_translate_y = new JSlider();
-		slider_translate_y.setBackground(new Color(102, 205, 170));
-		slider_translate_y.setPreferredSize(new Dimension(360, 26));
-		panel_translate_y.add(slider_translate_y, BorderLayout.EAST);
+		lbl_shear_x = new JLabel("X :");
+		GridBagConstraints gbc_lbl_shear_x = new GridBagConstraints();
+		gbc_lbl_shear_x.anchor = GridBagConstraints.EAST;
+		gbc_lbl_shear_x.insets = new Insets(0, 0, 0, 5);
+		gbc_lbl_shear_x.gridx = 1;
+		gbc_lbl_shear_x.gridy = 0;
+		panel_shear.add(lbl_shear_x, gbc_lbl_shear_x);
+		
+		txt_shear_x = new JTextField();
+		txt_shear_x.setColumns(10);
+		GridBagConstraints gbc_txt_shear_x = new GridBagConstraints();
+		gbc_txt_shear_x.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txt_shear_x.insets = new Insets(0, 0, 0, 5);
+		gbc_txt_shear_x.gridx = 2;
+		gbc_txt_shear_x.gridy = 0;
+		panel_shear.add(txt_shear_x, gbc_txt_shear_x);
+		
+		lbl_shear_y = new JLabel("Y :");
+		GridBagConstraints gbc_lbl_shear_y = new GridBagConstraints();
+		gbc_lbl_shear_y.anchor = GridBagConstraints.EAST;
+		gbc_lbl_shear_y.insets = new Insets(0, 0, 0, 5);
+		gbc_lbl_shear_y.gridx = 3;
+		gbc_lbl_shear_y.gridy = 0;
+		panel_shear.add(lbl_shear_y, gbc_lbl_shear_y);
+		
+		txt_shear_y = new JTextField();
+		txt_shear_y.setColumns(10);
+		GridBagConstraints gbc_txt_shear_y = new GridBagConstraints();
+		gbc_txt_shear_y.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txt_shear_y.gridx = 4;
+		gbc_txt_shear_y.gridy = 0;
+		panel_shear.add(txt_shear_y, gbc_txt_shear_y);
+		
+		panel_rotate = new JPanel();
+		panel_rotate.setOpaque(false);
+		panel_transformation.add(panel_rotate);
+		GridBagLayout gbl_panel_rotate = new GridBagLayout();
+		gbl_panel_rotate.columnWidths = new int[]{100, 0, 150, 0, 150, 0};
+		gbl_panel_rotate.rowHeights = new int[]{14, 0};
+		gbl_panel_rotate.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_rotate.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panel_rotate.setLayout(gbl_panel_rotate);
+		
+		lbl_rotate = new JLabel("Rotate (in clockwise)");
+		GridBagConstraints gbc_lbl_rotate = new GridBagConstraints();
+		gbc_lbl_rotate.anchor = GridBagConstraints.WEST;
+		gbc_lbl_rotate.insets = new Insets(0, 0, 0, 5);
+		gbc_lbl_rotate.gridx = 0;
+		gbc_lbl_rotate.gridy = 0;
+		panel_rotate.add(lbl_rotate, gbc_lbl_rotate);
+		
+		txt_rotate = new JTextField();
+		txt_rotate.setColumns(10);
+		GridBagConstraints gbc_txt_rotate = new GridBagConstraints();
+		gbc_txt_rotate.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txt_rotate.insets = new Insets(0, 0, 0, 5);
+		gbc_txt_rotate.gridx = 2;
+		gbc_txt_rotate.gridy = 0;
+		panel_rotate.add(txt_rotate, gbc_txt_rotate);
+		
+		lblNewLabel = new JLabel("degrees");
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
+		gbc_lblNewLabel.gridx = 3;
+		gbc_lblNewLabel.gridy = 0;
+		panel_rotate.add(lblNewLabel, gbc_lblNewLabel);
+		
+		panel_reflect = new JPanel();
+		panel_reflect.setOpaque(false);
+		panel_transformation.add(panel_reflect);
+		GridBagLayout gbl_panel_reflect = new GridBagLayout();
+		gbl_panel_reflect.columnWidths = new int[]{100, 0, 150, 0, 150, 0};
+		gbl_panel_reflect.rowHeights = new int[]{14, 0};
+		gbl_panel_reflect.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_reflect.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panel_reflect.setLayout(gbl_panel_reflect);
+		
+		lbl_reflect = new JLabel("Reflect ");
+		GridBagConstraints gbc_lbl_reflect = new GridBagConstraints();
+		gbc_lbl_reflect.anchor = GridBagConstraints.WEST;
+		gbc_lbl_reflect.insets = new Insets(0, 0, 0, 5);
+		gbc_lbl_reflect.gridx = 0;
+		gbc_lbl_reflect.gridy = 0;
+		panel_reflect.add(lbl_reflect, gbc_lbl_reflect);
+		
+		rBtn_x = new JRadioButton("X-axis");
+		rBtn_x.setOpaque(false);
+		GridBagConstraints gbc_rBtn_x = new GridBagConstraints();
+		gbc_rBtn_x.insets = new Insets(0, 0, 0, 5);
+		gbc_rBtn_x.gridx = 2;
+		gbc_rBtn_x.gridy = 0;
+		panel_reflect.add(rBtn_x, gbc_rBtn_x);
+		
+		rBtn_y = new JRadioButton("Y-axis");
+		rBtn_y.setOpaque(false);
+		GridBagConstraints gbc_rBtn_y = new GridBagConstraints();
+		gbc_rBtn_y.gridx = 4;
+		gbc_rBtn_y.gridy = 0;
+		panel_reflect.add(rBtn_y, gbc_rBtn_y);
+		
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(rBtn_x);
+		bg.add(rBtn_y);
 		
 		panel_matrix = new JPanel();
-		panel_matrix.setBorder(new TitledBorder(null, "Matrix Result", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_matrix.setBorder(new TitledBorder(null, "Matrix Results", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_matrix.setBackground(new Color(32, 178, 170));
-		panel_matrix.setPreferredSize(new Dimension(250, 350));
+		panel_matrix.setPreferredSize(new Dimension(250, 330));
 		panel_side.add(panel_matrix, BorderLayout.SOUTH);
 		panel_matrix.setLayout(new BorderLayout(0, 0));
 		
 		splitPane = new JSplitPane();
+		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		splitPane.setPreferredSize(new Dimension(179, 50));
 		panel_matrix.add(splitPane);
 		
