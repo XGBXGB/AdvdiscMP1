@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.ShapeController;
+import model.shape.Circle;
 import net.miginfocom.swing.MigLayout;
 
 public class Circle_GUI extends Content{
@@ -15,10 +17,16 @@ public class Circle_GUI extends Content{
 	private JLabel lbl_radius;
 	private JPanel panel_content;
 	private Points center;
+	private Circle c;
+	
+	private ShapeController sCon;
 
 	public Circle_GUI() {
 		
 		super("Circle");
+		
+		sCon = ShapeController.getInstance();
+		
 		panel_content = new JPanel();
 		panel_content.setPreferredSize(new Dimension(350, 350));
 		panel_content.setLayout(new MigLayout("", "[][]", "[][]"));
@@ -38,7 +46,13 @@ public class Circle_GUI extends Content{
 	@Override
 	public void createShape() {
 		// TODO Auto-generated method stub
+		c = new Circle();
 		System.out.println("CIRCLEE CREATE SHAPE");
+		c.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
+		c.setRadius(Double.parseDouble(txt_radius.getText()));
+		
+		sCon.setShape(c);
+		
 	}
 
 	@Override

@@ -37,7 +37,7 @@ public class Parabola_GUI extends Content implements ActionListener{
 		
 		panel_content.add(center, "cell 0 0 2 1");
 		
-		lbl_horizontal = new JLabel("Horizontal distance :");
+		lbl_horizontal = new JLabel("Magnitude :");
 		panel_content.add(lbl_horizontal, "cell 0 1");
 		
 		txt_horizontal = new JTextField();

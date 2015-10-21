@@ -25,7 +25,7 @@ public class Polygon extends Shape {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
         Point p1, p2;
         int rowHt = 500 / 20;
         for (int i = 0; i < 4; i++) {
@@ -35,11 +35,11 @@ public class Polygon extends Shape {
             } else {
                 p2 = points.get(i + 1);
             }
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setStroke(new BasicStroke(2));
-            g2.setColor(Color.red);
-            g2.draw(new Line2D.Double((p1.getX() + 10) * rowHt, (10 - p1.getY()) * rowHt, (p2.getX() + 10) * rowHt, (10 - p2.getY()) * rowHt));
-            g2.setStroke(new BasicStroke(1));
+        
+            g.setStroke(new BasicStroke(2));
+            g.setColor(Color.red);
+            g.draw(new Line2D.Double((p1.getX() + 10) * rowHt, (10 - p1.getY()) * rowHt, (p2.getX() + 10) * rowHt, (10 - p2.getY()) * rowHt));
+            g.setStroke(new BasicStroke(1));
             System.out.println("Point " + i + 1 + ": (" + p1.getX() + "," + p1.getY() + ")  Point 2: (" + p2.getX() + "," + p2.getY() + ")");
         }
     }

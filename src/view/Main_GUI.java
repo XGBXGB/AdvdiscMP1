@@ -120,7 +120,7 @@ public class Main_GUI extends JFrame implements ActionListener {
 		panel_shape_details.setBorder(new TitledBorder(null, "Shape Details", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_shape_info.add(panel_shape_details, BorderLayout.CENTER);
 		
-		panel_grid = new Grid(560,510,40,40);
+		panel_grid = new Grid(510,510,40,40);
 		panel_grid.setBackground(SystemColor.window);
 		panel_grid.setBorder(new TitledBorder(null, "Shape Preview", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		splitPane.setRightComponent(panel_grid);
@@ -146,6 +146,7 @@ public class Main_GUI extends JFrame implements ActionListener {
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setSize((int)(screenSize.width/1.2), (int)(screenSize.height/1.1));
+		
 		this.setVisible(true);
 		this.setResizable(false);
 		this.setTitle("ADVDISC MP1");

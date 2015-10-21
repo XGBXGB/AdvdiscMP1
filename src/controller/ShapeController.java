@@ -38,10 +38,10 @@ public class ShapeController implements Subject{
     
     public void setShape(Shape s){
         Shape = s;
-        notifyObservers();//?
+        notifyObservers();
     }
     
-    public Shape getShape(Shape s){
+    public Shape getShape(){
         return Shape;
     }
     

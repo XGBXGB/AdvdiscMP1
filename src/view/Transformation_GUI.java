@@ -40,7 +40,8 @@ import javax.swing.JRadioButton;
 
 
 public class Transformation_GUI extends JPanel implements ActionListener{
-	private JPanel panel_top, panel_bottom, panel_side, panel_center;
+	private JPanel panel_top, panel_bottom, panel_side;
+	private JPanel panel_center;
 	private JPanel panel_transformation;
 	private JPanel panel_matrix, panel_before_matrix, panel_after_matrix;
 	
@@ -373,7 +374,7 @@ public class Transformation_GUI extends JPanel implements ActionListener{
 		btn_reset.addActionListener(this);
 		panel_menu.add(btn_reset);
 		
-		panel_center = new Grid(560,510,40,40);;
+		panel_center = new Grid(510,510,40,40);
 		panel_center.setBackground(Color.WHITE);
 		panel_center.setBorder(new TitledBorder(null, "Grid", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		this.add(panel_center, BorderLayout.CENTER);

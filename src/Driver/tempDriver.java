@@ -19,7 +19,7 @@ public class tempDriver {
       p.addPoint(2,2);
       p.addPoint(1,2);
       p.shear(true, 2);
-      xz.drawQuad(p);
+      //xz.drawQuad(p);
   }
 }
 
