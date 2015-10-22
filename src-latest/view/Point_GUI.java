@@ -11,6 +11,10 @@ import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import model.Point;
 
 public class Point_GUI extends JPanel
 {
@@ -24,7 +28,7 @@ public class Point_GUI extends JPanel
 		textField.setColumns(10);
 		
 		setMaximumSize(new Dimension(400, 37));
-		setPreferredSize(new Dimension(210, 37));
+		setPreferredSize(new Dimension(300, 37));
 		
 		FlowLayout flowLayout = (FlowLayout) getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
@@ -39,7 +43,7 @@ public class Point_GUI extends JPanel
 		
 		txt_x = new JTextField("X");
 		txt_x.setHorizontalAlignment(SwingConstants.CENTER);
-		txt_x.setPreferredSize(new Dimension(30, 24));
+		txt_x.setPreferredSize(new Dimension(50, 24));
 		this.add(txt_x);
 		
 		lbl_comma = new JLabel(",");
@@ -47,7 +51,7 @@ public class Point_GUI extends JPanel
 		
 		txt_y = new JTextField("Y");
 		txt_y.setHorizontalAlignment(SwingConstants.CENTER);
-		txt_y.setPreferredSize(new Dimension(30, 24));
+		txt_y.setPreferredSize(new Dimension(50, 24));
 		this.add(txt_y);
 		
 		lbl_close_paren = new JLabel(")");
@@ -66,6 +70,9 @@ public class Point_GUI extends JPanel
 		this.repaint();
 	}
 	
+	public void setCaption(String title){
+		this.lbl_point_name.setText(title);
+	}
 	public void setXValue(String x){
 		this.txt_x.setText(x);
 	}
@@ -83,4 +90,5 @@ public class Point_GUI extends JPanel
 	public JButton getButton(){
 		return this.btn;
 	}
+	
 }

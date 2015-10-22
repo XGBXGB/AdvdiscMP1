@@ -204,7 +204,7 @@ public abstract class GraphicObject {
             	 ((R3Matrix)pointHolder).setPointValues(p.getX(), 1);
           
              pointHolder.setData(scalor.times(pointHolder));
-             ((Ellipse)this).setDistances(((R3Matrix) pointHolder).getPoint().getX(), ((R3Matrix) pointHolder).getPoint().getY());
+         	 points.set(i, ((R3Matrix) pointHolder).getPoint());
          }
 	 }
 }

@@ -21,8 +21,8 @@ public class Vector extends GraphicObject {
 		  int rowHt = 510 / 40;
 	      int rowWid = 510 / 40;
 	      double x, y, x2,y2;
-	      double dx, dy;
-	      int j;
+	      double dx, dy, tempx, tempy;
+	     
 	      if(points.size() > 0){
 	    	 
 	    	 
@@ -38,18 +38,28 @@ public class Vector extends GraphicObject {
               
               dx = x2-x;
               dy = y2-y;
+              tempx = points.get(1).getX() - points.get(0).getX();
+              tempy = points.get(1).getY() - points.get(0).getY();
               
-	    	  for(int i = (int)points.get(points.size()-1).getX(); i <20; i++){
-		    	  
-	    		  j = (int)points.get(points.size()-1).getY();
-	    		  System.out.println("X: " + x + " Y: "+ y);
-	    		  System.out.println("X2: " + x2 + " Y2: "+ y2);
+              //if(dx < 0) dx *= -1;
+              //else if(dy < 0) dy *= -1;
+              System.out.println("TEMP DISTANCE X: "+ tempx);
+              System.out.println("TEMP DISTANCE Y: "+ tempy);
+              int i = (int)points.get(points.size()-1).getX();
+              int j = (int)points.get(points.size()-1).getY();
+              int end = 20;
+              
+              //if(i < 0 || j <0) end *= -1;
+              do{
+            	  System.out.println("i: "+i + " j: "+j);
+            	  System.out.println("X: " + i + " Y: "+ j);
+	    		  System.out.println("X2: " + (i+tempx) + " Y2: "+ (j+tempy));
 	    		  System.out.println("dx: " + dx);
 	    		  System.out.println("dy: " + dy);
 	    		  
 		    	  x2 = (20+i+dx)*rowWid;
 		    	  y2 = (20-j+dy)*rowHt;
-		    	  
+		          
 		    	  g.setStroke(new BasicStroke(3));
 		    	  g.setColor(Color.CYAN);
 	              g.draw(new Line2D.Double(x, y,x2,y2));
@@ -59,11 +69,12 @@ public class Vector extends GraphicObject {
 	              x = (20+x2+dx)*rowWid;
 		    	  y = (20-y2+dy)*rowHt;  
 		    	  j++; 
-	    	  }
-	    	  
-	    	  for(int i =0; i< points.size(); i++){
+		    	  i++;
+              }while(i < end && j < end);
+	    	 
+	    	  for(i =0; i< points.size(); i++){
 			        points.get(i).draw(g);
-			     }
+			  }
 	     }	
 	}
 

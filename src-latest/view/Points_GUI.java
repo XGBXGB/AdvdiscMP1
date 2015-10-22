@@ -76,6 +76,9 @@ public class Points_GUI extends Content implements ActionListener {
 		//init();
 	}
 
+	public Point_GUI getPoint(int index){
+		return (Point_GUI)pointList.get(index);
+	}
 	public void addInitPoints(int size){
 
 		for(int i = 0; i<size; i++){

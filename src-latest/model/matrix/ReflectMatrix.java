@@ -1,9 +1,9 @@
 package model.matrix;
 
 
-public class ScaleMatrix extends Matrix{
+public class ReflectMatrix extends Matrix{
 
-	 public ScaleMatrix(){
+	 public ReflectMatrix(){
 	        super(3,3);
 	    }
 	    
