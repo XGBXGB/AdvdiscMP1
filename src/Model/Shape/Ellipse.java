@@ -9,15 +9,23 @@ import model.Point;
 public class Ellipse extends Shape{
 	
 private Point distances;
+private Point scaledDistances;
 	
 	public Ellipse(){
 		points = new ArrayList<Point>();
 		distances = null;
+		scaledDistances = null;
 	}
 	
 	public void setDistances(double horizontalDistance, double verticalDistance)
 	{
 		distances = new Point(horizontalDistance, verticalDistance);
+		scaledDistances = new Point(horizontalDistance, verticalDistance);
+	}
+	
+	public void setScaledDistances(double horizontalDistance, double verticalDistance)
+	{
+		scaledDistances = new Point(horizontalDistance, verticalDistance);
 	}
 	
 	public void setHorizontalDistance(double hd)
@@ -53,7 +61,7 @@ private Point distances;
         	   p1 = points.get(0);
             
                Ellipse2D ellipse = new Ellipse2D.Double();
-               ellipse.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt, (20+p1.getX()+distances.getX())*rowWid, (20-p1.getY()-distances.getY())*rowHt);
+               ellipse.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt, (20+p1.getX()+scaledDistances.getX())*rowWid, (20-p1.getY()-scaledDistances.getY())*rowHt);
                g.draw(ellipse);
                
                Ellipse2D center = new Ellipse2D.Double();
