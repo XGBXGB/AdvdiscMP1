@@ -57,8 +57,7 @@ public class Ellipse_GUI extends Content {
 		System.out.println("Ellipse CREATE SHAPE");
 		
 		e.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
-		((Ellipse)e).setHorizontalDistance(Double.parseDouble(txt_horizontal.getText()));
-		((Ellipse)e).setVerticalDistance(Double.parseDouble(txt_vertical.getText()));
+		((Ellipse)e).setDistances(Double.parseDouble(txt_horizontal.getText()),Double.parseDouble(txt_vertical.getText()));
 		
 		sCon.setShape(e);
 		

@@ -5,37 +5,54 @@ import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import model.Point;
+import model.matrix.Matrix;
+import model.matrix.MatrixFactory;
+import model.matrix.R3Matrix;
+import model.matrix.ScaleMatrix;
 
 public class Ellipse extends Shape{
 	
-private double horizontalDistance;
-private double verticalDistance;
+private Point distances;
+private Point scaledDistances;
 	
 	public Ellipse(){
 		points = new ArrayList<Point>();
-		horizontalDistance = 0;
-		verticalDistance = 0;
+		distances = null;
+		scaledDistances = null;
+	}
+	
+	public void setDistances(double horizontalDistance, double verticalDistance)
+	{
+		distances = new Point(horizontalDistance, verticalDistance);
+		scaledDistances = new Point(horizontalDistance, verticalDistance);
+	}
+	
+	public void setScaledDistances(double horizontalDistance, double verticalDistance)
+	{
+		scaledDistances = new Point(horizontalDistance, verticalDistance);
 	}
 	
 	public void setHorizontalDistance(double hd)
 	{
-		horizontalDistance = hd;
+		distances.setX(hd);
 	}
 	
 	public double getHorizontalDistance()
 	{
-		return horizontalDistance;
+		return distances.getX();
 	}
 	
 	public void setVerticalDistance(double vd)
 	{
-		verticalDistance = vd;
+		distances.setY(vd);
 	}
 	
 	public double getVerticalDistance()
 	{
-		return verticalDistance;
+		return distances.getY();
 	}
+	
+	
 	
 	@Override
 	public void draw(Graphics2D g) {
@@ -48,8 +65,7 @@ private double verticalDistance;
         	   p1 = points.get(0);
             
                Ellipse2D ellipse = new Ellipse2D.Double();
-               ellipse.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt, (20+p1.getX()+horizontalDistance)*rowWid, (20-p1.getY()-verticalDistance)*rowHt);
-               //ellipse.setFrame(p1.getX(), p1.getY(), horizontalDistance*100, verticalDistance*100);
+               ellipse.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt, (20+p1.getX()+scaledDistances.getX())*rowWid, (20-p1.getY()-scaledDistances.getY())*rowHt);
                g.draw(ellipse);
                
                Ellipse2D center = new Ellipse2D.Double();
@@ -59,5 +75,20 @@ private double verticalDistance;
                //g.drawLine(0, 0, 20*rowWid, 20*rowHt);
         }
 	}
+	
+	@Override
+	 public void scaleShape(double scalingFactorX, double scalingFactorY)
+	 {
+		 
+		 MatrixFactory matrixFactory = new MatrixFactory();
+        Matrix scalor = matrixFactory.getMatrix("SCALE");
+        Matrix pointHolder = matrixFactory.getMatrix("POINT");
+        ((ScaleMatrix)scalor).setScalingFactor(scalingFactorX, scalingFactorY);
+        
+        ((R3Matrix) pointHolder).setPointValues(((Ellipse)this).getHorizontalDistance(), ((Ellipse)this).getVerticalDistance());
+         pointHolder.setData(scalor.times(pointHolder));
+         this.setScaledDistances(((R3Matrix) pointHolder).getPoint().getX(), ((R3Matrix) pointHolder).getPoint().getY());
+
+	 }
 
 }

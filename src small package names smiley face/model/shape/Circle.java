@@ -9,6 +9,7 @@ import model.Point;
 public class Circle extends Shape{
 
 	private double radius;
+	private Point rd;
 	
 	public Circle(){
 		points = new ArrayList<Point>();
@@ -17,11 +18,18 @@ public class Circle extends Shape{
 	
 	public void setRadius(double radius){
 		this.radius = radius;
+		rd = new Point(radius, radius);
 	}
+	
+	
 	public double getRadius(){
 		return this.radius;
 	}
 	
+	public Point getRD()
+	{
+		return this.rd;
+	}
 	
 	
 	@Override

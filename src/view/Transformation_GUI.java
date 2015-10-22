@@ -413,31 +413,49 @@ public class Transformation_GUI extends JPanel implements ActionListener{
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 				// TODO Auto-generated method stub
-				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals(""))
+				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals("")
+						&& !txt_scale_x.getText().equals("0") && !txt_scale_x.getText().equals("0"))
 					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
+				else if((txt_scale_x.getText().equals("") || txt_scale_x.getText().equals("0")) && (!txt_scale_y.getText().equals("")
+						&& !txt_scale_y.getText().equals("0")))
+					sc.scaleShape(1, Double.valueOf(txt_scale_y.getText()));
+				else if((!txt_scale_x.getText().equals("") && !txt_scale_x.getText().equals("0")) && (txt_scale_y.getText().equals("")
+						|| txt_scale_x.getText().equals("0")))
+					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), 1);
 				else
 					sc.scaleShape(1,1);
-				System.out.println("Whut");
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
 				// TODO Auto-generated method stub
-				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals(""))
+				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals("")
+						&& !txt_scale_x.getText().equals("0") && !txt_scale_x.getText().equals("0"))
 					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
+				else if((txt_scale_x.getText().equals("") || txt_scale_x.getText().equals("0")) && (!txt_scale_y.getText().equals("")
+						&& !txt_scale_y.getText().equals("0")))
+					sc.scaleShape(1, Double.valueOf(txt_scale_y.getText()));
+				else if((!txt_scale_x.getText().equals("") && !txt_scale_x.getText().equals("0")) && (txt_scale_y.getText().equals("")
+						|| txt_scale_x.getText().equals("0")))
+					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), 1);
 				else
-					sc.scaleShape(1,1);	
-				System.out.println("Whut");				
+					sc.scaleShape(1,1);
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals(""))
+				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals("")
+						&& !txt_scale_x.getText().equals("0") && !txt_scale_x.getText().equals("0"))
 					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
+				else if((txt_scale_x.getText().equals("") || txt_scale_x.getText().equals("0")) && (!txt_scale_y.getText().equals("")
+						&& !txt_scale_y.getText().equals("0")))
+					sc.scaleShape(1, Double.valueOf(txt_scale_y.getText()));
+				else if((!txt_scale_x.getText().equals("") && !txt_scale_x.getText().equals("0")) && (txt_scale_y.getText().equals("")
+						|| txt_scale_x.getText().equals("0")))
+					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), 1);
 				else
 					sc.scaleShape(1,1);
 				
-				System.out.println("Whut");
 				
 			}
 			
@@ -448,32 +466,50 @@ public class Transformation_GUI extends JPanel implements ActionListener{
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 				// TODO Auto-generated method stub
-				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals(""))
+				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals("")
+						&& !txt_scale_x.getText().equals("0") && !txt_scale_x.getText().equals("0"))
 					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
+				else if((txt_scale_x.getText().equals("") || txt_scale_x.getText().equals("0")) && (!txt_scale_y.getText().equals("")
+						&& !txt_scale_y.getText().equals("0")))
+					sc.scaleShape(1, Double.valueOf(txt_scale_y.getText()));
+				else if((!txt_scale_x.getText().equals("") && !txt_scale_x.getText().equals("0")) && (txt_scale_y.getText().equals("")
+						|| txt_scale_x.getText().equals("0")))
+					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), 1);
 				else
 					sc.scaleShape(1,1);
-				System.out.println("Whut");
 				
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
 				// TODO Auto-generated method stub
-				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals(""))
+				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals("")
+						&& !txt_scale_x.getText().equals("0") && !txt_scale_x.getText().equals("0"))
 					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
+				else if((txt_scale_x.getText().equals("") || txt_scale_x.getText().equals("0")) && (!txt_scale_y.getText().equals("")
+						&& !txt_scale_y.getText().equals("0")))
+					sc.scaleShape(1, Double.valueOf(txt_scale_y.getText()));
+				else if((!txt_scale_x.getText().equals("") && !txt_scale_x.getText().equals("0")) && (txt_scale_y.getText().equals("")
+						|| txt_scale_x.getText().equals("0")))
+					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), 1);
 				else
 					sc.scaleShape(1,1);
-				System.out.println("Whut");
+
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals(""))
+				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals("")
+						&& !txt_scale_x.getText().equals("0") && !txt_scale_x.getText().equals("0"))
 					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
+				else if((txt_scale_x.getText().equals("") || txt_scale_x.getText().equals("0")) && (!txt_scale_y.getText().equals("")
+						&& !txt_scale_y.getText().equals("0")))
+					sc.scaleShape(1, Double.valueOf(txt_scale_y.getText()));
+				else if((!txt_scale_x.getText().equals("") && !txt_scale_x.getText().equals("0")) && (txt_scale_y.getText().equals("")
+						|| txt_scale_x.getText().equals("0")))
+					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), 1);
 				else
 					sc.scaleShape(1,1);
-				System.out.println("Whut");
-				
 			}
 			
 		});
