@@ -187,15 +187,6 @@ public abstract class Shape {
 	 public void scaleShape(double scalingFactorX, double scalingFactorY)
 	 {
 		 
-		 MatrixFactory matrixFactory = new MatrixFactory();
-         Matrix scalor = matrixFactory.getMatrix("SCALE");
-         Matrix pointHolder = matrixFactory.getMatrix("POINT");
-         ((ScaleMatrix)scalor).setScalingFactor(scalingFactorX, scalingFactorY);
-         
-         ((R3Matrix) pointHolder).setPointValues(((Ellipse)this).getHorizontalDistance(), ((Ellipse)this).getVerticalDistance());
-          pointHolder.setData(scalor.times(pointHolder));
-          ((Ellipse)this).setScaledDistances(((R3Matrix) pointHolder).getPoint().getX(), ((R3Matrix) pointHolder).getPoint().getY());
- 
 		 	/* MatrixFactory matrixFactory = new MatrixFactory();
 	         Matrix scalor = matrixFactory.getMatrix("SCALE");
 	         Matrix pointHolder = matrixFactory.getMatrix("POINT");
