@@ -91,8 +91,8 @@ public class Hyperbola_GUI extends Content implements ActionListener{
 		GraphicObject hyperbola = new Hyperbola();
                 hyperbola.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
                 System.out.println(txt_horizontal.getText() + txt_vertical.getText());
-                ((Hyperbola)hyperbola).setA(Double.parseDouble(txt_horizontal.getText()));
-                ((Hyperbola)hyperbola).setB(Double.parseDouble(txt_vertical.getText()));
+                ((Hyperbola)hyperbola).sethDistance(Double.parseDouble(txt_horizontal.getText()));
+                ((Hyperbola)hyperbola).setvDistance(Double.parseDouble(txt_vertical.getText()));
                 ((Hyperbola)hyperbola).setHorizontal(rbtn_horizontal.isSelected());
                 sCon.setShape(hyperbola);
 	}
