@@ -6,23 +6,16 @@
 package view;
 
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
-
 import java.awt.BasicStroke;
 import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 
-import javax.swing.JPanel;
-
+import model.Observer;
+import model.shape.Polygon;
+import model.shape.Shape;
 import controller.ShapeController;
-import Model.Observer;
-import Model.Shape.Polygon;
-import Model.Shape.Shape;
 
 /**
  *
@@ -95,7 +88,8 @@ public class GridCanvas extends Canvas implements Observer {
 		// TODO Auto-generated method stub
 		Shape = sCon.getShape();
 		
-		repaint();
+		this.repaint();
+		this.revalidate();
 	}
 
  

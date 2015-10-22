@@ -12,7 +12,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-public class Points extends JPanel
+public class Point extends JPanel
 {
 	private JLabel lbl_point_name;
 	private JTextField txt_x, txt_y;
@@ -20,7 +20,7 @@ public class Points extends JPanel
 	private JButton btn;
 	
 	private final JTextField textField = new JTextField();
-	public Points(String point_name, boolean stat) {
+	public Point(String point_name, boolean stat) {
 		textField.setColumns(10);
 		
 		setMaximumSize(new Dimension(400, 37));

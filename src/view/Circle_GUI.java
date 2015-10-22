@@ -1,22 +1,20 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.ShapeController;
-import Model.Shape.Circle;
+import model.shape.Circle;
 import net.miginfocom.swing.MigLayout;
+import controller.ShapeController;
 
 public class Circle_GUI extends Content{
 	private JTextField txt_radius;
 	private JLabel lbl_radius;
 	private JPanel panel_content;
-	private Points center;
+	private Point center;
 	private Circle c;
 	
 	private ShapeController sCon;
@@ -32,7 +30,7 @@ public class Circle_GUI extends Content{
 		panel_content.setLayout(new MigLayout("", "[][]", "[][]"));
 		setContent(panel_content);
 		
-		center = new Points("Center", false);
+		center = new Point("Center", false);
 		panel_content.add(center, "cell 0 0 2 1");
 
 		lbl_radius = new JLabel("Radius :");

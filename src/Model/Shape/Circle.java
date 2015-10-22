@@ -1,18 +1,15 @@
-package Model.Shape;
+package model.shape;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
-import Model.Point;
+import model.Point;
 
 public class Circle extends Shape{
 
 	private double radius;
+	private Point rd;
 	
 	public Circle(){
 		points = new ArrayList<Point>();
@@ -21,11 +18,18 @@ public class Circle extends Shape{
 	
 	public void setRadius(double radius){
 		this.radius = radius;
+		rd = new Point(radius, radius);
 	}
+	
+	
 	public double getRadius(){
 		return this.radius;
 	}
 	
+	public Point getRD()
+	{
+		return this.rd;
+	}
 	
 	
 	@Override
@@ -41,6 +45,12 @@ public class Circle extends Shape{
                Ellipse2D circle = new Ellipse2D.Double();
                circle.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt, (20+p1.getX()+radius)*rowWid, (20-p1.getY()-radius)*rowHt);
                g.draw(circle);
+               
+               
+               Ellipse2D center = new Ellipse2D.Double();
+               center.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt, 
+            		   					(20+p1.getX()+0.5)*rowWid,(20-p1.getY()-0.5)*rowHt);
+               g.fill(center);
                //g.drawLine(0, 0, 20*rowWid, 20*rowHt);
         }
 	}

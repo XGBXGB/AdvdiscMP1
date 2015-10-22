@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package Model.matrix;
+package model.matrix;
 
-import Model.Point;
+import model.Point;
 
 /**
  *

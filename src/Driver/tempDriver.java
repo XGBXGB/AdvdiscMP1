@@ -1,7 +1,6 @@
-package Driver;
+package driver;
 
 
-import Model.Shape.Polygon;
 import view.Grid;
 
 public class tempDriver {

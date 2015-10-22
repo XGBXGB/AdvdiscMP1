@@ -7,10 +7,10 @@
 package controller;
 
 import java.util.ArrayList;
-import Model.Observer;
-import Model.Point;
-import Model.Subject;
-import Model.Shape.Shape;
+
+import model.Observer;
+import model.Subject;
+import model.shape.Shape;
 
 /**
  *
@@ -53,6 +53,11 @@ public class ShapeController implements Subject{
     public void translateShape(double x, double y){
         Shape.translateShape(x, y);
         notifyObservers();
+    }
+    
+    public void scaleShape(double x, double y){
+    	Shape.scaleShape(x, y);
+    	notifyObservers();
     }
     
     @Override

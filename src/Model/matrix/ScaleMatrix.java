@@ -1,4 +1,4 @@
-package Model.matrix;
+package model.matrix;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;

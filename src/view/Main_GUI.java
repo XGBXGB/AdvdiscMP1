@@ -108,7 +108,7 @@ public class Main_GUI extends JFrame implements ActionListener {
 		
 		cmb_shape = new JComboBox();
 		cmb_shape.addItemListener(new ItemChangeListener());
-		cmb_shape.setModel(new DefaultComboBoxModel(new String[] {"Vector", "Line Segment", "Polygon", "Circle", "Ellipse", "Parabola", "Hyperbola"}));
+		cmb_shape.setModel(new DefaultComboBoxModel(new String[] {"Points","Vector", "Line Segment", "Polygon", "Circle", "Ellipse", "Parabola", "Hyperbola"}));
 		cmb_shape.setBackground(SystemColor.window);
 		panel_choose_shape.add(cmb_shape, BorderLayout.CENTER);
 		
@@ -159,20 +159,26 @@ public class Main_GUI extends JFrame implements ActionListener {
 
 		public void init(){
 			
-			TwoPoints_GUI t = new TwoPoints_GUI();
-			t.setCaption("Vector");
-			t.getButtonCreate().addActionListener(this);
-			panel_shape_details.add(t, "Vector");
-			contentList.put("Vector", t);
-			
-			t = new TwoPoints_GUI();
-			t.setCaption("Line Segment");
-			t.getButtonCreate().addActionListener(this);
-			panel_shape_details.add(t, "Line Segment");
-			contentList.put("Line Segment", t);
-			
-			Polygon_GUI p = new Polygon_GUI();
+			Points_GUI p = new Points_GUI("Point(s)", true);
 			p.getButtonCreate().addActionListener(this);
+			panel_shape_details.add(p, "Points");
+			contentList.put("Points", p);
+			
+			p = new Points_GUI("Vector", false);
+			p.getButtonCreate().addActionListener(this);
+			p.addInitPoints(1);
+			panel_shape_details.add(p, "Vector");
+			contentList.put("Vector", p);
+			
+			p = new Points_GUI("Line Segment", false);
+			p.getButtonCreate().addActionListener(this);
+			p.addInitPoints(1);
+			panel_shape_details.add(p, "Line Segment");
+			contentList.put("Line Segment", p);
+			
+			p = new Points_GUI("Polygon", true);
+			p.getButtonCreate().addActionListener(this);
+			p.addInitPoints(2);
 			panel_shape_details.add(p, "Polygon");
 			contentList.put("Polygon", p);
 			
@@ -196,7 +202,7 @@ public class Main_GUI extends JFrame implements ActionListener {
 			panel_shape_details.add(h, "Hyperbola");
 			contentList.put("Hyperbola", h);
 			
-			cl_shape.show(panel_shape_details, "Vector");
+			cl_shape.show(panel_shape_details, null);
 		}
 		
 		class ItemChangeListener implements ItemListener {

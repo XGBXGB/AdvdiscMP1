@@ -1,41 +1,46 @@
-package Model.Shape;
+package model.shape;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
-import Model.Point;
+import model.Point;
 
 public class Ellipse extends Shape{
 	
-private double horizontalDistance;
-private double verticalDistance;
+private Point distances;
 	
 	public Ellipse(){
 		points = new ArrayList<Point>();
-		horizontalDistance = 0;
-		verticalDistance = 0;
+		distances = null;
+	}
+	
+	public void setDistances(double horizontalDistance, double verticalDistance)
+	{
+		distances = new Point(horizontalDistance, verticalDistance);
 	}
 	
 	public void setHorizontalDistance(double hd)
 	{
-		horizontalDistance = hd;
+		distances.setX(hd);
 	}
 	
 	public double getHorizontalDistance()
 	{
-		return horizontalDistance;
+		return distances.getX();
 	}
 	
 	public void setVerticalDistance(double vd)
 	{
-		verticalDistance = vd;
+		distances.setY(vd);
 	}
 	
 	public double getVerticalDistance()
 	{
-		return verticalDistance;
+		return distances.getY();
 	}
+	
+	
 	
 	@Override
 	public void draw(Graphics2D g) {
@@ -48,9 +53,13 @@ private double verticalDistance;
         	   p1 = points.get(0);
             
                Ellipse2D ellipse = new Ellipse2D.Double();
-               ellipse.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt, (20+p1.getX()+horizontalDistance)*rowWid, (20-p1.getY()-verticalDistance)*rowHt);
-               //ellipse.setFrame(p1.getX(), p1.getY(), horizontalDistance*100, verticalDistance*100);
+               ellipse.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt, (20+p1.getX()+distances.getX())*rowWid, (20-p1.getY()-distances.getY())*rowHt);
                g.draw(ellipse);
+               
+               Ellipse2D center = new Ellipse2D.Double();
+               center.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt, 
+            		   					(20+p1.getX()+0.5)*rowWid,(20-p1.getY()-0.5)*rowHt);
+               g.fill(center);
                //g.drawLine(0, 0, 20*rowWid, 20*rowHt);
         }
 	}

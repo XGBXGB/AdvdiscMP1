@@ -1,24 +1,21 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import Model.Shape.Circle;
-import Model.Shape.Ellipse;
-import Model.Shape.Shape;
-import controller.ShapeController;
+import model.shape.Ellipse;
+import model.shape.Shape;
 import net.miginfocom.swing.MigLayout;
+import controller.ShapeController;
 
 public class Ellipse_GUI extends Content {
 	private JTextField txt_horizontal, txt_vertical;
 	private JLabel lbl_horizontal, lbl_vertical;
 	private JPanel panel_content;
-	private Points center;
+	private Point center;
 	//vertexA and vertexB are the horizontal axis points
 	//covertexA and covertexB are the vertical axis points
 	
@@ -34,7 +31,7 @@ public class Ellipse_GUI extends Content {
 		panel_content.setLayout(new MigLayout("", "[][]", "[][]"));
 		super.setContent(panel_content);
 		
-		center = new Points("Center", false);
+		center = new Point("Center", false);
 		
 		panel_content.add(center, "cell 0 0 2 1");
 		
@@ -60,8 +57,7 @@ public class Ellipse_GUI extends Content {
 		System.out.println("Ellipse CREATE SHAPE");
 		
 		e.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
-		((Ellipse)e).setHorizontalDistance(Double.parseDouble(txt_horizontal.getText()));
-		((Ellipse)e).setVerticalDistance(Double.parseDouble(txt_vertical.getText()));
+		((Ellipse)e).setDistances(Double.parseDouble(txt_horizontal.getText()),Double.parseDouble(txt_vertical.getText()));
 		
 		sCon.setShape(e);
 		

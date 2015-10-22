@@ -30,6 +30,11 @@ import javax.swing.BoxLayout;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import controller.ShapeController;
+
 import javax.swing.JButton;
 import javax.swing.border.SoftBevelBorder;
 
@@ -77,9 +82,13 @@ public class Transformation_GUI extends JPanel implements ActionListener{
 	private JRadioButton rBtn_x;
 	private JRadioButton rBtn_y;
 	private JLabel lblNewLabel;
+	
+	private ShapeController sc;
 	public Transformation_GUI(CardLayout cl, JPanel panel_main_content) {
 		
 		super();
+		
+		sc = ShapeController.getInstance();
 		
 		this.cl = cl;
 		this.panel_main_content = panel_main_content;
@@ -141,7 +150,8 @@ public class Transformation_GUI extends JPanel implements ActionListener{
 		gbc_txt_scale_x.gridy = 0;
 		panel_scale.add(txt_scale_x, gbc_txt_scale_x);
 		txt_scale_x.setColumns(10);
-		
+		txt_scale_x.setText("1");
+
 		lbl_scale_y = new JLabel("Y :");
 		GridBagConstraints gbc_lbl_scale_y = new GridBagConstraints();
 		gbc_lbl_scale_y.anchor = GridBagConstraints.EAST;
@@ -157,6 +167,7 @@ public class Transformation_GUI extends JPanel implements ActionListener{
 		gbc_txt_scale_y.gridy = 0;
 		panel_scale.add(txt_scale_y, gbc_txt_scale_y);
 		txt_scale_y.setColumns(10);
+		txt_scale_y.setText("1");
 		
 		panel_translate = new JPanel();
 		panel_translate.setOpaque(false);
@@ -391,7 +402,83 @@ public class Transformation_GUI extends JPanel implements ActionListener{
 		}
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		
+		
 		this.setSize((int)(screenSize.width/1.2), (int)(screenSize.height/1.1));
+		
+		
+		txt_scale_x.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals(""))
+					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
+				else
+					sc.scaleShape(1,1);
+				System.out.println("Whut");
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals(""))
+					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
+				else
+					sc.scaleShape(1,1);	
+				System.out.println("Whut");				
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals(""))
+					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
+				else
+					sc.scaleShape(1,1);
+				
+				System.out.println("Whut");
+				
+			}
+			
+		});
+		
+		txt_scale_y.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals(""))
+					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
+				else
+					sc.scaleShape(1,1);
+				System.out.println("Whut");
+				
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals(""))
+					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
+				else
+					sc.scaleShape(1,1);
+				System.out.println("Whut");
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				if(!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals(""))
+					sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
+				else
+					sc.scaleShape(1,1);
+				System.out.println("Whut");
+				
+			}
+			
+		});
+				
+		
 		this.setVisible(true);
 	}
 	@Override

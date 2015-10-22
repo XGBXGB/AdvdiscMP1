@@ -14,21 +14,21 @@ import javax.swing.JScrollPane;
 import net.miginfocom.swing.MigLayout;
 import java.awt.FlowLayout;
 
-public class Polygon_GUI extends Content implements ActionListener {
+public class Points_GUI extends Content implements ActionListener {
 
 	private JPanel panel_points;
 	private JPanel panel_content;
 	private JScrollPane scrollPane;
 	private JPanel panel_top;
 	private JButton btn_addPoints;
-	private ArrayList<Points> pointList;
+	private ArrayList<Point> pointList;
 	private ArrayList<JButton> buttonList;
 
-	public Polygon_GUI() {
+	public Points_GUI(String title, boolean hasBtn) {
 		
-		super("Polygon");
+		super(title);
 		
-		pointList = new ArrayList<Points>();
+		pointList = new ArrayList<Point>();
 		buttonList = new ArrayList<JButton>();
 		
 		panel_content = new JPanel();
@@ -50,17 +50,25 @@ public class Polygon_GUI extends Content implements ActionListener {
 		panel_content.add(panel_top, BorderLayout.NORTH);
 
 		btn_addPoints = new JButton("Add Point");
+		btn_addPoints.setVisible(hasBtn);
 		btn_addPoints.addActionListener(this);
 		panel_top.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		panel_top.add(btn_addPoints);
 
-		init();
+		Point p = new Point("Point", false);
+		panel_points.add(p, "newline");
+		pointList.add(p);
+		//System.out.println("BUTTON: "+ p.getButton().getActionCommand());
+		p.getButton().addActionListener(this);
+		buttonList.add(p.getButton());
+		
+		//init();
 	}
 
-	public void init(){
+	public void addInitPoints(int size){
 
-		for(int i = 0; i<3; i++){
-			Points p = new Points("Point", false);
+		for(int i = 0; i<size; i++){
+			Point p = new Point("Point", false);
 			panel_points.add(p, "newline");
 			pointList.add(p);
 			//System.out.println("BUTTON: "+ p.getButton().getActionCommand());
@@ -73,7 +81,7 @@ public class Polygon_GUI extends Content implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == btn_addPoints){
-			Points p = new Points("Point",true);
+			Point p = new Point("Point",true);
 			panel_points.add(p,"newline");
 			pointList.add(p);
 			//woooooooooh

@@ -18,7 +18,7 @@ public class Hyperbola_GUI extends Content implements ActionListener{
 	private JTextField txt_horizontal, txt_vertical;
 	private JLabel lbl_horizontal, lbl_vertical;
 	private JPanel panel_content;
-	private Points center;
+	private Point center;
 	private JRadioButton rbtn_vertical, rbtn_horizontal;
 	private JLabel lbl_orientation;
 	
@@ -33,7 +33,7 @@ public class Hyperbola_GUI extends Content implements ActionListener{
 		panel_content.setLayout(new MigLayout("", "[][]", "[][][][][]"));
 		super.setContent(panel_content);
 		
-		center = new Points("Center", false);
+		center = new Point("Center", false);
 		
 		panel_content.add(center, "cell 0 0 2 1");
 		
