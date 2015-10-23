@@ -24,16 +24,16 @@ import model.matrix.TranslateMatrix;
  * @author Christian Gabriel
  */
 public class Parabola extends GraphicObject {
-
+    private Point center;
     private boolean vertical;
     private double magnitude;
-    private ArrayList<Point> paraPoints;
 
     public Parabola() {
         vertical = false;
         magnitude = 0;
         points = new ArrayList<Point>();
-        paraPoints = new ArrayList<Point>();
+        originalPoints = new ArrayList();
+        center=null;
     }
 
     public boolean isVertical() {
@@ -42,7 +42,7 @@ public class Parabola extends GraphicObject {
 
     public void setVertical(boolean vertical) {
         this.vertical = vertical;
-        initialize();
+        revertToOriginal();
     }
 
     public double getMagnitude() {
@@ -51,15 +51,15 @@ public class Parabola extends GraphicObject {
 
     public void setMagnitude(double magnitude) {
         this.magnitude = magnitude;
-        initialize();
+        revertToOriginal();
     }
-
-    public void initialize() {
-        paraPoints.clear();
-        Point center = points.get(0);
+    
+    @Override
+    public void addPoint(double x, double y) {
+        points.add(new Point(x,y));
+        center = points.get(0);
         double h = center.getX(); //center X
         double k = center.getY(); // center Y
-        //double a = 0.5; // magnitude!
         double boundary;
 
         boundary = 20;
@@ -71,13 +71,17 @@ public class Parabola extends GraphicObject {
             if (vertical) {
                 val1 = sqrt((i - k) / magnitude) + h;
                 val2 = -sqrt((i - k) / magnitude) + h;
-                paraPoints.add(new Point(val1, i));
-                paraPoints.add(new Point(val2, i));
+                originalPoints.add(new Point(val1, i));
+                originalPoints.add(new Point(val2, i));
+                points.add(new Point(val1, i));
+                points.add(new Point(val2, i));
             } else {
                 val1 = sqrt((i - h) / magnitude) + k;
                 val2 = -sqrt((i - h) / magnitude) + k;
-                paraPoints.add(new Point(i, val1));
-                paraPoints.add(new Point(i, val2));
+                originalPoints.add(new Point(i, val1));
+                originalPoints.add(new Point(i, val2));
+                points.add(new Point(i, val1));
+                points.add(new Point(i, val2));
             }
             i += 0.1;
         }
@@ -85,30 +89,26 @@ public class Parabola extends GraphicObject {
 
     @Override
     public void draw(Graphics2D g) {
-        System.out.println("PARABOLA");
         int rowHt = 510 / 40;
         int rowWid = 510 / 40;
-        //double a = 0.5; // magnitude!
-
         g.setStroke(new BasicStroke(3));
-        for (int i = 0; i < paraPoints.size(); i++) {
-            Point p = paraPoints.get(i);
+        for (int i = 0; i < points.size(); i++) {
+            Point p = points.get(i);
             g.draw(new Line2D.Double((20 + p.getX()) * rowWid, (20 - p.getY()) * rowHt, (20 + p.getX()) * rowWid, (20 - p.getY()) * rowHt));
         }
         g.setStroke(new BasicStroke(1));
     }
 
-    public void rotateShape(float angle, boolean clockwise) {
-        System.out.println("INA ANG ROTATE");
-        initialize();
-        Point center = points.get(0);
+    @Override
+    public void rotateShape(float angle, double val, double val2, boolean clockwise) {
+        revertToOriginal();
         MatrixFactory matrixFactory = new MatrixFactory();
         Matrix rotator = matrixFactory.getMatrix("ROTATE");
         Matrix translator = matrixFactory.getMatrix("TRANSLATE");
         Matrix pointHolder = matrixFactory.getMatrix("POINT");
         ((RotateMatrix) rotator).makeRotator(angle, clockwise);
-        for (int i = 0; i < paraPoints.size(); i++) {
-            Point p = paraPoints.get(i);
+        for (int i = 0; i < points.size(); i++) {
+            Point p = points.get(i);
 
             ((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());
             ((TranslateMatrix) translator).setTranslateValues(-center.getX(), -center.getY());
@@ -118,16 +118,16 @@ public class Parabola extends GraphicObject {
 
             ((TranslateMatrix) translator).setTranslateValues(center.getX(), center.getY());
             pointHolder.setData(translator.times(pointHolder));
-            paraPoints.set(i, ((R3Matrix) pointHolder).getPoint());
+            points.set(i, ((R3Matrix) pointHolder).getPoint());
 
         }
         extendParabola();
     }
 
     public void extendParabola() {
-        Point val1 = paraPoints.get(paraPoints.size() - 1), val2 = paraPoints.get(paraPoints.size() - 2);
-        Point val12 = paraPoints.get(paraPoints.size() - 3);
-        Point val22 = paraPoints.get(paraPoints.size() - 4);
+        Point val1 = points.get(points.size() - 1), val2 = points.get(points.size() - 2);
+        Point val12 = points.get(points.size() - 3);
+        Point val22 = points.get(points.size() - 4);
         
         if (val1.getX() > -20 && val1.getX() < 20 && val1.getY() > -20 && val1.getY() < 20) {
             Point p1 = val1;
@@ -139,13 +139,13 @@ public class Parabola extends GraphicObject {
             
             while(p1.getX() > -20 && p1.getX() < 20 && p1.getY() > -20 && p1.getY() < 20){
                 Point p1extend = new Point(p1.getX()+distance1x, p1.getY()+distance1y);
-                paraPoints.add(p1extend);
+                points.add(p1extend);
                 p1 = p1extend;
             }
             
             while(p2.getX() > -20 && p2.getX() < 20 && p2.getY() > -20 && p2.getY() < 20){
                 Point p2extend = new Point(p2.getX()+distance2x, p2.getY()+distance2y);
-                paraPoints.add(p2extend);
+                points.add(p2extend);
                 p2 = p2extend;
             }
 

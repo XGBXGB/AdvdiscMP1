@@ -82,9 +82,9 @@ public class Parabola_GUI extends Content implements ActionListener{
 	@Override
 	public void createShape() {
             GraphicObject parabola = new Parabola();
-            parabola.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
             ((Parabola)parabola).setMagnitude(Double.parseDouble(txt_magnitude.getText()));
             ((Parabola)parabola).setVertical(rbtn_vertical.isSelected());
+            parabola.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
             sCon.setShape(parabola);
 	}
 

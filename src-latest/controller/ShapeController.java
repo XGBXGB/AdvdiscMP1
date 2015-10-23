@@ -48,12 +48,7 @@ public class ShapeController implements Subject{
     }
     
     public void rotateShape(float angle, double centerX, double centerY, boolean clockwise){
-        if(Shape instanceof Parabola){
-            System.out.println("PASOK SA ROTATE PARABOLA");
-            ((Parabola)Shape).rotateShape(angle, clockwise);
-        }
-        else
-            Shape.rotateShape(angle, centerX, centerY, clockwise);
+        Shape.rotateShape(angle, centerX, centerY, clockwise);
         notifyObservers();
     }
     

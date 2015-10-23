@@ -26,9 +26,11 @@ import model.matrix.TranslateMatrix;
  */
 public abstract class GraphicObject {
 	protected ArrayList<Point> points;
+        protected ArrayList<Point> originalPoints;
 
 	public void addPoint(double x, double y) {
 		points.add(new Point(x, y));
+                originalPoints.add(new Point(x, y));
 	}
 
 	public Iterator<Point> getPoints() {
@@ -41,6 +43,13 @@ public abstract class GraphicObject {
 			this.points.add(points.next());
 		}
 	}
+        
+        public void revertToOriginal(){
+            points.clear();
+            for(int i=0; i<originalPoints.size(); i++){
+                 points.add(new Point(originalPoints.get(i).getX(),originalPoints.get(i).getY()));
+            }
+        }
 
 	public abstract void draw(Graphics2D g);
 
