@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import model.Observer;
 import model.Subject;
 import model.graphic_objects.GraphicObject;
+import model.graphic_objects.Parabola;
 
 
 /**
@@ -47,7 +48,12 @@ public class ShapeController implements Subject{
     }
     
     public void rotateShape(float angle, double centerX, double centerY, boolean clockwise){
-        Shape.rotateShape(angle, centerX, centerY, clockwise);
+        if(Shape instanceof Parabola){
+            System.out.println("PASOK SA ROTATE PARABOLA");
+            ((Parabola)Shape).rotateShape(angle, clockwise);
+        }
+        else
+            Shape.rotateShape(angle, centerX, centerY, clockwise);
         notifyObservers();
     }
     

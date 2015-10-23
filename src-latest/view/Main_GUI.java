@@ -197,6 +197,7 @@ public class Main_GUI extends JFrame implements ActionListener {
 		init();
 		this.repaint();
 		this.revalidate();
+                this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 		public void init(){
