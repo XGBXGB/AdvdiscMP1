@@ -89,11 +89,18 @@ public class Hyperbola_GUI extends Content implements ActionListener{
 	public void createShape() {
 		// TODO Auto-generated method stub
 		GraphicObject hyperbola = new Hyperbola();
-        hyperbola.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
+        
         System.out.println(txt_horizontal.getText() + txt_vertical.getText());
-        ((Hyperbola)hyperbola).sethDistance(Double.parseDouble(txt_horizontal.getText()));
-        ((Hyperbola)hyperbola).setvDistance(Double.parseDouble(txt_vertical.getText()));
+        if(rbtn_horizontal.isSelected()){
+            ((Hyperbola)hyperbola).setA(Double.parseDouble(txt_horizontal.getText()));
+            ((Hyperbola)hyperbola).setB(Double.parseDouble(txt_vertical.getText()));
+        }
+        else{
+            ((Hyperbola)hyperbola).setB(Double.parseDouble(txt_horizontal.getText()));
+            ((Hyperbola)hyperbola).setA(Double.parseDouble(txt_vertical.getText()));
+        }
         ((Hyperbola)hyperbola).setHorizontal(rbtn_horizontal.isSelected());
+        ((Hyperbola)hyperbola).setCenter(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
         sCon.setOriginalObject(hyperbola);
         sCon.setTransformedObject((Hyperbola)hyperbola.clone());
         clear();
