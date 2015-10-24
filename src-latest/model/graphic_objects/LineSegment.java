@@ -34,12 +34,20 @@ public class LineSegment extends GraphicObject {
 	    	  y2 = (float)(20-points.get(1).getY())*rowHt;
 	    	  
 	    	  g.setStroke(new BasicStroke(3));
-	    	  g.setColor(Color.CYAN);
+	    	  g.setColor(c);
               g.draw(new Line2D.Float(x, y,x2,y2));
               g.setColor(Color.BLACK);
               g.setStroke(new BasicStroke(1));
               
 	     }	
+	}
+
+	@Override
+	public GraphicObject clone() {
+		LineSegment l = new LineSegment();
+		l.setColor(getColor());
+		l.setPoints(getPoints());
+		return l;
 	}
 
 }

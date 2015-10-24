@@ -1,6 +1,6 @@
 package view;
 
-import controller.ShapeController;
+import controller.GraphicObjectController;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -24,14 +24,14 @@ public class Parabola_GUI extends Content implements ActionListener{
 	private Point_GUI center;
 	private JRadioButton rbtn_vertical, rbtn_horizontal;
 	private JLabel lbl_orientation;
-        private ShapeController sCon;
+        private GraphicObjectController sCon;
 	
 	//vertexA and vertexB are the horizontal axis points
 	//covertexA and covertexB are the vertical axis points
 	
 	public Parabola_GUI() {
 		super("Parabola");
-		sCon = ShapeController.getInstance();
+		sCon = GraphicObjectController.getInstance();
 		panel_content = new JPanel();
 		panel_content.setPreferredSize(new Dimension(350, 350));
 		panel_content.setLayout(new MigLayout("", "[][][]", "[][][]"));
@@ -81,16 +81,21 @@ public class Parabola_GUI extends Content implements ActionListener{
 
 	@Override
 	public void createShape() {
-            GraphicObject parabola = new Parabola();
-            ((Parabola)parabola).setMagnitude(Double.parseDouble(txt_magnitude.getText()));
-            ((Parabola)parabola).setVertical(rbtn_vertical.isSelected());
-            parabola.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
-            sCon.setShape(parabola);
+        GraphicObject parabola = new Parabola();
+        ((Parabola)parabola).setMagnitude(Double.parseDouble(txt_magnitude.getText()));
+        ((Parabola)parabola).setVertical(rbtn_vertical.isSelected());
+        parabola.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
+        sCon.setOriginalObject(parabola);
+        sCon.setTransformedObject((Parabola)parabola.clone());
+        clear();
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+		 this.txt_magnitude.setText("");
+		 this.center.clear();
+		 this.rbtn_horizontal.setSelected(false);
+		 this.rbtn_vertical.setEnabled(true);
 		
 	}
 

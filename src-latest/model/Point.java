@@ -61,9 +61,17 @@ public class Point extends GraphicObject{
 		 Ellipse2D center = new Ellipse2D.Double();
          center.setFrameFromCenter((20+x)*rowWid,(20-y)*rowHt, 
       		   					(20+x+0.3)*rowWid,(20-y-0.3)*rowHt);
-         g.setColor(Color.BLUE);
+         g.setColor(c);
          g.fill(center);
          g.setColor(Color.BLACK);
+	}
+
+	@Override
+	public Point clone() {
+		Point p = new Point(getX(), getY());
+		p.setW(getW());
+		p.setColor(getColor());
+		return p;
 	}
     
     

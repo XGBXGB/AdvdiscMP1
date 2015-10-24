@@ -5,7 +5,7 @@ public class ShearMatrix extends Matrix{
 		super(3, 3);
 	}
 	
-	public void shear(boolean isXAxis, int units) {
+	public void shear(boolean isXAxis, double units) {
 		super.makeIdentity();
 		
 		if(isXAxis) {

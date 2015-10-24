@@ -22,6 +22,8 @@ public class MatrixFactory {
         	return new ShearMatrix(); 
         else if(type.equalsIgnoreCase("SCALE"))
         	return new ScaleMatrix();
+        else if(type.equalsIgnoreCase("REFLECT"))
+        	return new ReflectMatrix();
         return null;
     }
 }

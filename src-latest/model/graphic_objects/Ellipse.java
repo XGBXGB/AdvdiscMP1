@@ -1,5 +1,7 @@
 package model.graphic_objects;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
@@ -24,15 +26,22 @@ private Point origin;
 		scaledDistances = null;
 	}
 	
-	public void setDistances(double horizontalDistance, double verticalDistance)
+	public void setDistances(Point p)
 	{
-		distances = new Point(horizontalDistance, verticalDistance);
-		scaledDistances = new Point(horizontalDistance, verticalDistance);
+		distances = p;
+		//scaledDistances = new Point(horizontalDistance, verticalDistance);
 	}
 	
-	public void setScaledDistances(double horizontalDistance, double verticalDistance)
-	{
-		scaledDistances = new Point(horizontalDistance, verticalDistance);
+	public Point getDistances(){
+		return distances;
+	}
+	
+	public void setScaledDistances(Point p){
+		scaledDistances = p;
+	}
+	
+	public Point getScaledDistances(){
+		return scaledDistances;
 	}
 	
 	public void setHorizontalDistance(double hd)
@@ -55,9 +64,13 @@ private Point origin;
 		return distances.getY();
 	}
 	
-	public void setOrigin(double x, double y)
+	public void setOrigin(Point p)
 	{
-		origin = new Point(x,y);
+		origin = p;
+	}
+	
+	public Point getOrigin(){
+		return origin;
 	}
 	
 	@Override
@@ -73,12 +86,14 @@ private Point origin;
             
                Ellipse2D ellipse = new Ellipse2D.Double();
                ellipse.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt, (20+p1.getX()+scaledDistances.getX())*rowWid, (20-p1.getY()-scaledDistances.getY())*rowHt);
-               g.draw(ellipse);
                
-               Ellipse2D center = new Ellipse2D.Double();
-               center.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt, 
-            		   					(20+p1.getX()+0.5)*rowWid,(20-p1.getY()-0.5)*rowHt);
-               g.fill(center);
+               g.setStroke(new BasicStroke(3));
+               g.setColor(c);
+               g.draw(ellipse);
+               g.setStroke(new BasicStroke(1));
+  	    	 	g.setColor(Color.BLACK);
+               
+               p1.draw(g);
                //g.drawLine(0, 0, 20*rowWid, 20*rowHt);
         }
 	}
@@ -110,8 +125,22 @@ private Point origin;
         
         ((R3Matrix) pointHolder).setPointValues(((Ellipse)this).getHorizontalDistance(), ((Ellipse)this).getVerticalDistance());
          pointHolder.setData(scalor.times(pointHolder));
-         this.setScaledDistances(((R3Matrix) pointHolder).getPoint().getX(), ((R3Matrix) pointHolder).getPoint().getY());
+         this.setScaledDistances(((R3Matrix) pointHolder).getPoint());
 
 	 }
+
+	@Override
+	public GraphicObject clone() {
+		
+		Ellipse e = new Ellipse();
+		e.setColor(getColor());
+		e.setDistances(getDistances());
+		e.setHorizontalDistance(getHorizontalDistance());
+		e.setVerticalDistance(getVerticalDistance());
+		e.setOrigin(getOrigin());
+		e.setScaledDistances(getScaledDistances());
+		e.setPoints(getPoints());
+		return e;
+	}
 
 }

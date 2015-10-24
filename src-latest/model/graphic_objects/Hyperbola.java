@@ -84,4 +84,15 @@ public class Hyperbola extends GraphicObject{
         }
     }
 
+	@Override
+	public GraphicObject clone() {
+		 Hyperbola h = new Hyperbola();
+		 h.setColor(getColor());
+		 h.sethDistance(gethDistance());
+		 h.setvDistance(getvDistance());
+		 h.setPoints(getPoints());
+		 h.setHorizontal(isHorizontal());
+		return h;
+	}
+
 }
