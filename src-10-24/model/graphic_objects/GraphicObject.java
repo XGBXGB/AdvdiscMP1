@@ -123,10 +123,11 @@ public abstract class GraphicObject implements Cloneable {
 		System.out.println("NEAREST: " + nearest);
 		for (int i = 0; i < points.size(); i++) {
 			Point p = points.get(i);
-			double X = ((R3Matrix) pointHolder).getPoint().getX();
-			double Y = ((R3Matrix) pointHolder).getPoint().getY();
 			// Convert point to matrix
 			((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());
+			
+			double X = ((R3Matrix) pointHolder).getPoint().getX();
+			double Y = ((R3Matrix) pointHolder).getPoint().getY();
 
 			// Translate near X or Y axis
 			if (isXAxis) {

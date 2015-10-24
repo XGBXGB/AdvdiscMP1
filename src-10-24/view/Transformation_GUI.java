@@ -492,11 +492,15 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")) {
+					sc.revertToOriginal();
+					sc.shearShape(false, Double.valueOf(txt_shear_y.getText()));
 					sc.shearShape(true, Double.valueOf(txt_shear_x.getText()));
-				} else  if(txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")){
+				} else if (txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")) {
 					sc.revertToOriginal();
-				} else  if(!txt_shear_x.getText().equals("") && txt_shear_y.getText().equals("")){
+					sc.shearShape(false, Double.valueOf(txt_shear_y.getText()));
+				} else if (!txt_shear_x.getText().equals("") && txt_shear_y.getText().equals("")) {
 					sc.revertToOriginal();
+					sc.shearShape(true, Double.valueOf(txt_shear_x.getText()));
 				} else {
 					sc.revertToOriginal();
 				}
@@ -508,11 +512,15 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")) {
+					sc.revertToOriginal();
+					sc.shearShape(true, Double.valueOf(txt_shear_x.getText()));
 					sc.shearShape(false, Double.valueOf(txt_shear_y.getText()));
-				} else  if(txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")){
+				} else if (txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")) {
 					sc.revertToOriginal();
-				} else  if(!txt_shear_x.getText().equals("") && txt_shear_y.getText().equals("")){
+					sc.shearShape(false, Double.valueOf(txt_shear_y.getText()));
+				} else if (!txt_shear_x.getText().equals("") && txt_shear_y.getText().equals("")) {
 					sc.revertToOriginal();
+					sc.shearShape(true, Double.valueOf(txt_shear_x.getText()));
 				} else {
 					sc.revertToOriginal();
 				}
