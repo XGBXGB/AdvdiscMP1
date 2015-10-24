@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import model.Point;
 import model.graphic_objects.GraphicObject;
 import model.graphic_objects.Parabola;
 
@@ -84,7 +85,8 @@ public class Parabola_GUI extends Content implements ActionListener{
         GraphicObject parabola = new Parabola();
         ((Parabola)parabola).setMagnitude(Double.parseDouble(txt_magnitude.getText()));
         ((Parabola)parabola).setVertical(rbtn_vertical.isSelected());
-        parabola.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
+        Point p = new Point(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
+        ((Parabola)parabola).setCenter(p);
         sCon.setOriginalObject(parabola);
         sCon.setTransformedObject((Parabola)parabola.clone());
         clear();
