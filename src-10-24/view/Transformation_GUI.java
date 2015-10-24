@@ -94,7 +94,6 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
     public Transformation_GUI(CardLayout cl, JPanel panel_main_content) {
 
         super();
-
         sc = GraphicObjectController.getInstance();
         sc.registerObserver(this);
         
@@ -551,7 +550,7 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
     }
     
    public void clear(){
-	   clearMatrixLog();
+	   update();
 	   this.rBtn_x.setSelected(false);
 	   this.rBtn_y.setSelected(false);
 	   this.txt_rotate.setText("");
@@ -572,15 +571,16 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
             clear();
         }
         else if (a.getSource() == btn_reset) {
-            sc.revertToOriginal();
-            clear();
+        	clear();
+        	sc.revertToOriginal();  
         }
-
     }
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		if(matrix_log != null){
+			this.matrix_log.setText(sc.getMatrixLog());
+		}
 		
 	}
 

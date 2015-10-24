@@ -54,22 +54,15 @@ public abstract class GraphicObject implements Cloneable {
 		}
 	}
 
-//	public void revertToOriginal() {
-//		points.clear();
-//		for (int i = 0; i < originalPoints.size(); i++) {
-//			points.add(new Point(originalPoints.get(i).getX(), originalPoints.get(i).getY()));
-//		}
-//	}
-
 	public abstract void draw(Graphics2D g);
-
+	
 	public void reflect(boolean isXAxis) {
 
 		MatrixFactory matrixFactory = new MatrixFactory();
 		Matrix reflector = matrixFactory.getMatrix("REFLECT");
 		Matrix pointHolder = matrixFactory.getMatrix("POINT");
 		((ReflectMatrix) reflector).reflect(isXAxis);
-		reflector.printValues();
+//		reflector.printValues();
 		for (int i = 0; i < points.size(); i++) {
 			Point p = points.get(i);
 			((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());
@@ -120,7 +113,6 @@ public abstract class GraphicObject implements Cloneable {
 		((ShearMatrix) shearer).shear(isXAxis, x);
 
 		double nearest = distanceToAxis(isXAxis);
-		System.out.println("NEAREST: " + nearest);
 		for (int i = 0; i < points.size(); i++) {
 			Point p = points.get(i);
 			// Convert point to matrix
@@ -227,6 +219,7 @@ public abstract class GraphicObject implements Cloneable {
 		Matrix pointHolder = matrixFactory.getMatrix("POINT");
 		((ScaleMatrix) scalor).setScalingFactor(scalingFactorX, scalingFactorY);
 
+		
 		for (int i = 0; i < points.size(); i++) {
 			Point p = points.get(i);
 			if (p.getX() != 0 && p.getY() != 0)
@@ -241,5 +234,16 @@ public abstract class GraphicObject implements Cloneable {
 			pointHolder.setData(scalor.times(pointHolder));
 			points.set(i, ((R3Matrix) pointHolder).getPoint());
 		}
+	}
+	
+	public String printMatrix(){
+		String result = "";
+		int ascii = 65;
+		for(Point p: points){	
+			result += String.format("%1s %c = "," ", ascii);
+			result += String.format("[%-1s %.3f %.3f %1s]\n"," ",p.getX(),p.getY(), " ");
+			ascii++;
+		}
+		return result;
 	}
 }

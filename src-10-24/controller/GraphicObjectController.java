@@ -23,6 +23,7 @@ public class GraphicObjectController implements Subject{
     private GraphicObject orgObject,transObject;
     private static GraphicObjectController instance = null;
     private ArrayList<Observer> observerList;
+    private String result = "";
     
     public GraphicObjectController(){
         observerList = new ArrayList<Observer>();
@@ -83,6 +84,19 @@ public class GraphicObjectController implements Subject{
     public void scaleShape(double x, double y){
     	transObject.scaleShape(x, y);
     	notifyObservers();
+    }
+    
+    public String getMatrixLog(){
+    	String s = "";
+    	if(orgObject != null && transObject != null){
+    		s = " BEFORE: \n";
+        	s += orgObject.printMatrix();
+        	s += " ------------------------------------------------------------\n";
+        	s += " AFTER: \n";
+        	s += transObject.printMatrix();
+        	return s;
+    	}
+    	return s;
     }
     
     @Override

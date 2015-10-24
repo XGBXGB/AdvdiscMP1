@@ -79,7 +79,6 @@ private Point origin;
 		Point p1, p2;
         int rowHt = 510 / 40;
         int rowWid = 510 / 40;
-        System.out.println("DRAW");
         
         if(points.size() > 0){
         	   p1 = points.get(0);
