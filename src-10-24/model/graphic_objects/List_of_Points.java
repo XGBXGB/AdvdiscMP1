@@ -14,19 +14,10 @@ public class List_of_Points extends GraphicObject {
 	
 	@Override
 	public void draw(Graphics2D g) {
-		// TODO Auto-generated method stub
-		  int rowHt = 510 / 40;
-	      int rowWid = 510 / 40;
-	        
-
     	  for(int i =0; i< points.size(); i++){
-	        	 Ellipse2D center = new Ellipse2D.Double();
-		         center.setFrameFromCenter((20+points.get(i).getX())*rowWid,(20-points.get(i).getY())*rowHt, 
-		      		   					(20+points.get(i).getX()+0.5)*rowWid,(20-points.get(i).getY()-0.5)*rowHt);
-		         points.get(i).draw(g);
-		         g.fill(center);
-	        }
-	      
+		      points.get(i).setColor(c);
+    		  points.get(i).draw(g); 
+	      }
 	}
 
 	@Override

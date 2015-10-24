@@ -140,7 +140,6 @@ public class Points_GUI extends Content implements ActionListener {
 		
 		System.out.println("POINTS Create Graphic Object");
 		go.setPoints(pList.iterator());
-		go.setColor(Color.BLACK);
 		sCon.setOriginalObject(go);
 		sCon.setTransformedObject(go.clone());
 		clear();

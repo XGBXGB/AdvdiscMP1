@@ -60,7 +60,7 @@ public class Point extends GraphicObject{
 		// TODO Auto-generated method stub
 		 Ellipse2D center = new Ellipse2D.Double();
          center.setFrameFromCenter((20+x)*rowWid,(20-y)*rowHt, 
-      		   					(20+x+0.3)*rowWid,(20-y-0.3)*rowHt);
+      		   					(20+x+0.4)*rowWid,(20-y-0.4)*rowHt);
          g.setColor(c);
          g.fill(center);
          g.setColor(Color.BLACK);

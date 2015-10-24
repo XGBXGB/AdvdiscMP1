@@ -70,18 +70,25 @@ public class Hyperbola extends GraphicObject{
                 val1= sqrt( Math.pow(hDistance, 2) + Math.pow(hDistance, 2)*( Math.pow(i-k, 2)/Math.pow(vDistance, 2) ) ) + h;
                 val2= -sqrt( Math.pow(hDistance, 2) + Math.pow(hDistance, 2)*( Math.pow(i-k, 2)/Math.pow(vDistance, 2) ) ) + h;
                 
+                g2.setColor(c);
                 g2.draw(new Line2D.Double((20+val1)*rowWid, (20-i)*rowHt, (20+val1)*rowWid, (20-i)*rowHt ));
+                g2.setColor(c);
                 g2.draw(new Line2D.Double((20+val2)*rowWid, (20-i)*rowHt, (20+val2)*rowWid, (20-i)*rowHt ));
+                
             }else{
                 val1= sqrt( Math.pow(vDistance, 2) + Math.pow(vDistance, 2)*( Math.pow(i-h, 2)/Math.pow(hDistance, 2) ) ) + k;
                 val2= -sqrt( Math.pow(vDistance, 2) + Math.pow(vDistance, 2)*( Math.pow(i-h, 2)/Math.pow(hDistance, 2) ) ) + k;
                 
+                g2.setColor(c);
                 g2.draw(new Line2D.Double((20+i)*rowWid, (20-val1)*rowHt, (20+i)*rowWid, (20-val1)*rowHt ));
+                g2.setColor(c);
                 g2.draw(new Line2D.Double((20+i)*rowWid, (20-val2)*rowHt, (20+i)*rowWid, (20-val2)*rowHt ));
             }
             
             i+=0.05;
         }
+        
+        g2.setColor(Color.BLACK);
     }
 
 	@Override
