@@ -16,34 +16,21 @@ import model.matrix.TranslateMatrix;
 public class Ellipse extends GraphicObject{
 	
 private Point distances;
-private Point scaledDistances;
-private Point origin;	
 
 	public Ellipse(){
 		points = new ArrayList<Point>();
-		origin = null;
 		distances = null;
-		scaledDistances = null;
 	}
 	
 	public void setDistances(Point p)
 	{
 		distances = p;
-		//scaledDistances = new Point(horizontalDistance, verticalDistance);
 	}
 	
 	public Point getDistances(){
 		return distances;
 	}
-	
-	public void setScaledDistances(Point p){
-		scaledDistances = p;
-	}
-	
-	public Point getScaledDistances(){
-		return scaledDistances;
-	}
-	
+		
 	public void setHorizontalDistance(double hd)
 	{
 		distances.setX(hd);
@@ -64,15 +51,6 @@ private Point origin;
 		return distances.getY();
 	}
 	
-	public void setOrigin(Point p)
-	{
-		origin = p;
-	}
-	
-	public Point getOrigin(){
-		return origin;
-	}
-	
 	@Override
 	public void draw(Graphics2D g) {
 		// TODO Auto-generated method stub
@@ -84,7 +62,7 @@ private Point origin;
         	   p1 = points.get(0);
             
                Ellipse2D ellipse = new Ellipse2D.Double();
-               ellipse.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt, (20+p1.getX()+scaledDistances.getX())*rowWid, (20-p1.getY()-scaledDistances.getY())*rowHt);
+               ellipse.setFrameFromCenter((20+p1.getX())*rowWid,(20-p1.getY())*rowHt, (20+p1.getX()+distances.getX())*rowWid, (20-p1.getY()-distances.getY())*rowHt);
                
                g.setStroke(new BasicStroke(3));
                g.setColor(c);
@@ -107,7 +85,7 @@ private Point origin;
 
 		for (int i = 0; i < points.size(); i++) {
 			Point p = points.get(i);
-			((R3Matrix) pointHolder).setPointValues(origin.getX(), origin.getY());
+			((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());
 			pointHolder.setData(translator.times(pointHolder));
 			points.set(i, ((R3Matrix) pointHolder).getPoint());
 		}
@@ -122,9 +100,9 @@ private Point origin;
         Matrix pointHolder = matrixFactory.getMatrix("POINT");
         ((ScaleMatrix)scalor).setScalingFactor(scalingFactorX, scalingFactorY);
         
-        ((R3Matrix) pointHolder).setPointValues(((Ellipse)this).getHorizontalDistance(), ((Ellipse)this).getVerticalDistance());
+        ((R3Matrix) pointHolder).setPointValues(getHorizontalDistance(), getVerticalDistance());
          pointHolder.setData(scalor.times(pointHolder));
-         this.setScaledDistances(((R3Matrix) pointHolder).getPoint());
+         this.setDistances(((R3Matrix) pointHolder).getPoint());
 
 	 }
 
@@ -136,8 +114,6 @@ private Point origin;
 		e.setDistances(getDistances());
 		e.setHorizontalDistance(getHorizontalDistance());
 		e.setVerticalDistance(getVerticalDistance());
-		e.setOrigin(getOrigin());
-		e.setScaledDistances(getScaledDistances());
 		e.setPoints(getPoints());
 		return e;
 	}

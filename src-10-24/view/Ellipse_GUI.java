@@ -62,9 +62,7 @@ public class Ellipse_GUI extends Content {
 		e.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
 		Point d = new Point(Double.parseDouble(txt_horizontal.getText()), Double.parseDouble(txt_vertical.getText()));
 		Point o = new Point(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
-		((Ellipse)e).setDistances(d);	
-		((Ellipse)e).setScaledDistances(d);	
-		((Ellipse)e).setOrigin(o);
+		((Ellipse)e).setDistances(d);
 		sCon.setOriginalObject(e);
 		sCon.setTransformedObject((Ellipse)e.clone());
 		clear();
