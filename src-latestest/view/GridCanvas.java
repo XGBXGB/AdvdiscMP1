@@ -15,17 +15,17 @@ import java.awt.geom.Line2D;
 import model.Observer;
 import model.graphic_objects.GraphicObject;
 import model.graphic_objects.Polygon;
-import controller.ShapeController;
+import controller.GraphicObjectController;
 
 /**
  *
  * @author Christian Gabriel*/
 public class GridCanvas extends Canvas implements Observer {
 
-	private ShapeController sCon;
+	private GraphicObjectController sCon;
 	private int width, height;
 	private int rows,cols;
-	private GraphicObject Shape = null;
+	private GraphicObject oObject = null, tObject = null;
     double x1, y1, x2, y2;
     float rowHt, rowWid;
     Polygon quad = null;
@@ -33,7 +33,7 @@ public class GridCanvas extends Canvas implements Observer {
     boolean rotateLine = false;
 
     public GridCanvas(int width, int height, int rows, int cols) {
-    	sCon = ShapeController.getInstance();
+    	sCon = GraphicObjectController.getInstance();
     	sCon.registerObserver(this);
         this.setSize(width, height);
         this.width  = width;
@@ -48,8 +48,10 @@ public class GridCanvas extends Canvas implements Observer {
     public void paint(Graphics g) {
         int i;
         Graphics2D g2 = (Graphics2D) g;
-        if(Shape!=null)
-        	Shape.draw(g2);
+        if(tObject!=null)
+        	tObject.draw(g2);
+        if(oObject!=null)
+        	oObject.draw(g2);
         drawGrid(g2);
     }
 
@@ -86,7 +88,9 @@ public class GridCanvas extends Canvas implements Observer {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		Shape = sCon.getShape();
+	
+		oObject = sCon.getOriginalObject();
+		tObject = sCon.getTransformedObject();
 		
 		this.repaint();
 		this.revalidate();

@@ -1,6 +1,6 @@
 package view;
 
-import controller.ShapeController;
+import controller.GraphicObjectController;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -24,14 +24,14 @@ public class Hyperbola_GUI extends Content implements ActionListener{
 	private Point_GUI center;
 	private JRadioButton rbtn_vertical, rbtn_horizontal;
 	private JLabel lbl_orientation;
-        private ShapeController sCon;
+        private GraphicObjectController sCon;
 	
 	//vertexA and vertexB are the horizontal axis points
 	//covertexA and covertexB are the vertical axis points
 	
 	public Hyperbola_GUI() {
 		super("Hyperbola");
-		sCon = ShapeController.getInstance();
+		sCon = GraphicObjectController.getInstance();
 		panel_content = new JPanel();
 		panel_content.setPreferredSize(new Dimension(350, 350));
 		panel_content.setLayout(new MigLayout("", "[][]", "[][][][][]"));
@@ -65,7 +65,7 @@ public class Hyperbola_GUI extends Content implements ActionListener{
 		rbtn_vertical.setOpaque(false);
 		rbtn_vertical.addActionListener(this);
 		rbtn_vertical.setFocusPainted(false);
-                rbtn_vertical.setSelected(true);
+        rbtn_vertical.setSelected(true);
 		panel_content.add(rbtn_vertical, "cell 1 3");
 		
 		rbtn_horizontal = new JRadioButton("Horizontal");
@@ -89,18 +89,23 @@ public class Hyperbola_GUI extends Content implements ActionListener{
 	public void createShape() {
 		// TODO Auto-generated method stub
 		GraphicObject hyperbola = new Hyperbola();
-                hyperbola.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
-                System.out.println(txt_horizontal.getText() + txt_vertical.getText());
-                ((Hyperbola)hyperbola).sethDistance(Double.parseDouble(txt_horizontal.getText()));
-                ((Hyperbola)hyperbola).setvDistance(Double.parseDouble(txt_vertical.getText()));
-                ((Hyperbola)hyperbola).setHorizontal(rbtn_horizontal.isSelected());
-                sCon.setShape(hyperbola);
+        hyperbola.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
+        System.out.println(txt_horizontal.getText() + txt_vertical.getText());
+        ((Hyperbola)hyperbola).sethDistance(Double.parseDouble(txt_horizontal.getText()));
+        ((Hyperbola)hyperbola).setvDistance(Double.parseDouble(txt_vertical.getText()));
+        ((Hyperbola)hyperbola).setHorizontal(rbtn_horizontal.isSelected());
+        sCon.setOriginalObject(hyperbola);
+        sCon.setTransformedObject((Hyperbola)hyperbola.clone());
+        clear();
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		 this.txt_horizontal.setText("");
+		 this.txt_vertical.setText("");
+		 this.center.clear();
+		 this.rbtn_horizontal.setSelected(false);
+		 this.rbtn_vertical.setEnabled(true);
 	}
 
 }

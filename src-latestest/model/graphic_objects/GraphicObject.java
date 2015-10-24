@@ -6,6 +6,7 @@
 
 package model.graphic_objects;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,34 +25,41 @@ import model.matrix.TranslateMatrix;
  *
  * @author Christian Gabriel
  */
-public abstract class GraphicObject {
+public abstract class GraphicObject implements Cloneable {
 	protected ArrayList<Point> points;
-	protected ArrayList<Point> originalPoints;
-
+	protected Color c;
+	
 	public void addPoint(double x, double y) {
 		points.add(new Point(x, y));
 	}
-
+	
+	public void setColor(Color c){
+		this.c = c;
+	}
+	
+	public Color getColor(){
+		return this.c;
+	}
+	
+	public abstract GraphicObject clone();
 	public Iterator<Point> getPoints() {
 		return points.iterator();
 	}
 
 	public void setPoints(Iterator<Point> points) {
-		originalPoints = new ArrayList<Point>();
 		this.points.clear();
 		while (points.hasNext()) {
 			Point p = points.next();
 			this.points.add(p);
-			this.originalPoints.add(p);
 		}
 	}
 
-	public void revertToOriginal() {
-		points.clear();
-		for (int i = 0; i < originalPoints.size(); i++) {
-			points.add(new Point(originalPoints.get(i).getX(), originalPoints.get(i).getY()));
-		}
-	}
+//	public void revertToOriginal() {
+//		points.clear();
+//		for (int i = 0; i < originalPoints.size(); i++) {
+//			points.add(new Point(originalPoints.get(i).getX(), originalPoints.get(i).getY()));
+//		}
+//	}
 
 	public abstract void draw(Graphics2D g);
 
@@ -198,17 +206,18 @@ public abstract class GraphicObject {
 
 	public void translateShape(double x, double y) {
 
-		/*
-		 * MatrixFactory matrixFactory = new MatrixFactory(); Matrix translator
-		 * = matrixFactory.getMatrix("TRANSLATE"); Matrix pointHolder =
-		 * matrixFactory.getMatrix("POINT"); ((TranslateMatrix)
-		 * translator).setTranslateValues(x, y);
-		 * 
-		 * for (int i = 0; i < points.size(); i++) { Point p = points.get(i);
-		 * ((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());
-		 * pointHolder.setData(translator.times(pointHolder)); points.set(i,
-		 * ((R3Matrix) pointHolder).getPoint()); }
-		 */
+		 MatrixFactory matrixFactory = new MatrixFactory();
+		 Matrix translator = matrixFactory.getMatrix("TRANSLATE"); 
+		 Matrix pointHolder = matrixFactory.getMatrix("POINT"); ((TranslateMatrix)
+		 translator).setTranslateValues(x, y);
+		 
+		 for (int i = 0; i < points.size(); i++) { 
+			 Point p = points.get(i);
+			 ((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());
+			 pointHolder.setData(translator.times(pointHolder)); 
+			 points.set(i,((R3Matrix) pointHolder).getPoint()); 
+		}
+		 
 	}
 
 	public void scaleShape(double scalingFactorX, double scalingFactorY) {

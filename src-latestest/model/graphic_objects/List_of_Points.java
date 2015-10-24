@@ -29,4 +29,12 @@ public class List_of_Points extends GraphicObject {
 	      
 	}
 
+	@Override
+	public GraphicObject clone() {
+		List_of_Points lp = new List_of_Points();
+		lp.setColor(getColor());
+		lp.setPoints(getPoints());
+		return lp;
+	}
+
 }

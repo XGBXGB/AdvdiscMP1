@@ -26,13 +26,10 @@ public class Polygon extends GraphicObject {
 
     @Override
     public void draw(Graphics2D g) {
-        Point p1, p2;
+       
         int rowHt = 510 / 40;
         int rowWid = 510 / 40;
         float x,y,x2,y2;
-        
-        int[] xList = new int[points.size()];
-        int[] yList = new int[points.size()];
         
         for (int i = 0; i < points.size()-1; i++) {
          
@@ -43,7 +40,7 @@ public class Polygon extends GraphicObject {
 	    	 y2 = (float)(20-points.get(i+1).getY())*rowHt;
 	    	  
 	    	 g.setStroke(new BasicStroke(3));
-	    	 g.setColor(Color.CYAN);
+	    	 g.setColor(c);
              g.draw(new Line2D.Float(x, y,x2,y2));
              g.setColor(Color.BLACK);
              g.setStroke(new BasicStroke(1));
@@ -51,7 +48,6 @@ public class Polygon extends GraphicObject {
            points.get(i).draw(g);
         }
         
-        System.out.println("DRAW");
         //connect the first point and the last point
    	 	x = (float)(20+points.get(0).getX())*rowHt;
    	 	y = (float)(20-points.get(0).getY())*rowHt;
@@ -60,10 +56,18 @@ public class Polygon extends GraphicObject {
    	 	y2 = (float)(20-points.get(points.size()-1).getY())*rowHt;
    	 	points.get(points.size()-1).draw(g); //print the point of the last point
    	 	g.setStroke(new BasicStroke(3));
-   	 	g.setColor(Color.CYAN);
+   	 	g.setColor(c);
         g.draw(new Line2D.Float(x, y,x2,y2));
         g.setColor(Color.BLACK);
         g.setStroke(new BasicStroke(1));
         
     }
+
+	@Override
+	public GraphicObject clone() {
+		Polygon p = new Polygon();
+		p.setColor(getColor());
+		p.setPoints(getPoints());
+		return p;
+	}
 }

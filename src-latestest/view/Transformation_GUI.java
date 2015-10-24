@@ -23,9 +23,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.BoxLayout;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
@@ -33,7 +35,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import controller.ShapeController;
+import controller.GraphicObjectController;
 
 import javax.swing.JButton;
 import javax.swing.border.SoftBevelBorder;
@@ -43,13 +45,16 @@ import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 
-public class Transformation_GUI extends JPanel implements ActionListener {
+import model.Observer;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+public class Transformation_GUI extends JPanel implements ActionListener, Observer {
 
     private JPanel panel_top, panel_bottom, panel_side;
     private JPanel panel_transformation;
-    private JPanel panel_matrix, panel_before_matrix, panel_after_matrix;
-
-    private JSplitPane splitPane;
+    private JPanel panel_matrix;
     private JPanel panel_menu;
     private JButton btn_change_shape;
     private JButton btn_reset;
@@ -81,15 +86,18 @@ public class Transformation_GUI extends JPanel implements ActionListener {
     private JRadioButton rBtn_x;
     private JRadioButton rBtn_y;
     private JLabel lblNewLabel;
-
-    private ShapeController sc;
-
+    private JTextArea matrix_log;
+    private GraphicObjectController sc;
+    private JScrollPane scrollPane;
+    private String result;
+    
     public Transformation_GUI(CardLayout cl, JPanel panel_main_content) {
 
         super();
 
-        sc = ShapeController.getInstance();
-
+        sc = GraphicObjectController.getInstance();
+        sc.registerObserver(this);
+        
         this.cl = cl;
         this.panel_main_content = panel_main_content;
 
@@ -348,23 +356,15 @@ public class Transformation_GUI extends JPanel implements ActionListener {
         panel_matrix.setPreferredSize(new Dimension(250, 330));
         panel_side.add(panel_matrix, BorderLayout.SOUTH);
         panel_matrix.setLayout(new BorderLayout(0, 0));
-
-        splitPane = new JSplitPane();
-        splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        splitPane.setPreferredSize(new Dimension(179, 50));
-        panel_matrix.add(splitPane);
-
-        panel_before_matrix = new JPanel();
-        panel_before_matrix.setBackground(new Color(255, 255, 255));
-        panel_before_matrix.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null), "Before", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-        panel_before_matrix.setPreferredSize(new Dimension(220, 10));
-        splitPane.setLeftComponent(panel_before_matrix);
-
-        panel_after_matrix = new JPanel();
-        panel_after_matrix.setBackground(new Color(255, 255, 255));
-        splitPane.setRightComponent(panel_after_matrix);
-        panel_after_matrix.setPreferredSize(new Dimension(200, 10));
-        panel_after_matrix.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null), "After", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+        
+        matrix_log = new JTextArea(100,100);
+        matrix_log.setEditable(false);
+        scrollPane = new JScrollPane(matrix_log);
+        
+		scrollPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+		scrollPane.getViewport().setBackground(null);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        panel_matrix.add(scrollPane, BorderLayout.CENTER);
 
         panel_menu = new JPanel();
         panel_menu.setBackground(new Color(135, 206, 250));
@@ -400,371 +400,180 @@ public class Transformation_GUI extends JPanel implements ActionListener {
 
         this.setSize((int) (screenSize.width / 1.2), (int) (screenSize.height / 1.1));
 
-        /**
-         * *********************** SCALE ******************************
-         */
-        txt_scale_x.getDocument().addDocumentListener(new DocumentListener() {
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                // TODO Auto-generated method stub
-                if (!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals("")
-                        && !txt_scale_x.getText().equals("0") && !txt_scale_x.getText().equals("0")) {
-                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
-                } else if ((txt_scale_x.getText().equals("") || txt_scale_x.getText().equals("0")) && (!txt_scale_y.getText().equals("")
-                        && !txt_scale_y.getText().equals("0"))) {
-                    sc.scaleShape(1, Double.valueOf(txt_scale_y.getText()));
-                } else if ((!txt_scale_x.getText().equals("") && !txt_scale_x.getText().equals("0")) && (txt_scale_y.getText().equals("")
-                        || txt_scale_x.getText().equals("0"))) {
-                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), 1);
-                } else {
-                    sc.scaleShape(1, 1);
-                }
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                // TODO Auto-generated method stub
-                if (!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals("")
-                        && !txt_scale_x.getText().equals("0") && !txt_scale_x.getText().equals("0")) {
-                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
-                } else if ((txt_scale_x.getText().equals("") || txt_scale_x.getText().equals("0")) && (!txt_scale_y.getText().equals("")
-                        && !txt_scale_y.getText().equals("0"))) {
-                    sc.scaleShape(1, Double.valueOf(txt_scale_y.getText()));
-                } else if ((!txt_scale_x.getText().equals("") && !txt_scale_x.getText().equals("0")) && (txt_scale_y.getText().equals("")
-                        || txt_scale_x.getText().equals("0"))) {
-                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), 1);
-                } else {
-                    sc.scaleShape(1, 1);
-                }
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                if (!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals("")
-                        && !txt_scale_x.getText().equals("0") && !txt_scale_x.getText().equals("0")) {
-                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
-                } else if ((txt_scale_x.getText().equals("") || txt_scale_x.getText().equals("0")) && (!txt_scale_y.getText().equals("")
-                        && !txt_scale_y.getText().equals("0"))) {
-                    sc.scaleShape(1, Double.valueOf(txt_scale_y.getText()));
-                } else if ((!txt_scale_x.getText().equals("") && !txt_scale_x.getText().equals("0")) && (txt_scale_y.getText().equals("")
-                        || txt_scale_x.getText().equals("0"))) {
-                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), 1);
-                } else {
-                    sc.scaleShape(1, 1);
-                }
-
-            }
-
-        });
-
-        txt_scale_y.getDocument().addDocumentListener(new DocumentListener() {
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                // TODO Auto-generated method stub
-                if (!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals("")
-                        && !txt_scale_x.getText().equals("0") && !txt_scale_x.getText().equals("0")) {
-                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
-                } else if ((txt_scale_x.getText().equals("") || txt_scale_x.getText().equals("0")) && (!txt_scale_y.getText().equals("")
-                        && !txt_scale_y.getText().equals("0"))) {
-                    sc.scaleShape(1, Double.valueOf(txt_scale_y.getText()));
-                } else if ((!txt_scale_x.getText().equals("") && !txt_scale_x.getText().equals("0")) && (txt_scale_y.getText().equals("")
-                        || txt_scale_x.getText().equals("0"))) {
-                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), 1);
-                } else {
-                    sc.scaleShape(1, 1);
-                }
-
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                // TODO Auto-generated method stub
-                if (!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals("")
-                        && !txt_scale_x.getText().equals("0") && !txt_scale_x.getText().equals("0")) {
-                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
-                } else if ((txt_scale_x.getText().equals("") || txt_scale_x.getText().equals("0")) && (!txt_scale_y.getText().equals("")
-                        && !txt_scale_y.getText().equals("0"))) {
-                    sc.scaleShape(1, Double.valueOf(txt_scale_y.getText()));
-                } else if ((!txt_scale_x.getText().equals("") && !txt_scale_x.getText().equals("0")) && (txt_scale_y.getText().equals("")
-                        || txt_scale_x.getText().equals("0"))) {
-                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), 1);
-                } else {
-                    sc.scaleShape(1, 1);
-                }
-
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                if (!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals("")
-                        && !txt_scale_x.getText().equals("0") && !txt_scale_x.getText().equals("0")) {
-                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
-                } else if ((txt_scale_x.getText().equals("") || txt_scale_x.getText().equals("0")) && (!txt_scale_y.getText().equals("")
-                        && !txt_scale_y.getText().equals("0"))) {
-                    sc.scaleShape(1, Double.valueOf(txt_scale_y.getText()));
-                } else if ((!txt_scale_x.getText().equals("") && !txt_scale_x.getText().equals("0")) && (txt_scale_y.getText().equals("")
-                        || txt_scale_x.getText().equals("0"))) {
-                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), 1);
-                } else {
-                    sc.scaleShape(1, 1);
-                }
-            }
-
-        });
-
-        /**
-         * *********************** TRANSLATE ******************************
-         */
-        txt_translate_x.getDocument().addDocumentListener(new DocumentListener() {
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                // TODO Auto-generated method stub
-                if (!txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
-                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), Double.valueOf(txt_translate_y.getText()));
-                } else if (txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
-                    sc.translateShape(0, Double.valueOf(txt_translate_y.getText()));
-                } else if (!txt_translate_x.getText().equals("") && txt_translate_y.getText().equals("")) {
-                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), 0);
-                } else {
-                    sc.translateShape(0, 0);
-                }
-
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                // TODO Auto-generated method stub
-                if (!txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
-                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), Double.valueOf(txt_translate_y.getText()));
-                } else if (txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
-                    sc.translateShape(0, Double.valueOf(txt_translate_y.getText()));
-                } else if (!txt_translate_x.getText().equals("") && txt_translate_y.getText().equals("")) {
-                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), 0);
-                } else {
-                    sc.translateShape(0, 0);
-                }
-
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                if (!txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
-                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), Double.valueOf(txt_translate_y.getText()));
-                } else if (txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
-                    sc.translateShape(0, Double.valueOf(txt_translate_y.getText()));
-                } else if (!txt_translate_x.getText().equals("") && txt_translate_y.getText().equals("")) {
-                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), 0);
-                } else {
-                    sc.translateShape(0, 0);
-                }
-
-            }
-
-        });
-
-        txt_translate_y.getDocument().addDocumentListener(new DocumentListener() {
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                // TODO Auto-generated method stub
-                if (!txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
-                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), Double.valueOf(txt_translate_y.getText()));
-                } else if (txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
-                    sc.translateShape(0, Double.valueOf(txt_translate_y.getText()));
-                } else if (!txt_translate_x.getText().equals("") && txt_translate_y.getText().equals("")) {
-                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), 0);
-                } else {
-                    sc.translateShape(0, 0);
-                }
-
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                // TODO Auto-generated method stub
-                if (!txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
-                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), Double.valueOf(txt_translate_y.getText()));
-                } else if (txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
-                    sc.translateShape(0, Double.valueOf(txt_translate_y.getText()));
-                } else if (!txt_translate_x.getText().equals("") && txt_translate_y.getText().equals("")) {
-                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), 0);
-                } else {
-                    sc.translateShape(0, 0);
-                }
-
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                if (!txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
-                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), Double.valueOf(txt_translate_y.getText()));
-                } else if (txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
-                    sc.translateShape(0, Double.valueOf(txt_translate_y.getText()));
-                } else if (!txt_translate_x.getText().equals("") && txt_translate_y.getText().equals("")) {
-                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), 0);
-                } else {
-                    sc.translateShape(0, 0);
-                }
-
-            }
-
-        });
-
-        /**
-         * *********************** ROTATE ******************************
-         */
-        txt_rotate.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                // TODO Auto-generated method stub
-                if (!txt_rotate.getText().equals("")) {
-                    sc.rotateShape(Float.parseFloat(txt_rotate.getText()), 0, 0, true);
-                }
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                // TODO Auto-generated method stub
-                if (!txt_rotate.getText().equals("")) {
-                    sc.rotateShape(Float.parseFloat(txt_rotate.getText()), 0, 0, true);
-                }
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                // TODO Auto-generated method stub
-                if (!txt_rotate.getText().equals("")) {
-                    sc.rotateShape(Float.parseFloat(txt_rotate.getText()), 0, 0, true);
-                }
-            }
-        });
-        /**
-         * *********************** SHEAR ******************************
-         */
-        txt_shear_x.getDocument().addDocumentListener(new DocumentListener() {
-
-			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				if (!txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")) {
-						sc.shearShape(true, Double.valueOf(txt_shear_x.getText()));
-				} else  if(txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")){
-					sc.revertToOriginal();
-				} else  if(!txt_shear_x.getText().equals("") && txt_shear_y.getText().equals("")){
-					sc.revertToOriginal();
-				} else {
-					sc.revertToOriginal();
-				}
-
-			}
-
+/********************************* SCALE *******************************/
+         
+        txt_scale_x.addActionListener(new ActionListener() {
+			
 			@Override
-			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				if (!txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")) {
-						sc.shearShape(true, Double.valueOf(txt_shear_x.getText()));
-				} else  if(txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")){
-					sc.revertToOriginal();
-				} else  if(!txt_shear_x.getText().equals("") && txt_shear_y.getText().equals("")){
-					sc.revertToOriginal();
-				} else {
-					sc.revertToOriginal();
-				}
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				if (!txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")) {
-						sc.shearShape(true, Double.valueOf(txt_shear_x.getText()));
-				} else  if(txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")){
-					sc.revertToOriginal();
-				} else  if(!txt_shear_x.getText().equals("") && txt_shear_y.getText().equals("")){
-					sc.revertToOriginal();
-				} else {
-					sc.revertToOriginal();
-				}
-
+			public void actionPerformed(ActionEvent e) {
+				if (!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals("")
+                        && !txt_scale_x.getText().equals("0") && !txt_scale_x.getText().equals("0")) {
+                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
+                } else if ((txt_scale_x.getText().equals("") || txt_scale_x.getText().equals("0")) && (!txt_scale_y.getText().equals("")
+                        && !txt_scale_y.getText().equals("0"))) {
+                    sc.scaleShape(1, Double.valueOf(txt_scale_y.getText()));
+                } else if ((!txt_scale_x.getText().equals("") && !txt_scale_x.getText().equals("0")) && (txt_scale_y.getText().equals("")
+                        || txt_scale_x.getText().equals("0"))) {
+                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), 1);
+                } else {
+                    sc.scaleShape(1, 1);
+                }
 			}
 		});
 
-		txt_shear_y.getDocument().addDocumentListener(new DocumentListener() {
-
-			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				if (!txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")) {
-						sc.shearShape(false, Double.valueOf(txt_shear_y.getText()));
-				} else  if(txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")){
-					sc.revertToOriginal();
-				} else  if(!txt_shear_x.getText().equals("") && txt_shear_y.getText().equals("")){
-					sc.revertToOriginal();
-				} else {
-					sc.revertToOriginal();
-				}
-
-			}
-
+        txt_scale_y.addActionListener(new ActionListener() {
+			
 			@Override
-			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				if (!txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")) {
-						sc.shearShape(false, Double.valueOf(txt_shear_y.getText()));
-				} else  if(txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")){
-					sc.revertToOriginal();
-				} else  if(!txt_shear_x.getText().equals("") && txt_shear_y.getText().equals("")){
-					sc.revertToOriginal();
-				} else {
-					sc.revertToOriginal();
-				}
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				if (!txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")) {
-						sc.shearShape(false, Double.valueOf(txt_shear_y.getText()));
-				} else  if(txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")){
-					sc.revertToOriginal();
-				} else  if(!txt_shear_x.getText().equals("") && txt_shear_y.getText().equals("")){
-					sc.revertToOriginal();
-				} else {
-					sc.revertToOriginal();
-				}
-
+			public void actionPerformed(ActionEvent e) {
+				if (!txt_scale_x.getText().equals("") && !txt_scale_y.getText().equals("")
+	                        && !txt_scale_x.getText().equals("0") && !txt_scale_x.getText().equals("0")) {
+                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), Double.valueOf(txt_scale_y.getText()));
+                } else if ((txt_scale_x.getText().equals("") || txt_scale_x.getText().equals("0")) && (!txt_scale_y.getText().equals("")
+                        && !txt_scale_y.getText().equals("0"))) {
+                    sc.scaleShape(1, Double.valueOf(txt_scale_y.getText()));
+                } else if ((!txt_scale_x.getText().equals("") && !txt_scale_x.getText().equals("0")) && (txt_scale_y.getText().equals("")
+                        || txt_scale_x.getText().equals("0"))) {
+                    sc.scaleShape(Double.valueOf(txt_scale_x.getText()), 1);
+                } else {
+                    sc.scaleShape(1, 1);
+                }
 			}
 		});
-		/**
-         * *********************** REFLECT ******************************
-         */
+
+/********************************* TRANSLATE *******************************/
+         
+        txt_translate_x.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 if (!txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
+	                sc.translateShape(Double.valueOf(txt_translate_x.getText()), Double.valueOf(txt_translate_y.getText()));
+                } else if (txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
+                    sc.translateShape(0, Double.valueOf(txt_translate_y.getText()));
+                } else if (!txt_translate_x.getText().equals("") && txt_translate_y.getText().equals("")) {
+                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), 0);
+                } else {
+                    sc.translateShape(0, 0);
+                }
+			}
+		});
+        
+        txt_translate_y.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
+                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), Double.valueOf(txt_translate_y.getText()));
+                } else if (txt_translate_x.getText().equals("") && !txt_translate_y.getText().equals("")) {
+                    sc.translateShape(0, Double.valueOf(txt_translate_y.getText()));
+                } else if (!txt_translate_x.getText().equals("") && txt_translate_y.getText().equals("")) {
+                    sc.translateShape(Double.valueOf(txt_translate_x.getText()), 0);
+                } else {
+                    sc.translateShape(0, 0);
+                }
+				
+			}
+		});
+
+/************************************** ROTATE *******************************/
+        txt_rotate.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!txt_rotate.getText().equals("")) {
+                    sc.rotateShape(Float.parseFloat(txt_rotate.getText()), 0, 0, true);
+                }
+			}
+		});
+        
+/*********************************** SHEAR *******************************/
+        txt_shear_x.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")) {
+					sc.shearShape(true, Double.valueOf(txt_shear_x.getText()));
+				} else  if(txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")){
+					sc.revertToOriginal();
+				} else  if(!txt_shear_x.getText().equals("") && txt_shear_y.getText().equals("")){
+					sc.revertToOriginal();
+				} else {
+					sc.revertToOriginal();
+				}
+			}
+		});
+
+		txt_shear_y.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")) {
+					sc.shearShape(false, Double.valueOf(txt_shear_y.getText()));
+				} else  if(txt_shear_x.getText().equals("") && !txt_shear_y.getText().equals("")){
+					sc.revertToOriginal();
+				} else  if(!txt_shear_x.getText().equals("") && txt_shear_y.getText().equals("")){
+					sc.revertToOriginal();
+				} else {
+					sc.revertToOriginal();
+				}
+				
+			}
+		});
+		
+/******************************************* REFLECT *******************************/
 		rBtn_x.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				sc.reflect(true);
 			}
-			
 		});
+		
 		rBtn_y.addActionListener(new ActionListener() {
-
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				sc.reflect(false);
 			}
-			
 		});
         this.setVisible(true);
     }
 
+    public void clearMatrixLog(){
+    	this.matrix_log.setText("");
+    	this.repaint();
+    	this.revalidate();
+    }
+    
+   public void clear(){
+	   clearMatrixLog();
+	   this.rBtn_x.setSelected(false);
+	   this.rBtn_y.setSelected(false);
+	   this.txt_rotate.setText("");
+	   this.txt_scale_x.setText("");
+	   this.txt_scale_y.setText("");
+	   this.txt_shear_x.setText("");
+	   this.txt_shear_y.setText("");
+	   this.txt_translate_x.setText("");
+	   this.txt_translate_y.setText("");
+   }
+    
     @Override
     public void actionPerformed(ActionEvent a) {
 		// TODO Auto-generated method stub
 
         if (a.getSource() == btn_change_shape) {
             cl.show(panel_main_content, "Shape");
+            clear();
+        }
+        else if (a.getSource() == btn_reset) {
+            sc.revertToOriginal();
+            clear();
         }
 
     }
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

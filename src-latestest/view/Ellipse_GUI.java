@@ -2,14 +2,17 @@ package view;
 
 import java.awt.Dimension;
 
+
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import model.Point;
 import model.graphic_objects.Ellipse;
 import model.graphic_objects.GraphicObject;
 import net.miginfocom.swing.MigLayout;
-import controller.ShapeController;
+import controller.GraphicObjectController;
 
 public class Ellipse_GUI extends Content {
 	private JTextField txt_horizontal, txt_vertical;
@@ -19,12 +22,12 @@ public class Ellipse_GUI extends Content {
 	//vertexA and vertexB are the horizontal axis points
 	//covertexA and covertexB are the vertical axis points
 	
-	private ShapeController sCon;
+	private GraphicObjectController sCon;
 	
 	public Ellipse_GUI() {
 		super("Ellipse");
 		
-		sCon = ShapeController.getInstance();
+		sCon = GraphicObjectController.getInstance();
 		
 		panel_content = new JPanel();
 		panel_content.setPreferredSize(new Dimension(350, 350));
@@ -57,16 +60,22 @@ public class Ellipse_GUI extends Content {
 		System.out.println("Ellipse CREATE SHAPE");
 		
 		e.addPoint(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
-		((Ellipse)e).setDistances(Double.parseDouble(txt_horizontal.getText()), Double.parseDouble(txt_vertical.getText()));		
-		((Ellipse)e).setOrigin(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
-		sCon.setShape(e);
-		
+		Point d = new Point(Double.parseDouble(txt_horizontal.getText()), Double.parseDouble(txt_vertical.getText()));
+		Point o = new Point(Double.parseDouble(center.getXValue()), Double.parseDouble(center.getYValue()));
+		((Ellipse)e).setDistances(d);	
+		((Ellipse)e).setScaledDistances(d);	
+		((Ellipse)e).setOrigin(o);
+		sCon.setOriginalObject(e);
+		sCon.setTransformedObject((Ellipse)e.clone());
+		clear();
 	}
 
 	@Override
 	public void clear() {
 		// TODO Auto-generated method stub
-		
+		 this.txt_horizontal.setText(""); 
+		 this.txt_vertical.setText("");
+		 this.center.clear();
 	}
 
 }

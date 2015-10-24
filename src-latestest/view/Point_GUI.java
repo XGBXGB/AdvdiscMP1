@@ -91,4 +91,9 @@ public class Point_GUI extends JPanel
 		return this.btn;
 	}
 	
+	public void clear(){
+		this.txt_x.setText("");
+		this.txt_y.setText("");
+	}
+	
 }

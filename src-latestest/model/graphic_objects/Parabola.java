@@ -32,7 +32,7 @@ public class Parabola extends GraphicObject {
         vertical = false;
         magnitude = 0;
         points = new ArrayList<Point>();
-        originalPoints = new ArrayList();
+//        originalPoints = new ArrayList();
         center=null;
     }
 
@@ -42,7 +42,7 @@ public class Parabola extends GraphicObject {
 
     public void setVertical(boolean vertical) {
         this.vertical = vertical;
-        revertToOriginal();
+//        revertToOriginal();
     }
 
     public double getMagnitude() {
@@ -51,7 +51,7 @@ public class Parabola extends GraphicObject {
 
     public void setMagnitude(double magnitude) {
         this.magnitude = magnitude;
-        revertToOriginal();
+//        revertToOriginal();
     }
     
     @Override
@@ -71,15 +71,15 @@ public class Parabola extends GraphicObject {
             if (vertical) {
                 val1 = sqrt((i - k) / magnitude) + h;
                 val2 = -sqrt((i - k) / magnitude) + h;
-                originalPoints.add(new Point(val1, i));
-                originalPoints.add(new Point(val2, i));
+//                originalPoints.add(new Point(val1, i));
+//                originalPoints.add(new Point(val2, i));
                 points.add(new Point(val1, i));
                 points.add(new Point(val2, i));
             } else {
                 val1 = sqrt((i - h) / magnitude) + k;
                 val2 = -sqrt((i - h) / magnitude) + k;
-                originalPoints.add(new Point(i, val1));
-                originalPoints.add(new Point(i, val2));
+//                originalPoints.add(new Point(i, val1));
+//                originalPoints.add(new Point(i, val2));
                 points.add(new Point(i, val1));
                 points.add(new Point(i, val2));
             }
@@ -101,7 +101,7 @@ public class Parabola extends GraphicObject {
 
     @Override
     public void rotateShape(float angle, double val, double val2, boolean clockwise) {
-        revertToOriginal();
+//        revertToOriginal();
         MatrixFactory matrixFactory = new MatrixFactory();
         Matrix rotator = matrixFactory.getMatrix("ROTATE");
         Matrix translator = matrixFactory.getMatrix("TRANSLATE");
@@ -152,5 +152,15 @@ public class Parabola extends GraphicObject {
         }
 
     }
+
+	@Override
+	public GraphicObject clone() {
+		Parabola p = new Parabola();
+		p.setColor(getColor());
+		p.setMagnitude(getMagnitude());
+		p.setVertical(isVertical());
+		p.setPoints(getPoints());
+		return p;
+	}
 
 }

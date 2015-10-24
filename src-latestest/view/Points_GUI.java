@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import controller.ShapeController;
+import controller.GraphicObjectController;
 import model.Point;
 import model.graphic_objects.GraphicObject;
 import model.graphic_objects.LineSegment;
@@ -31,13 +31,13 @@ public class Points_GUI extends Content implements ActionListener {
 	private JButton btn_addPoints;
 	private ArrayList<Point_GUI> pointList;
 	private ArrayList<JButton> buttonList;
-	private ShapeController sCon;
+	private GraphicObjectController sCon;
 	private String title;
 	public Points_GUI(String title, boolean hasBtn) {
 		
 		super(title);
 		this.title = title;
-		sCon = ShapeController.getInstance();
+		sCon = GraphicObjectController.getInstance();
 		
 		pointList = new ArrayList<Point_GUI>();
 		buttonList = new ArrayList<JButton>();
@@ -98,22 +98,19 @@ public class Points_GUI extends Content implements ActionListener {
 			Point_GUI p = new Point_GUI("Point",true);
 			panel_points.add(p,"newline");
 			pointList.add(p);
-			//woooooooooh
 			p.getButton().addActionListener(this);
 			buttonList.add(p.getButton());
-			//wooooooooooh
 			this.repaint();
 			this.revalidate();
-			System.out.println("ADD POINT");
 		}
 		else if(((JButton) e.getSource()).getActionCommand().equals("delete")){
-			System.out.println("Delete POINT");
+		
 			int index = buttonList.indexOf(e.getSource());
 			buttonList.remove(index);
 			panel_points.remove(index);
 			pointList.remove(index);
 			panel_points.setMaximumSize(new Dimension(360,panel_points.getComponentCount() * 37));
-			System.out.println("Delete POINT");
+		
 			this.repaint();
 			this.revalidate();
 		}
@@ -143,12 +140,36 @@ public class Points_GUI extends Content implements ActionListener {
 		
 		System.out.println("POINTS Create Graphic Object");
 		go.setPoints(pList.iterator());
-		sCon.setShape(go);
+		go.setColor(Color.BLACK);
+		sCon.setOriginalObject(go);
+		sCon.setTransformedObject(go.clone());
+		clear();
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+		int min;
+		for(int i = 0; i<pointList.size(); i++){
+			pointList.get(i).clear();
+		}
+		
+		if(title.equals("Polygon") || title.equals("Point(s)")){
+			if(title.equals("Polygon")){
+				min = 3;
+			}else
+				min = 1;
+			
+			System.out.println("HELLO PASOK");
+			for(int i = pointList.size()-1; i>= min; i--){
+				buttonList.remove(i);
+				panel_points.remove(i);
+				pointList.remove(i);
+				panel_points.setMaximumSize(new Dimension(360,panel_points.getComponentCount() * 37));
+			
+				this.repaint();
+				this.revalidate();
+			}
+		}
 		
 	}
 }
