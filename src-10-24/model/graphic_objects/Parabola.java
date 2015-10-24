@@ -42,6 +42,19 @@ public class Parabola extends GraphicObject {
         this.vertical = vertical;
     }
 
+    @Override
+    public void scaleShape(double scalingFactor, double dummy) {
+        Point focus = points.get(1);
+        Point center = points.get(0);
+        if (vertical) {
+            points.set(1, new Point(focus.getX(), ((focus.getY() - center.getY())* scalingFactor)+center.getY()));
+            double fuck = (focus.getY() - center.getY()) * scalingFactor;
+
+        } else {
+            points.set(1, new Point(((focus.getX() - center.getX()) * scalingFactor)+center.getX(), focus.getY()));
+        }
+    }
+
     public double getMagnitude() {
         return magnitude;
     }
@@ -69,7 +82,7 @@ public class Parabola extends GraphicObject {
     public void draw(Graphics2D g) {
         int rowHt = 510 / 40;
         int rowWid = 510 / 40;
-        
+
         double h = points.get(0).getX();
         double k = points.get(0).getY();
         double boundary = 20;
@@ -79,13 +92,14 @@ public class Parabola extends GraphicObject {
         g.setStroke(new BasicStroke(3));
 
         i = -20;
-        if(vertical)
-            magnitude = (points.get(1).getY()-points.get(0).getY())*4*Math.pow(magnitude, 2);
-        else
-            magnitude = (points.get(1).getX()-points.get(0).getX())*4*Math.pow(magnitude, 2);
+        if (vertical) {
+            magnitude = 1/(points.get(1).getY()-points.get(0).getY());
+        } else {
+            magnitude = 1/(points.get(1).getX()-points.get(0).getX());
+        }
+
         while (i < boundary) {
             if (vertical) {
-                System.out.println("FUCKINGTUDE: "+magnitude);
                 val1 = sqrt((i - k) / magnitude) + h;
                 val2 = -sqrt((i - k) / magnitude) + h;
                 g.draw(new Line2D.Double((20 + val1) * rowWid, (20 - i) * rowHt, (20 + val1) * rowWid, (20 - i) * rowHt));
@@ -104,10 +118,13 @@ public class Parabola extends GraphicObject {
         }
 
         //extendParabola(pVal1, pVal2, extender1, extender2, g);
-        g.setStroke(new BasicStroke(1));
         g.setColor(Color.BLACK);
+        g.setStroke(new BasicStroke(5));
+        for (int z = 0; z < points.size(); z++) {
+            g.draw(new Line2D.Double((20 + points.get(z).getX()) * rowWid, (20 - points.get(z).getY()) * rowHt, (20 + points.get(z).getX()) * rowWid, (20 - points.get(z).getY()) * rowHt));
+        }
+        g.setStroke(new BasicStroke(1));
     }
-    
 
     @Override
     public void rotateShape(float angle, double val, double val2, boolean clockwise) {
@@ -125,23 +142,23 @@ public class Parabola extends GraphicObject {
             pointHolder.setData(rotator.times(pointHolder));
             ((TranslateMatrix) translator).setTranslateValues(center.getX(), center.getY());
             pointHolder.setData(translator.times(pointHolder));
-            
+
             focus = ((R3Matrix) pointHolder).getPoint();
             points.set(1, focus);
-            if(angle==90 || angle==-90){
-                if(vertical){
-                    if(angle==-90){
+            if (angle == 90 || angle == -90) {
+                if (vertical) {
+                    if (angle == -90) {
                         magnitude = -magnitude;
                     }
                     vertical = !vertical;
-                }else{
-                    if(angle==90){
+                } else {
+                    if (angle == 90) {
                         magnitude = -magnitude;
                     }
                     vertical = !vertical;
                 }
             }
-            if(Math.abs(angle) == 180){
+            if (Math.abs(angle) == 180) {
                 magnitude = -magnitude;
             }
         }
@@ -181,7 +198,6 @@ public class Parabola extends GraphicObject {
 //            }
 //        }
 //    }
-
     @Override
     public GraphicObject clone() {
         Parabola p = new Parabola();
