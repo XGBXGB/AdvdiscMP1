@@ -41,6 +41,10 @@ public class Parabola extends GraphicObject {
     public void setVertical(boolean vertical) {
         this.vertical = vertical;
     }
+    
+    @Override
+    public void shear(boolean isXaxis, double value){
+    }
 
     @Override
     public void scaleShape(double scalingFactor, double dummy) {
@@ -48,7 +52,6 @@ public class Parabola extends GraphicObject {
         Point center = points.get(0);
         if (vertical) {
             points.set(1, new Point(focus.getX(), ((focus.getY() - center.getY())* scalingFactor)+center.getY()));
-            double fuck = (focus.getY() - center.getY()) * scalingFactor;
 
         } else {
             points.set(1, new Point(((focus.getX() - center.getX()) * scalingFactor)+center.getX(), focus.getY()));
@@ -93,9 +96,9 @@ public class Parabola extends GraphicObject {
 
         i = -20;
         if (vertical) {
-            magnitude = 1/(points.get(1).getY()-points.get(0).getY());
+            magnitude = 1/(4*(points.get(1).getY()-points.get(0).getY()));
         } else {
-            magnitude = 1/(points.get(1).getX()-points.get(0).getX());
+            magnitude = 1/(4*(points.get(1).getX()-points.get(0).getX()));
         }
 
         while (i < boundary) {
@@ -207,5 +210,4 @@ public class Parabola extends GraphicObject {
         p.setCenter(getCenter());
         return p;
     }
-
 }

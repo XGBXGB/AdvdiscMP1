@@ -111,7 +111,6 @@ public abstract class GraphicObject implements Cloneable {
 		Matrix translator = matrixFactory.getMatrix("TRANSLATE");
 		Matrix shearer = matrixFactory.getMatrix("SHEAR");
 		((ShearMatrix) shearer).shear(isXAxis, x);
-
 		double nearest = distanceToAxis(isXAxis);
 		for (int i = 0; i < points.size(); i++) {
 			Point p = points.get(i);

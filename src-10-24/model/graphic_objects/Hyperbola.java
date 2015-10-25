@@ -45,6 +45,10 @@ public class Hyperbola extends GraphicObject {
         return horizontal;
     }
 
+    @Override
+    public void shear(boolean isXaxis, double value){
+    }
+    
     public void setHorizontal(boolean horizontal) {
         this.horizontal = horizontal;
     }
@@ -95,7 +99,6 @@ public class Hyperbola extends GraphicObject {
 
     @Override
     public void draw(Graphics2D g) {
-        System.out.println("DRAWING HYPERBOLA");
         Point center = points.get(0);
         double h = center.getX();
         double k = center.getY();
