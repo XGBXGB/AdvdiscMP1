@@ -112,6 +112,27 @@ private Point distances;
 			}
 	 }
 
+	public String printMatrix(){
+		String result = "";
+		double vd, hd;
+		
+		result = String.format(" Center: %5s", " ");
+		result += String.format("[%-1s %.3f %.3f %1s]\n"," ",points.get(0).getX(),points.get(0).getY(), " ");
+		
+		vd = points.get(0).getY() + getVerticalDistance();
+		result += String.format(" Vertical Distance: %10s", " ");
+		result += String.format("[%-1s %.3f %.3f %1s] %3s"," ",points.get(0).getX(),vd, " ", " ");
+		vd = points.get(0).getY() - getVerticalDistance();
+		result += String.format("[%-1s %.3f %.3f %1s]\n"," ",points.get(0).getX(),vd, " ");
+		
+		hd = points.get(0).getX() + getHorizontalDistance();
+		result += String.format(" Horizontal Distance: %5s", " ");
+		result += String.format("[%-1s %.3f %.3f %1s] %3s"," ",hd,points.get(0).getY(), " ", " ");
+		hd = points.get(0).getX() - getHorizontalDistance();
+		result += String.format("[%-1s %.3f %.3f %1s]\n"," ",hd,points.get(0).getY(), " ");
+		return result;
+	}
+	
 	@Override
 	public GraphicObject clone() {
 		

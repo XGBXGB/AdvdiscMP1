@@ -28,6 +28,7 @@ import javax.swing.border.TitledBorder;
 
 import model.Observer;
 import controller.GraphicObjectController;
+import java.awt.Font;
 
 public class Transformation_GUI extends JPanel implements ActionListener, Observer {
 
@@ -64,12 +65,12 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
     private JLabel lbl_reflect;
     private JRadioButton rBtn_x;
     private JRadioButton rBtn_y;
-    private JLabel lblNewLabel;
     private JTextArea matrix_log;
     private GraphicObjectController sc;
     private JScrollPane scrollPane;
     private String result;
     private Main_GUI m;
+    private JLabel lbl_rotate_inform;
     
     public Transformation_GUI(Transformation_Builder tb) {
 
@@ -129,6 +130,8 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
         panel_scale.add(lbl_scale_x, gbc_lbl_scale_x);
 
         txt_scale_x = new JTextField();
+        txt_scale_x.setDocument(new JTextFieldFilter(JTextFieldFilter.FLOAT));
+        ((JTextFieldFilter)txt_scale_x.getDocument()).setNegativeAccepted(true);
         GridBagConstraints gbc_txt_scale_x = new GridBagConstraints();
         gbc_txt_scale_x.insets = new Insets(0, 0, 0, 5);
         gbc_txt_scale_x.fill = GridBagConstraints.HORIZONTAL;
@@ -149,6 +152,8 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 
         txt_scale_y = new JTextField();
         txt_scale_y.setVisible(tb.scaleY);
+        txt_scale_y.setDocument(new JTextFieldFilter(JTextFieldFilter.FLOAT));
+        ((JTextFieldFilter)txt_scale_y.getDocument()).setNegativeAccepted(true);
         GridBagConstraints gbc_txt_scale_y = new GridBagConstraints();
         gbc_txt_scale_y.fill = GridBagConstraints.HORIZONTAL;
         gbc_txt_scale_y.gridx = 4;
@@ -186,6 +191,8 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 
         txt_translate_x = new JTextField();
         txt_translate_x.setColumns(10);
+        txt_translate_x.setDocument(new JTextFieldFilter(JTextFieldFilter.FLOAT));
+        ((JTextFieldFilter)txt_translate_x.getDocument()).setNegativeAccepted(true);
         GridBagConstraints gbc_txt_translate_x = new GridBagConstraints();
         gbc_txt_translate_x.fill = GridBagConstraints.HORIZONTAL;
         gbc_txt_translate_x.insets = new Insets(0, 0, 0, 5);
@@ -203,6 +210,8 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 
         txt_translate_y = new JTextField();
         txt_translate_y.setColumns(10);
+        txt_translate_y.setDocument(new JTextFieldFilter(JTextFieldFilter.FLOAT));
+        ((JTextFieldFilter)txt_translate_y.getDocument()).setNegativeAccepted(true);
         GridBagConstraints gbc_txt_translate_y = new GridBagConstraints();
         gbc_txt_translate_y.fill = GridBagConstraints.HORIZONTAL;
         gbc_txt_translate_y.gridx = 4;
@@ -238,6 +247,8 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 
         txt_shear_x = new JTextField();
         txt_shear_x.setColumns(10);
+        txt_shear_x.setDocument(new JTextFieldFilter(JTextFieldFilter.FLOAT));
+        ((JTextFieldFilter)txt_shear_x.getDocument()).setNegativeAccepted(true);
         GridBagConstraints gbc_txt_shear_x = new GridBagConstraints();
         gbc_txt_shear_x.fill = GridBagConstraints.HORIZONTAL;
         gbc_txt_shear_x.insets = new Insets(0, 0, 0, 5);
@@ -255,6 +266,8 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 
         txt_shear_y = new JTextField();
         txt_shear_y.setColumns(10);
+        txt_shear_y.setDocument(new JTextFieldFilter(JTextFieldFilter.FLOAT));
+        ((JTextFieldFilter)txt_shear_y.getDocument()).setNegativeAccepted(true);
         GridBagConstraints gbc_txt_shear_y = new GridBagConstraints();
         gbc_txt_shear_y.fill = GridBagConstraints.HORIZONTAL;
         gbc_txt_shear_y.gridx = 4;
@@ -266,35 +279,47 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
         panel_rotate.setVisible(tb.rotate);
         panel_transformation.add(panel_rotate);
         GridBagLayout gbl_panel_rotate = new GridBagLayout();
-        gbl_panel_rotate.columnWidths = new int[]{100, 0, 150, 0, 150, 0};
-        gbl_panel_rotate.rowHeights = new int[]{14, 0};
+        gbl_panel_rotate.columnWidths = new int[]{85, 8, 150, 0, 150, 0};
+        gbl_panel_rotate.rowHeights = new int[]{35, 0};
         gbl_panel_rotate.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
         gbl_panel_rotate.rowWeights = new double[]{0.0, Double.MIN_VALUE};
         panel_rotate.setLayout(gbl_panel_rotate);
-
-        lbl_rotate = new JLabel("Rotate (in clockwise)");
-        GridBagConstraints gbc_lbl_rotate = new GridBagConstraints();
-        gbc_lbl_rotate.anchor = GridBagConstraints.WEST;
-        gbc_lbl_rotate.insets = new Insets(0, 0, 0, 5);
-        gbc_lbl_rotate.gridx = 0;
-        gbc_lbl_rotate.gridy = 0;
-        panel_rotate.add(lbl_rotate, gbc_lbl_rotate);
-
-        txt_rotate = new JTextField();
-        txt_rotate.setColumns(10);
-        GridBagConstraints gbc_txt_rotate = new GridBagConstraints();
-        gbc_txt_rotate.fill = GridBagConstraints.HORIZONTAL;
-        gbc_txt_rotate.insets = new Insets(0, 0, 0, 5);
-        gbc_txt_rotate.gridx = 2;
-        gbc_txt_rotate.gridy = 0;
-        panel_rotate.add(txt_rotate, gbc_txt_rotate);
-
-        lblNewLabel = new JLabel("degrees");
-        GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-        gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
-        gbc_lblNewLabel.gridx = 3;
-        gbc_lblNewLabel.gridy = 0;
-        panel_rotate.add(lblNewLabel, gbc_lblNewLabel);
+        
+                lbl_rotate = new JLabel("Rotate (angle in degrees)");
+                GridBagConstraints gbc_lbl_rotate = new GridBagConstraints();
+                gbc_lbl_rotate.anchor = GridBagConstraints.WEST;
+                gbc_lbl_rotate.insets = new Insets(0, 0, 0, 5);
+                gbc_lbl_rotate.gridx = 0;
+                gbc_lbl_rotate.gridy = 0;
+                panel_rotate.add(lbl_rotate, gbc_lbl_rotate);
+        
+                txt_rotate = new JTextField();
+                txt_rotate.setColumns(10);
+                txt_rotate.setDocument(new JTextFieldFilter(JTextFieldFilter.FLOAT));
+                ((JTextFieldFilter)txt_rotate.getDocument()).setNegativeAccepted(true);
+                GridBagConstraints gbc_txt_rotate = new GridBagConstraints();
+                gbc_txt_rotate.fill = GridBagConstraints.HORIZONTAL;
+                gbc_txt_rotate.insets = new Insets(0, 0, 0, 5);
+                gbc_txt_rotate.gridx = 2;
+                gbc_txt_rotate.gridy = 0;
+                panel_rotate.add(txt_rotate, gbc_txt_rotate);
+                txt_rotate.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!txt_rotate.getText().equals("")) {
+                            sc.rotateShape(Float.parseFloat(txt_rotate.getText()), 0, 0, true);
+                        }
+			}
+		});
+                
+                lbl_rotate_inform = new JLabel("*rotate only by 90, -90, 180, or -180");
+                lbl_rotate_inform.setFont(new Font("Tahoma", Font.PLAIN, 10));
+                GridBagConstraints gbc_lbl_rotate_inform = new GridBagConstraints();
+                gbc_lbl_rotate_inform.gridwidth = 4;
+                gbc_lbl_rotate_inform.gridx = 3;
+                gbc_lbl_rotate_inform.gridy = 0;
+                panel_rotate.add(lbl_rotate_inform, gbc_lbl_rotate_inform);
 
         panel_reflect = new JPanel();
         panel_reflect.setOpaque(false);
@@ -337,7 +362,7 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
         panel_matrix = new JPanel();
         panel_matrix.setBorder(new TitledBorder(null, "Matrix Results", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         panel_matrix.setBackground(new Color(32, 178, 170));
-        panel_matrix.setPreferredSize(new Dimension(250, 330));
+        panel_matrix.setPreferredSize(new Dimension(250, 310));
         panel_side.add(panel_matrix, BorderLayout.SOUTH);
         panel_matrix.setLayout(new BorderLayout(0, 0));
         
@@ -460,15 +485,6 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 		});
 
 /************************************** ROTATE *******************************/
-        txt_rotate.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!txt_rotate.getText().equals("")) {
-                    sc.rotateShape(Float.parseFloat(txt_rotate.getText()), 0, 0, true);
-                }
-			}
-		});
         
 /*********************************** SHEAR *******************************/
         txt_shear_x.addActionListener(new ActionListener() {
