@@ -8,13 +8,17 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 import model.Point;
+import model.matrix.Matrix;
+import model.matrix.MatrixFactory;
+import model.matrix.R3Matrix;
+import model.matrix.ScaleMatrix;
 
 public class LineSegment extends GraphicObject {
 
 	public LineSegment(){
 		points = new ArrayList<Point>();
 	}
-	
+		
 	@Override
 	public void draw(Graphics2D g) {
 		// TODO Auto-generated method stub
@@ -41,6 +45,22 @@ public class LineSegment extends GraphicObject {
               
 	     }	
 	}
+	
+	@Override
+	 public void scaleShape(double scalingFactorX, double scalingFactorY)
+	 {
+		 MatrixFactory matrixFactory = new MatrixFactory();
+        Matrix scalor = matrixFactory.getMatrix("SCALE");
+        Matrix pointHolder = matrixFactory.getMatrix("POINT");
+        ((ScaleMatrix)scalor).setScalingFactor(scalingFactorX, scalingFactorX);
+	   	 
+	     for (int i = 0; i < points.size(); i++) {
+				Point p = points.get(i);
+				((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());
+				pointHolder.setData(scalor.times(pointHolder));
+				points.set(i, ((R3Matrix) pointHolder).getPoint());
+			}
+	 }
 
 	@Override
 	public GraphicObject clone() {

@@ -145,6 +145,8 @@ public class Points_GUI extends Content implements ActionListener {
 		clear();
 	}
 
+	
+	
 	@Override
 	public void clear() {
 		int min;
