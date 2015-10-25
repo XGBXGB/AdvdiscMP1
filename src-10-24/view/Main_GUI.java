@@ -195,31 +195,31 @@ public class Main_GUI extends JFrame implements ActionListener {
 		public void init(){
 			Transformation_GUI t;
 			t = new Transformation_GUI.Transformation_Builder(this).rotate(true)
-			  .reflect(true).scaleY(true).translate(true).shear(false).rotateLimit(false).build();
+			  .reflect(true).scale(false).translate(true).shear(false).rotateLimit(false).build();
 			panel_side_content.add(t, "Points");	
 			
 			t = new Transformation_GUI.Transformation_Builder(this).rotate(true)
-			  .reflect(true).scaleY(false).translate(true).shear(true).rotateLimit(false).build();
+			  .reflect(true).scale(true).scaleY(false).translate(true).shear(true).rotateLimit(false).build();
 			panel_side_content.add(t, "Line Segment");
 			
 			t = new Transformation_GUI.Transformation_Builder(this).rotate(true)
-			  .reflect(true).scaleY(false).translate(true).shear(true).rotateLimit(false).build();
+			  .reflect(true).scale(true).scaleY(false).translate(true).shear(true).rotateLimit(false).build();
 			panel_side_content.add(t, "Vector");
 			
 			t = new Transformation_GUI.Transformation_Builder(this).rotate(true)
-			  .reflect(true).scaleY(true).translate(true).shear(true).rotateLimit(false).build();
+			  .reflect(true).scale(true).scaleY(true).translate(true).shear(true).rotateLimit(false).build();
 			panel_side_content.add(t, "Polygon");
 			
 			t = new Transformation_GUI.Transformation_Builder(this).rotate(true)
-			 .reflect(true).scaleY(true).translate(true).shear(false).rotateLimit(false).build();
+			 .reflect(true).scale(true).scaleY(true).translate(true).shear(false).rotateLimit(false).build();
 			panel_side_content.add(t, "Ellipse");
 			
 			t = new Transformation_GUI.Transformation_Builder(this).rotate(true)
-			  .reflect(true).scaleY(false).translate(true).shear(false).rotateLimit(true).build();
+			  .reflect(true).scale(true).scaleY(false).translate(true).shear(false).rotateLimit(true).build();
 			panel_side_content.add(t, "Parabola");
 			
 			t = new Transformation_GUI.Transformation_Builder(this).rotate(true)
-			  .reflect(true).scaleY(false).translate(true).shear(false).rotateLimit(true).build();
+			  .reflect(true).scale(true).scaleY(false).translate(true).shear(false).rotateLimit(true).build();
 			panel_side_content.add(t, "Hyperbola");
 			
 			cl_shape.show(panel_shape_details, null);

@@ -105,6 +105,7 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 
 		panel_scale = new JPanel();
 		panel_scale.setOpaque(false);
+		panel_scale.setVisible(tb.scale);
 		panel_transformation.add(panel_scale);
 		GridBagLayout gbl_panel_scale = new GridBagLayout();
 		gbl_panel_scale.columnWidths = new int[]{100, 0, 150, 0, 150, 0};
@@ -591,6 +592,7 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 	public static class Transformation_Builder{
 		private boolean rotate;
 		private boolean scaleY;
+		private boolean scale;
 		private boolean shear;
 		private boolean translate;
 		private boolean reflect;
@@ -600,6 +602,7 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 		public Transformation_Builder(Main_GUI m){
 			rotate = false;
 			rotateLimit = false;
+			scale = false;
 			scaleY = false;
 			shear = false;
 			translate = false;
@@ -618,6 +621,11 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 
 		public Transformation_Builder scaleY(boolean scale) {
 			this.scaleY = scale;
+			return this;
+		}
+		
+		public Transformation_Builder scale(boolean scale) {
+			this.scale = scale;
 			return this;
 		}
 
