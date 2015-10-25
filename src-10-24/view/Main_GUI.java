@@ -4,31 +4,26 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Toolkit;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-
 import java.awt.Font;
-
-import javax.swing.JSplitPane;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.border.TitledBorder;
-import javax.swing.JComboBox;
-
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.HashMap;
 
-import javax.swing.border.BevelBorder;
-import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.border.TitledBorder;
 
 
 
@@ -96,9 +91,6 @@ public class Main_GUI extends JFrame implements ActionListener {
 		panel_shape = new JPanel();
 		panel_shape.setLayout(new BorderLayout(0, 0));
 		panel_side_content.add(panel_shape,"Shape");
-		
-		Transformation_GUI t = new Transformation_GUI(cl_side_content, panel_side_content);
-		panel_side_content.add(t,"Transformation");
 		
 		panel_choose_shape = new JPanel();
 		panel_shape.add(panel_choose_shape, BorderLayout.NORTH);
@@ -201,6 +193,34 @@ public class Main_GUI extends JFrame implements ActionListener {
 	}
 
 		public void init(){
+			Transformation_GUI t;
+			t = new Transformation_GUI.Transformation_Builder(this).rotate(true)
+			  .reflect(true).scaleY(true).translate(true).shear(false).build();
+			panel_side_content.add(t, "Points");	
+			
+			t = new Transformation_GUI.Transformation_Builder(this).rotate(true)
+			  .reflect(true).scaleY(false).translate(true).shear(true).build();
+			panel_side_content.add(t, "Line Segment");
+			
+			t = new Transformation_GUI.Transformation_Builder(this).rotate(true)
+			  .reflect(true).scaleY(false).translate(true).shear(true).build();
+			panel_side_content.add(t, "Vector");
+			
+			t = new Transformation_GUI.Transformation_Builder(this).rotate(true)
+			  .reflect(true).scaleY(true).translate(true).shear(true).build();
+			panel_side_content.add(t, "Polygon");
+			
+			t = new Transformation_GUI.Transformation_Builder(this).rotate(true)
+			 .reflect(true).scaleY(true).translate(true).shear(false).build();
+			panel_side_content.add(t, "Ellipse");
+			
+			t = new Transformation_GUI.Transformation_Builder(this).rotate(true)
+			  .reflect(true).scaleY(false).translate(true).shear(false).build();
+			panel_side_content.add(t, "Parabola");
+			
+			t = new Transformation_GUI.Transformation_Builder(this).rotate(true)
+			  .reflect(true).scaleY(false).translate(true).shear(false).build();
+			panel_side_content.add(t, "Hyperbola");
 			
 			cl_shape.show(panel_shape_details, null);
 		}
@@ -218,13 +238,19 @@ public class Main_GUI extends JFrame implements ActionListener {
 		    }
 		}
 
+		public void setReturn(){
+			cl_side_content.show(panel_side_content,"Shape");
+		}
+	
+			
+		
 		@Override
 		public void actionPerformed(ActionEvent a) {
 			// TODO Auto-generated method stub
 			if(((JButton) a.getSource()).getActionCommand().equals("create")){
 				
 				contentList.get(cmb_shape.getSelectedItem().toString()).createShape();
-				cl_side_content.show(panel_side_content, "Transformation");
+				cl_side_content.show(panel_side_content, cmb_shape.getSelectedItem().toString());
 				contentList.get(cmb_shape.getSelectedItem().toString()).clear();
 				
 			}

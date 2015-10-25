@@ -41,10 +41,10 @@ public class GridCanvas extends Canvas implements Observer {
     	this.rows = rows;
         this.cols = cols;
         rowHt = height / rows;
-        rowWid = width / cols;
-        
+        rowWid = width / cols;        
     }
 
+    
     public void paint(Graphics g) {
         int i;
         Graphics2D g2 = (Graphics2D) g;

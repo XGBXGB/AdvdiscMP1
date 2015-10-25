@@ -4,51 +4,30 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Rectangle2D;
 
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
-import javax.swing.JSlider;
-import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import controller.GraphicObjectController;
-
-import javax.swing.JButton;
-import javax.swing.border.SoftBevelBorder;
-
-import java.awt.FlowLayout;
-
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
 
 import model.Observer;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import controller.GraphicObjectController;
 
 public class Transformation_GUI extends JPanel implements ActionListener, Observer {
 
@@ -90,15 +69,15 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
     private GraphicObjectController sc;
     private JScrollPane scrollPane;
     private String result;
+    private Main_GUI m;
     
-    public Transformation_GUI(CardLayout cl, JPanel panel_main_content) {
+    public Transformation_GUI(Transformation_Builder tb) {
 
         super();
         sc = GraphicObjectController.getInstance();
         sc.registerObserver(this);
         
-        this.cl = cl;
-        this.panel_main_content = panel_main_content;
+        this.m = tb.getMain_GUI();
 
         this.setBackground(new Color(255, 255, 255));
         this.setLayout(new BorderLayout(0, 0));
@@ -160,6 +139,7 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
         txt_scale_x.setText("1");
 
         lbl_scale_y = new JLabel("Y :");
+        lbl_scale_y.setVisible(tb.scaleY); 
         GridBagConstraints gbc_lbl_scale_y = new GridBagConstraints();
         gbc_lbl_scale_y.anchor = GridBagConstraints.EAST;
         gbc_lbl_scale_y.insets = new Insets(0, 0, 0, 5);
@@ -168,6 +148,7 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
         panel_scale.add(lbl_scale_y, gbc_lbl_scale_y);
 
         txt_scale_y = new JTextField();
+        txt_scale_y.setVisible(tb.scaleY);
         GridBagConstraints gbc_txt_scale_y = new GridBagConstraints();
         gbc_txt_scale_y.fill = GridBagConstraints.HORIZONTAL;
         gbc_txt_scale_y.gridx = 4;
@@ -178,6 +159,7 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 
         panel_translate = new JPanel();
         panel_translate.setOpaque(false);
+        panel_translate.setVisible(tb.translate);
         panel_transformation.add(panel_translate);
         GridBagLayout gbl_panel_translate = new GridBagLayout();
         gbl_panel_translate.columnWidths = new int[]{100, 0, 150, 0, 150, 0};
@@ -229,6 +211,7 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 
         panel_shear = new JPanel();
         panel_shear.setOpaque(false);
+        panel_shear.setVisible(tb.shear);
         panel_transformation.add(panel_shear);
         GridBagLayout gbl_panel_shear = new GridBagLayout();
         gbl_panel_shear.columnWidths = new int[]{100, 0, 150, 0, 150, 0};
@@ -280,6 +263,7 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 
         panel_rotate = new JPanel();
         panel_rotate.setOpaque(false);
+        panel_rotate.setVisible(tb.rotate);
         panel_transformation.add(panel_rotate);
         GridBagLayout gbl_panel_rotate = new GridBagLayout();
         gbl_panel_rotate.columnWidths = new int[]{100, 0, 150, 0, 150, 0};
@@ -314,6 +298,7 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 
         panel_reflect = new JPanel();
         panel_reflect.setOpaque(false);
+        panel_reflect.setVisible(tb.reflect);
         panel_transformation.add(panel_reflect);
         GridBagLayout gbl_panel_reflect = new GridBagLayout();
         gbl_panel_reflect.columnWidths = new int[]{100, 0, 150, 0, 150, 0};
@@ -562,12 +547,13 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 	   this.txt_translate_y.setText("");
    }
     
+   
     @Override
     public void actionPerformed(ActionEvent a) {
 		// TODO Auto-generated method stub
 
         if (a.getSource() == btn_change_shape) {
-            cl.show(panel_main_content, "Shape");
+            m.setReturn();
             clear();
         }
         else if (a.getSource() == btn_reset) {
@@ -583,5 +569,56 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 		}
 		
 	}
+	
+	public static class Transformation_Builder{
+		private boolean rotate;
+		private boolean scaleY;
+		private boolean shear;
+		private boolean translate;
+		private boolean reflect;
+		private Main_GUI m;
+		
+		public Transformation_Builder(Main_GUI m){
+			rotate = false;
+			scaleY = false;
+			shear = false;
+			translate = false;
+			reflect = false;
+			this.m = m;
+		}
+		
+		public Main_GUI getMain_GUI(){
+			return m;
+		}
+		
+		public Transformation_Builder rotate(boolean rotate) {
+			this.rotate = rotate;
+			return this;
+		}
+		
+		public Transformation_Builder scaleY(boolean scale) {
+			this.scaleY = scale;
+			return this;
+		}
+		
+		public Transformation_Builder shear(boolean shear) {
+			this.shear = shear;
+			return this;
+		}
+		
+		public Transformation_Builder translate(boolean translate) {
+			this.translate = translate;
+			return this;
+		}
+		public Transformation_Builder reflect(boolean reflect) {
+			this.reflect = reflect;
+			return this;
+		}
+		public Transformation_GUI build() {
+			return new Transformation_GUI(this);
+		}
+	}
+	
+	
 
 }

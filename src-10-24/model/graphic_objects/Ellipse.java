@@ -100,10 +100,12 @@ private Point distances;
         Matrix pointHolder = matrixFactory.getMatrix("POINT");
         ((ScaleMatrix)scalor).setScalingFactor(scalingFactorX, scalingFactorY);
         
-        ((R3Matrix) pointHolder).setPointValues(getHorizontalDistance(), getVerticalDistance());
-         pointHolder.setData(scalor.times(pointHolder));
-         this.setDistances(((R3Matrix) pointHolder).getPoint());
-
+        for (int i = 0; i < points.size(); i++) {
+        	 ((R3Matrix) pointHolder).setPointValues(getHorizontalDistance(), getVerticalDistance());
+             pointHolder.setData(scalor.times(pointHolder));
+             this.setDistances(((R3Matrix) pointHolder).getPoint());
+             points.set(i, ((R3Matrix) pointHolder).getPoint());
+		}
 	 }
 
 	@Override
