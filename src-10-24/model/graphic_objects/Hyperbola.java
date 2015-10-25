@@ -26,11 +26,19 @@ public class Hyperbola extends GraphicObject {
         b = 0;
         horizontal = false;
     }
-    
+
     @Override
     public void scaleShape(double scalingFactor, double dummy) {
-            a*= scalingFactor;
-            b*= scalingFactor;
+        a *= scalingFactor;
+        b *= scalingFactor;
+        Point center = points.get(0);
+        if (horizontal) {
+            points.set(1,new Point(center.getX() + a, center.getY()));
+            points.set(2,new Point(center.getX() - a, center.getY()));
+        } else {
+            points.set(1,new Point(center.getX(), center.getY() + b));
+            points.set(2,new Point(center.getX(), center.getY() - b));
+        }
     }
 
     public void setCenter(double x, double y) {
@@ -52,9 +60,9 @@ public class Hyperbola extends GraphicObject {
     }
 
     @Override
-    public void shear(boolean isXaxis, double value){
+    public void shear(boolean isXaxis, double value) {
     }
-    
+
     public void setHorizontal(boolean horizontal) {
         this.horizontal = horizontal;
     }
