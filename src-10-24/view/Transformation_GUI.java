@@ -122,6 +122,7 @@ public class Transformation_GUI extends JPanel implements ActionListener, Observ
 		panel_scale.add(lbl_scale, gbc_lbl_scale);
 
 		lbl_scale_x = new JLabel("X :");
+		lbl_scale_x.setVisible(tb.scaleY); 
 		GridBagConstraints gbc_lbl_scale_x = new GridBagConstraints();
 		gbc_lbl_scale_x.anchor = GridBagConstraints.EAST;
 		gbc_lbl_scale_x.insets = new Insets(0, 0, 0, 5);
