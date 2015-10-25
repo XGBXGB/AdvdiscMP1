@@ -8,6 +8,10 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 import model.Point;
+import model.matrix.Matrix;
+import model.matrix.MatrixFactory;
+import model.matrix.R3Matrix;
+import model.matrix.ScaleMatrix;
 
 public class Vector extends GraphicObject {
 
@@ -43,8 +47,13 @@ public class Vector extends GraphicObject {
           
               int i = (int)points.get(points.size()-1).getX();
               int j = (int)points.get(points.size()-1).getY();
+              g.setStroke(new BasicStroke(3));
+	    	  g.setColor(c);
+              g.draw(new Line2D.Double(x, y,x2,y2));
+              g.setColor(Color.BLACK);
+              g.setStroke(new BasicStroke(1));
 
-              do{
+             /* do{
 		    	  x2 = (20+i+dx)*rowWid;
 		    	  y2 = (20-j+dy)*rowHt;
 		          
@@ -58,13 +67,32 @@ public class Vector extends GraphicObject {
 		    	  y = (20-y2+dy)*rowHt;  
 		    	  j++; 
 		    	  i++;
-              }while(i>20 && i < -20 && j>20 && j <-20);
+              }while(i>20 && i < -20 && j>20 && j <-20);*/
 	    	 
 	    	  for(i =0; i< points.size(); i++){
 			        points.get(i).draw(g);
 			  }
 	     }	
 	}
+	
+	@Override
+	 public void scaleShape(double scalingFactorX, double scalingFactorY)
+	 {
+		 MatrixFactory matrixFactory = new MatrixFactory();
+       Matrix scalor = matrixFactory.getMatrix("SCALE");
+       Matrix pointHolder = matrixFactory.getMatrix("POINT");
+       ((ScaleMatrix)scalor).setScalingFactor(scalingFactorX, scalingFactorX);
+	   	 
+		Point p = points.get(1);
+		((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());
+		pointHolder.setData(scalor.times(pointHolder));
+		if(points.get(0).getX() != points.get(1).getX() && points.get(0).getX() != points.get(1).getX())
+			points.set(1, ((R3Matrix) pointHolder).getPoint());
+		else if(points.get(0).getX() == points.get(1).getX())
+			points.set(1, new Point(points.get(1).getX(),((R3Matrix) pointHolder).getPoint().getY()));
+		else if(points.get(0).getY() == points.get(1).getY())
+			points.set(1, new Point(((R3Matrix) pointHolder).getPoint().getX(), points.get(1).getY()));
+	 }
 
 	@Override
 	public GraphicObject clone() {
