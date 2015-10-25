@@ -221,14 +221,16 @@ public abstract class GraphicObject implements Cloneable {
 		
 		for (int i = 0; i < points.size(); i++) {
 			Point p = points.get(i);
-			if (p.getX() != 0 && p.getY() != 0)
+			((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());
+
+			/*if (p.getX() != 0 && p.getY() != 0)
 				((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());
 			else if (p.getX() == 0 && p.getY() == 0)
 				((R3Matrix) pointHolder).setPointValues(1, 1);
 			else if (p.getX() == 0)
 				((R3Matrix) pointHolder).setPointValues(1, p.getY());
 			else if (p.getY() == 0)
-				((R3Matrix) pointHolder).setPointValues(p.getX(), 1);
+				((R3Matrix) pointHolder).setPointValues(p.getX(), 1);*/
 
 			pointHolder.setData(scalor.times(pointHolder));
 			points.set(i, ((R3Matrix) pointHolder).getPoint());
