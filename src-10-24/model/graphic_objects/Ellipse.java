@@ -99,13 +99,25 @@ private Point distances;
         Matrix scalor = matrixFactory.getMatrix("SCALE");
         Matrix pointHolder = matrixFactory.getMatrix("POINT");
         ((ScaleMatrix)scalor).setScalingFactor(scalingFactorX, scalingFactorY);
-        
-        for (int i = 0; i < points.size(); i++) {
-        	 ((R3Matrix) pointHolder).setPointValues(getHorizontalDistance(), getVerticalDistance());
-             pointHolder.setData(scalor.times(pointHolder));
-             this.setDistances(((R3Matrix) pointHolder).getPoint());
-             points.set(i, ((R3Matrix) pointHolder).getPoint());
-		}
+
+         ((R3Matrix) pointHolder).setPointValues(getHorizontalDistance(), getVerticalDistance());
+	     pointHolder.setData(scalor.times(pointHolder));
+	     this.setDistances(((R3Matrix) pointHolder).getPoint());
+	   	 
+	     for (int i = 0; i < points.size(); i++) {
+				Point p = points.get(i);
+				/*if (p.getX() != 0 && p.getY() != 0)*/
+					((R3Matrix) pointHolder).setPointValues(p.getX(), p.getY());
+				/*else if (p.getX() == 0 && p.getY() == 0)
+					((R3Matrix) pointHolder).setPointValues(1, 1);
+				else if (p.getX() == 0)
+					((R3Matrix) pointHolder).setPointValues(1, p.getY());
+				else if (p.getY() == 0)
+					((R3Matrix) pointHolder).setPointValues(p.getX(), 1);*/
+
+				pointHolder.setData(scalor.times(pointHolder));
+				points.set(i, ((R3Matrix) pointHolder).getPoint());
+			}
 	 }
 
 	@Override
