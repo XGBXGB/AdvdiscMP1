@@ -42,6 +42,8 @@ public class Ellipse_GUI extends Content {
 		panel_content.add(lbl_horizontal, "cell 0 1");
 		
 		txt_horizontal = new JTextField();
+		txt_horizontal.setDocument(new JTextFieldFilter(JTextFieldFilter.FLOAT));
+		((JTextFieldFilter)txt_horizontal.getDocument()).setNegativeAccepted(true);
 		panel_content.add(txt_horizontal, "cell 1 1");
 		txt_horizontal.setColumns(10);
 		
@@ -49,6 +51,8 @@ public class Ellipse_GUI extends Content {
 		panel_content.add(lbl_vertical, "cell 0 2");
 		
 		txt_vertical = new JTextField();
+		txt_vertical.setDocument(new JTextFieldFilter(JTextFieldFilter.FLOAT));
+		((JTextFieldFilter)txt_vertical.getDocument()).setNegativeAccepted(true);
 		panel_content.add(txt_vertical, "cell 1 2");
 		txt_vertical.setColumns(10);
 	}

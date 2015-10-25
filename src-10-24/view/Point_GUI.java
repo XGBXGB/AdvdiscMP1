@@ -42,6 +42,8 @@ public class Point_GUI extends JPanel
 		this.add(lbl_open_paren);
 		
 		txt_x = new JTextField("X");
+		txt_x.setDocument(new JTextFieldFilter(JTextFieldFilter.FLOAT));
+		((JTextFieldFilter)txt_x.getDocument()).setNegativeAccepted(true);
 		txt_x.setHorizontalAlignment(SwingConstants.CENTER);
 		txt_x.setPreferredSize(new Dimension(50, 24));
 		this.add(txt_x);
@@ -50,6 +52,8 @@ public class Point_GUI extends JPanel
 		this.add(lbl_comma);
 		
 		txt_y = new JTextField("Y");
+		txt_y.setDocument(new JTextFieldFilter(JTextFieldFilter.FLOAT));
+		((JTextFieldFilter)txt_y.getDocument()).setNegativeAccepted(true);
 		txt_y.setHorizontalAlignment(SwingConstants.CENTER);
 		txt_y.setPreferredSize(new Dimension(50, 24));
 		this.add(txt_y);

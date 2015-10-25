@@ -248,12 +248,11 @@ public class Main_GUI extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent a) {
 			// TODO Auto-generated method stub
 			if(((JButton) a.getSource()).getActionCommand().equals("create")){
-				
 				contentList.get(cmb_shape.getSelectedItem().toString()).createShape();
 				cl_side_content.show(panel_side_content, cmb_shape.getSelectedItem().toString());
 				contentList.get(cmb_shape.getSelectedItem().toString()).clear();
 				
-			}
+			}				
 		}
 }
 

@@ -46,6 +46,8 @@ public class Parabola_GUI extends Content implements ActionListener{
 		panel_content.add(lbl_horizontal, "cell 0 1");
 		
 		txt_magnitude = new JTextField();
+		txt_magnitude.setDocument(new JTextFieldFilter(JTextFieldFilter.FLOAT));
+		((JTextFieldFilter)txt_magnitude.getDocument()).setNegativeAccepted(true);
 		panel_content.add(txt_magnitude, "cell 1 1");
 		txt_magnitude.setColumns(10);
 		
